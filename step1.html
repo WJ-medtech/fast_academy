@@ -222,10 +222,21 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 .sp-t strong{color:var(--blue-light);}
 
 .gap{height:16px;}.gap-sm{height:8px;}
+
+/* MUTE BTN */
+.mute-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;flex-shrink:0;transition:background .2s;}
+.mute-btn.muted{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.3);}
+
+/* HEARTBEAT flash overlay */
+.hb-flash{pointer-events:none;position:fixed;inset:0;z-index:999;
+  background:rgba(239,68,68,.12);opacity:0;transition:opacity .06s;}
 </style>
 </head>
 <body>
 <div class="bg-canvas" id="bgCanvas"></div>
+<div class="hb-flash" id="hbFlash"></div>
 <div class="app-wrapper">
 
   <div class="page-header">
@@ -234,6 +245,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="page-step-label">STEP 1 — FASTの重要性</div>
       <div class="page-title" id="hTitle">なぜFASTが必要なのか？</div>
     </div>
+    <button class="mute-btn" id="muteBtn" title="音ON/OFF">🔊</button>
   </div>
 
   <div class="progress-bar-wrap">
@@ -502,60 +514,178 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 </div>
 
 <script>
-// stars
+// ── STARS ──────────────────────────────────────────────
 const bg=document.getElementById('bgCanvas');
 for(let i=0;i<50;i++){const s=document.createElement('div');s.className='star';const z=Math.random()*2+.4;s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.5+.12};`;bg.appendChild(s);}
 
-const TOTAL=11;
-const TITLES=['なぜFASTが必要か','一番大事なポイント','緊迫の救急現場','搬入時バイタル','2分後の急変','ここが分岐点！','FASTなし → 最悪の展開','FASTあり → 救命へ','結末','クイズ 1','クイズ 2 + まとめ'];
-let cur=0;
+// ══════════════════════════════════════════════════════
+//  AUDIO ENGINE
+//  GitHub Pages (https) + サイレントスイッチOFF で動作
+//  iOS Safari: 最初のタップで AudioContext をアンロック
+// ══════════════════════════════════════════════════════
+let actx = null;
+let muted = false;
+let hbInterval = null;
 
-const track=document.getElementById('sTrack');
-const pFill=document.getElementById('pFill');
-const pStep=document.getElementById('pStep');
-const pSub=document.getElementById('pSub');
-const bPrev=document.getElementById('bPrev');
-const bNext=document.getElementById('bNext');
-const hTitle=document.getElementById('hTitle');
-
-function updateUI(){
-  track.style.transform=`translateX(-${cur*100}%)`;
-  const pct=Math.round((cur+1)/TOTAL*100);
-  pFill.style.width=pct+'%';
-  pStep.textContent=`${cur+1} / ${TOTAL}`;
-  pSub.textContent=TITLES[cur];
-  hTitle.textContent=TITLES[cur];
-  bPrev.disabled=cur===0;
-  const last=cur===TOTAL-1;
-  bNext.textContent=last?'✅ STEP 2へ進む →':'次へ →';
-  bNext.className='btn-next'+(last?' finish':'');
-  // re-trigger animations
-  const sl=document.getElementById('s'+cur);
-  sl.querySelectorAll('.an').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
+function getCtx() {
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  if (actx.state === 'suspended') actx.resume();
+  return actx;
 }
 
-function go(dir){
-  if(dir>0&&cur===TOTAL-1){window.location.href='step2.html';return;}
-  cur=Math.max(0,Math.min(TOTAL-1,cur+dir));
+function beep(freq, type, start, dur, vol) {
+  const ctx = getCtx();
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const g   = ctx.createGain();
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = type;
+  osc.frequency.value = freq;
+  g.gain.setValueAtTime(0,   now + start);
+  g.gain.linearRampToValueAtTime(vol, now + start + 0.01);
+  g.gain.setValueAtTime(vol, now + start + dur - 0.03);
+  g.gain.linearRampToValueAtTime(0,   now + start + dur);
+  osc.start(now + start);
+  osc.stop( now + start + dur + 0.01);
+}
+
+// ミュートボタン
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', () => {
+  getCtx();
+  muted = !muted;
+  muteBtn.textContent = muted ? '🔇' : '🔊';
+  muteBtn.classList.toggle('muted', muted);
+  if (muted) stopHeartbeat();
+});
+
+// 🚨 ホットラインブザー
+function playBuzzer() {
+  if (muted) return;
+  [0, 0.60].forEach(off => {
+    [0, 0.13, 0.26].forEach(d => beep(900, 'square',   off+d, 0.09, 0.22));
+    beep(110, 'sawtooth', off, 0.40, 0.08);
+  });
+}
+
+// 💓 心拍音
+const hbFlash = document.getElementById('hbFlash');
+function playOneBeat() {
+  if (muted || !actx) return;
+  const ctx = actx;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const g   = ctx.createGain();
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(900, now);
+  osc.frequency.linearRampToValueAtTime(450, now + 0.08);
+  g.gain.setValueAtTime(0.28, now);
+  g.gain.linearRampToValueAtTime(0, now + 0.18);
+  osc.start(now); osc.stop(now + 0.19);
+  hbFlash.style.opacity = '1';
+  setTimeout(() => { hbFlash.style.opacity = '0'; }, 100);
+}
+function startHeartbeat(bpm) {
+  stopHeartbeat();
+  playOneBeat();
+  hbInterval = setInterval(playOneBeat, Math.round(60000 / bpm));
+}
+function stopHeartbeat() {
+  if (hbInterval) { clearInterval(hbInterval); hbInterval = null; }
+  hbFlash.style.opacity = '0';
+}
+
+// ✅ 正解音
+function playCorrect() {
+  if (muted) return;
+  [523.25, 659.25, 783.99, 1046.5].forEach((f,i) => beep(f, 'sine', i*0.10, 0.25, 0.22));
+}
+
+// ❌ 不正解音
+function playWrong() {
+  if (muted) return;
+  beep(320, 'sawtooth', 0.00, 0.22, 0.18);
+  beep(220, 'sawtooth', 0.23, 0.28, 0.18);
+}
+
+// 🎺 ファンファーレ
+function playFanfare() {
+  if (muted) return;
+  [[523.25,0.00,0.16],[659.25,0.14,0.16],[783.99,0.28,0.16],
+   [1046.5,0.42,0.48],[880.00,0.44,0.48],[659.25,0.46,0.48]
+  ].forEach(([f,s,d]) => beep(f, 'triangle', s, d, 0.18));
+  beep(130, 'sine', 0.42, 0.55, 0.28);
+}
+
+// ══════════════════════════════════════════════════════
+//  SLIDE ENGINE
+// ══════════════════════════════════════════════════════
+const TOTAL  = 11;
+const TITLES = [
+  'なぜFASTが必要か','一番大事なポイント','緊迫の救急現場',
+  '搬入時バイタル','2分後の急変','ここが分岐点！',
+  'FASTなし → 最悪の展開','FASTあり → 救命へ',
+  '結末','クイズ 1','クイズ 2 + まとめ'
+];
+let cur = 0;
+const track  = document.getElementById('sTrack');
+const pFill  = document.getElementById('pFill');
+const pStep  = document.getElementById('pStep');
+const pSub   = document.getElementById('pSub');
+const bPrev  = document.getElementById('bPrev');
+const bNext  = document.getElementById('bNext');
+const hTitle = document.getElementById('hTitle');
+
+function triggerSlideAudio(idx) {
+  stopHeartbeat();
+  if (idx === 2) playBuzzer();
+  if (idx === 4) startHeartbeat(130);
+  if (idx === 8) playFanfare();
+}
+
+function updateUI() {
+  track.style.transform = `translateX(-${cur*100}%)`;
+  const pct = Math.round((cur+1)/TOTAL*100);
+  pFill.style.width = pct + '%';
+  pStep.textContent  = `${cur+1} / ${TOTAL}`;
+  pSub.textContent   = TITLES[cur];
+  hTitle.textContent = TITLES[cur];
+  bPrev.disabled = cur === 0;
+  const last = cur === TOTAL-1;
+  bNext.textContent = last ? '✅ STEP 2へ進む →' : '次へ →';
+  bNext.className   = 'btn-next' + (last ? ' finish' : '');
+  const sl = document.getElementById('s'+cur);
+  sl.querySelectorAll('.an').forEach(el => {
+    el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
+  });
+}
+
+function go(dir) {
+  getCtx(); // ← タップ文脈内でアンロック（iOS必須）
+  if (dir > 0 && cur === TOTAL-1) { window.location.href = 'step2.html'; return; }
+  cur = Math.max(0, Math.min(TOTAL-1, cur+dir));
   updateUI();
+  triggerSlideAudio(cur); // ← 同じタップ文脈内で発火
 }
 
-// quiz
-const FB={
+const FB = {
   q1:{ok:'✅ 正解！腹腔内出血は「外見からわからない」のが怖い。傷も血も見えないまま体の中で出血が続く。だからFASTで素早く確認が必要！',
       ng:'❌ 残念…正解は②。腹腔内出血は外表から判断できない。見逃されやすいから致命的になる。'},
   q2:{ok:'✅ 正解！CTと違い、移動・準備・被曝なしでベッドサイドで即スキャンできる。「出血あり/なし」を数分で判断できるのが最大の武器！',
       ng:'❌ 残念…正解は③。FASTは骨折診断には向かないし、画質もCT・MRIに劣る。でも「出血の有無を即座に判断する」能力は唯一無二！'}
 };
 
-function ansQ(id,idx,ok){
-  document.querySelectorAll(`#${id}opts .qopt`).forEach((o,i)=>{
+function ansQ(id, idx, ok) {
+  getCtx(); // ← タップ文脈内でアンロック
+  document.querySelectorAll(`#${id}opts .qopt`).forEach((o,i) => {
     o.classList.add('disabled');
-    if(i===idx)o.classList.add(ok?'correct':'wrong');
+    if (i === idx) o.classList.add(ok ? 'correct' : 'wrong');
   });
-  const fb=document.getElementById(`${id}fb`);
-  fb.textContent=ok?FB[id].ok:FB[id].ng;
-  fb.className='qfb show '+(ok?'ok':'ng');
+  const fb = document.getElementById(`${id}fb`);
+  fb.textContent = ok ? FB[id].ok : FB[id].ng;
+  fb.className   = 'qfb show ' + (ok ? 'ok' : 'ng');
+  if (ok) playCorrect(); else playWrong();
 }
 
 updateUI();
