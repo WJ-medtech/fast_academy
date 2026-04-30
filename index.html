@@ -112,7 +112,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .mini-sonobo img{width:100%;height:100%;object-fit:contain;}
 .mini-bubble-name{font-size:10px;color:var(--blue-light);font-weight:700;margin-bottom:3px;}
 .mini-bubble-text{font-size:13px;line-height:1.5;color:rgba(255,255,255,.82);
-  transition:opacity .3s ease;}
+  transition:opacity .3s ease;word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 .section-label{margin:26px 16px 10px;font-size:11px;font-weight:700;letter-spacing:3px;
   color:var(--blue-light);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
@@ -124,9 +124,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .module-card{border-radius:var(--radius);overflow:hidden;position:relative;
   cursor:pointer;transition:transform .2s ease;box-shadow:0 4px 20px rgba(0,0,0,.3);
   text-decoration:none;display:block;color:inherit;}
-.module-card:active:not(.locked){transform:scale(.98);}
-.module-card.locked{opacity:.5;cursor:default;pointer-events:none;}
-.module-card-inner{padding:18px;display:flex;align-items:center;gap:14px;position:relative;z-index:2;}
+.module-card:active{transform:scale(.98);}
+.module-card-inner{padding:18px;display:flex;align-items:center;gap:14px;position:relative;z-index:2;min-width:0;overflow:hidden;}
 .card-glow{position:absolute;inset:0;opacity:.4;z-index:1;
   background:radial-gradient(ellipse 80% 60% at 15% 50%,rgba(61,142,240,.15) 0%,transparent 60%);}
 .card-intro{background:linear-gradient(135deg,#0a2a5e 0%,#0f3a82 100%);border:1px solid rgba(61,142,240,.3);}
@@ -146,19 +145,16 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .module-badge{position:absolute;top:-5px;right:-5px;width:20px;height:20px;border-radius:50%;
   font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;
   background:var(--gold);color:var(--blue-deep);}
-.badge-lock{background:rgba(255,255,255,.2);color:white;}
 .badge-ai{background:linear-gradient(135deg,#a855f7,#6366f1);color:white;}
 
-.module-info{flex:1;min-width:0;}
-.module-step{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:2px;}
-
-/* ★ stepラベルを白系に変更（青字で見づらい問題を解消）*/
-.module-step{color:rgba(255,255,255,.55);}
+.module-info{flex:1;min-width:0;overflow:hidden;}
+.module-step{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:2px;color:rgba(255,255,255,.55);}
 .module-step.ai-label{color:#c084fc;}
-
 .module-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;
-  line-height:1.3;margin-bottom:4px;color:var(--white);}
-.module-desc{font-size:11px;color:rgba(255,255,255,.5);line-height:1.5;}
+  line-height:1.3;margin-bottom:4px;color:var(--white);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.module-desc{font-size:11px;color:rgba(255,255,255,.5);line-height:1.5;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .module-meta{display:flex;align-items:center;gap:6px;margin-top:7px;flex-wrap:wrap;}
 .meta-chip{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;
   background:rgba(255,255,255,.07);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.1);}
@@ -199,43 +195,38 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
 .welcome-scroll{padding:24px 16px 60px;display:flex;flex-direction:column;align-items:center;}
 .sonobo-center{width:140px;height:140px;margin:0 auto 20px;
-  filter:drop-shadow(0 6px 20px rgba(21,101,216,.55));
-  animation:heartbeat 2.5s ease-in-out infinite;}
-.sonobo-center img{width:100%;height:100%;object-fit:contain;}
+  filter:drop-shadow(0 6px 20px rgba(21,101,216,.55));}
+.sonobo-center img{width:100%;height:100%;object-fit:contain;animation:heartbeat 2.5s ease-in-out infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.06)}30%{transform:scale(1)}}
 
 .dialogue-container{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
 .dialogue-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
   border-radius:var(--radius);padding:16px 18px;
   opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
 .dialogue-step.visible{opacity:1;transform:translateY(0);}
-.dialogue-step .step-num{font-size:10px;color:var(--blue-light);font-weight:700;
-  margin-bottom:5px;letter-spacing:1px;}
-.dialogue-step h3{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;
-  margin-bottom:8px;}
-.dialogue-step p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.75;}
+.dialogue-step .step-num{font-size:10px;color:var(--blue-light);font-weight:700;margin-bottom:5px;letter-spacing:1px;}
+.dialogue-step h3{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;margin-bottom:8px;}
+.dialogue-step p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.75;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
-/* FASTポイントリスト */
 .fast-points{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
 .fast-point{display:flex;align-items:flex-start;gap:10px;
-  background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 12px;
-  min-width:0;overflow:hidden;}
+  background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 12px;}
 .fp-icon{font-size:20px;flex-shrink:0;line-height:1.4;}
 .fp-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.65;
-  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+  word-break:keep-all;overflow-wrap:break-word;min-width:0;}
 .fp-text strong{color:var(--blue-light);}
 
-/* スライド画像カード */
 .slide-card{width:100%;border-radius:var(--radius-sm);overflow:hidden;margin-top:12px;
   border:1px solid rgba(61,142,240,.2);box-shadow:0 4px 16px rgba(0,0,0,.4);}
 .slide-card img{width:100%;height:auto;display:block;}
 
 .highlight-box{background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(245,200,66,.05));
   border:1px solid rgba(245,200,66,.28);border-radius:var(--radius-sm);
-  padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-top:12px;
-  min-width:0;overflow:hidden;}
+  padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-top:12px;}
 .hi-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
 .highlight-box p{font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;
-  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+  word-break:keep-all;overflow-wrap:break-word;min-width:0;}
 
 .btn-goto-home{width:100%;padding:17px 24px;margin-top:6px;
   background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
@@ -252,12 +243,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .modal-sheet{width:100%;max-width:430px;
   background:linear-gradient(180deg,#0f2050 0%,#081530 100%);
   border-top:1px solid rgba(61,142,240,.28);border-radius:24px 24px 0 0;
-  padding:28px 24px 50px;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);text-align:center;}
-.modal-handle{width:38px;height:4px;background:rgba(255,255,255,.14);border-radius:2px;margin:0 auto 22px;}
-.modal-sonobo{width:90px;height:90px;margin:0 auto 14px;}
-.modal-sonobo img{width:100%;height:100%;object-fit:contain;}
-.modal-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;margin-bottom:7px;}
-.modal-text{font-size:13px;color:rgba(255,255,255,.58);line-height:1.7;margin-bottom:22px;}
+  padding:28px 24px 50px;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);}
+.modal-handle{width:38px;height:4px;background:rgba(255,255,255,.14);border-radius:2px;margin:0 auto 18px;}
 .modal-btn{width:100%;padding:15px;
   background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
   border:none;border-radius:var(--radius-sm);cursor:pointer;
@@ -300,19 +287,13 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   </div>
   <div class="scroll-content">
   <div class="welcome-scroll">
-
     <div class="sonobo-center"><img src="assets/sonobo_2.png" alt="ソノボくん"></div>
-
     <div class="dialogue-container" id="welcomeDialogues">
-
-      <!-- ① ソノボくんより（そのまま残す） -->
       <div class="dialogue-step" id="ds1">
         <div class="step-num">💬 ソノボくんより</div>
         <h3>やあ！ぼくはソノボくん🤖</h3>
         <p>これから一緒に「FAST」を学んでいくよ！むずかしそう？大丈夫、ぼくが全部わかりやすく教えるから！</p>
       </div>
-
-      <!-- ② FASTとは（スライド内容ベース・改行指定あり） -->
       <div class="dialogue-step" id="ds2">
         <div class="step-num">🚨 FASTとは？</div>
         <h3>Focused Assessment with<br>Sonography for Trauma</h3>
@@ -323,7 +304,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           </div>
           <div class="fast-point">
             <span class="fp-icon">🩸</span>
-            <!-- ★①改行指定：「を素早く探す」の前で折り返す -->
             <div class="fp-text">腹腔内・心膜腔内・胸腔内の<br>「出血（液体）」を素早く探す</div>
           </div>
           <div class="fast-point">
@@ -336,8 +316,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <p>目標：「体内の出血はあるか？」を<strong style="color:#f5c842">YES / NO</strong>で素早く判断する</p>
         </div>
       </div>
-
-      <!-- ③ 4箇所 → スライド写真のみ -->
       <div class="dialogue-step" id="ds3">
         <div class="step-num">📍 4箇所に当てるだけ！</div>
         <h3>4箇所を順番に確認するだけ</h3>
@@ -346,22 +324,18 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="highlight-box" style="margin-top:14px;">
           <span class="hi-icon">💧</span>
-          <p><strong style="color:#7bb8f8">モリソン窩・脾周囲・膀胱直腸窩／ダグラス窩</strong>は、ヒトが仰向けに寝たときに最も<strong style="color:#f5c842">低くなる部分</strong>！<br>重力で液体が貯まりやすいから、ここを見れば出血の有無がわかる🩸</p>
+          <p><strong style="color:#7bb8f8">モリソン窩・脾周囲・膀胱直腸窩／ダグラス窩</strong>は、ヒトが仰向けに寝たときに最も<strong style="color:#f5c842">低くなる部分</strong>！重力で液体が貯まりやすいから、ここを見れば出血の有無がわかる🩸</p>
         </div>
       </div>
-
-      <!-- ④ このアプリの目標（改行を適度に） -->
       <div class="dialogue-step" id="ds4">
         <div class="step-num">🎯 このアプリの目標</div>
         <h3>専門家レベルは求めない！</h3>
         <p>まずは「基本的な描出と判断」を身につけよう。それだけで患者さんの命を救える可能性がある！</p>
         <div class="highlight-box">
           <span class="hi-icon">🎓</span>
-          <!-- ★③ 適度な改行で枠幅に収める -->
-          <p>完全初学者でも、指導者なしで<br><strong style="color:#f5c842">一人でFASTを習得できる</strong>ように<br>設計されているよ。<br>ソノボくんが全ステップをサポートする！</p>
+          <p>完全初学者でも、指導者なしで<strong style="color:#f5c842">一人でFASTを習得できる</strong>ように設計されているよ。ソノボくんが全ステップをサポートする！</p>
         </div>
       </div>
-
     </div>
     <button class="btn-goto-home" onclick="goToHome()">📚 学習モジュールへ進む →</button>
     <div style="height:40px"></div>
@@ -374,7 +348,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <div class="home-header">
     <div class="home-header-top">
       <div class="app-logo">FAST<span>Academy</span></div>
-      <div class="progress-chip">0 / 5 完了</div>
+      <div class="progress-chip">全ステップ開放中</div>
     </div>
     <div class="overall-bar-wrap">
       <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallBar"></div></div>
@@ -384,9 +358,9 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <div class="scroll-content">
     <div class="mini-banner">
       <div class="mini-sonobo"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
-      <div style="flex:1;min-width:0;">
+      <div style="flex:1;min-width:0;overflow:hidden;">
         <div class="mini-bubble-name">🤖 ソノボくんTips</div>
-        <div class="mini-bubble-text" id="miniBubbleText">一緒に学んでいこう！どのステップから始める？</div>
+        <div class="mini-bubble-text" id="miniBubbleText">どのステップからでも始められるよ！気になるところから進もう🚀</div>
       </div>
     </div>
 
@@ -418,7 +392,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
             <div class="module-step">STEP 1</div>
             <div class="module-title">FASTの重要性</div>
             <div class="module-desc">会話劇で緊迫の救急現場を体験。なぜFASTが命を救うのか</div>
-            <div class="module-meta"><span class="meta-chip active">次に学ぼう</span><span class="meta-chip">10分</span></div>
+            <div class="module-meta"><span class="meta-chip active">まずここから！</span><span class="meta-chip">10分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -426,15 +400,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 2 -->
-      <a class="module-card card-2 locked" href="step2.html">
+      <a class="module-card card-2" href="step2.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">🫀<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">🫀<div class="module-badge">2</div></div>
           <div class="module-info">
             <div class="module-step">STEP 2</div>
             <div class="module-title">解剖知識</div>
             <div class="module-desc">FASTに必要な最小限の解剖。クイズ形式で楽しく習得</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">15分</span></div>
+            <div class="module-meta"><span class="meta-chip">15分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -442,15 +416,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 3 -->
-      <a class="module-card card-3 locked" href="step3.html">
+      <a class="module-card card-3" href="step3.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">🔧<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">🔧<div class="module-badge">3</div></div>
           <div class="module-info">
             <div class="module-step">STEP 3</div>
             <div class="module-title">準備〜エコーを当てる前に</div>
             <div class="module-desc">機器の準備・プローブの動かし方をアニメーションで解説</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">20分</span></div>
+            <div class="module-meta"><span class="meta-chip">20分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -458,15 +432,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 4 -->
-      <a class="module-card card-4 locked" href="step4.html">
+      <a class="module-card card-4" href="step4.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">📡<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">📡<div class="module-badge">4</div></div>
           <div class="module-info">
             <div class="module-step">STEP 4</div>
             <div class="module-title">実際に当ててみよう</div>
             <div class="module-desc">FASTの4窓を実践。正しい描出ポイントを解説</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">25分</span></div>
+            <div class="module-meta"><span class="meta-chip">25分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -474,15 +448,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 5 -->
-      <a class="module-card card-5 locked" href="step5.html">
+      <a class="module-card card-5" href="step5.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">🏆<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">🏆<div class="module-badge">5</div></div>
           <div class="module-info">
             <div class="module-step">STEP 5</div>
             <div class="module-title">トレーニングモード</div>
             <div class="module-desc">リアル症例シミュレーション。あなたが患者を救え！</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">30分</span></div>
+            <div class="module-meta"><span class="meta-chip">30分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -499,7 +473,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="module-info">
             <div class="module-step ai-label">AI TOOL — 画像解析</div>
             <div class="module-title">エコー画像をAIに聞く</div>
-            <div class="module-desc">うまく描出できない・プローブの動かし方に迷ったときにAIが改善策を提示してくれる！</div>
+            <div class="module-desc">うまく描出できない・プローブの動かし方に迷ったときにAIが改善策を提示</div>
             <div class="module-meta">
               <span class="meta-chip ai">✨ 無料で使える</span>
               <span class="meta-chip warn">⚠️ モリソン窩のみ対応</span>
@@ -507,7 +481,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           </div>
         </div>
         <div class="ai-sub-btns">
-          <!-- ★ ai-guide.html へ直接リンク -->
           <a class="ai-sub-btn guide" href="ai-guide.html" style="text-decoration:none;">
             <span class="btn-icon">📖</span>
             <span>使い方ガイド</span>
@@ -541,7 +514,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%;background:linear-gradient(90deg,var(--green),#4ade80);"></div></div>
       </a>
 
-      <!-- DISCLAIMER BUTTON -->
+      <!-- DISCLAIMER -->
       <button class="module-card" onclick="openDisclaimer()" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);width:100%;text-align:left;cursor:pointer;">
         <div class="module-card-inner" style="padding:14px 18px;">
           <div class="module-icon-wrap" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);font-size:20px;">⚠️</div>
@@ -561,20 +534,20 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 <!-- DISCLAIMER MODAL -->
 <div class="modal-overlay" id="disclaimerModal" onclick="if(event.target===this)closeDisclaimer()">
   <div class="modal-sheet" style="text-align:left;max-height:85vh;overflow-y:auto;">
-    <div class="modal-handle" style="margin:0 auto 18px;"></div>
+    <div class="modal-handle"></div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
       <span style="font-size:24px;">⚠️</span>
       <h2 style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;">注意事項・免責事項</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
-        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 本アプリの目的は、初学者がFASTの基本的手技を身につけることにあります。本アプリのみでFASTを完全に習得できるものではありません。</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;word-break:break-all;overflow-wrap:break-word;">■ 本アプリの目的は、初学者がFASTの基本的手技を身につけることにあります。本アプリのみでFASTを完全に習得できるものではありません。</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
         <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 標準的な体型の健康な若年男性を被検者として想定しています。</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
-        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 本アプリでは練習中のプライバシーに配慮し、膀胱直腸窩（ダグラス窩）の描出は省略しています。</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;word-break:break-all;overflow-wrap:break-word;">■ 本アプリでは練習中のプライバシーに配慮し、膀胱直腸窩（ダグラス窩）の描出は省略しています。</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
         <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 一部、医学的に厳密ではない表現が含まれる場合があります。</p>
@@ -592,14 +565,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
 </div><!-- /app-wrapper -->
 
-<!-- MODAL（AI_GUIDE用を削除。直リンクに変更したため不要） -->
-
 <script>
-const S = {
-  1:"assets/sonobo_1.png",2:"assets/sonobo_2.png",3:"assets/sonobo_3.png",4:"assets/sonobo_4.png",
-  5:"assets/sonobo_5.png",6:"assets/sonobo_6.png",7:"assets/sonobo_7.png",8:"assets/sonobo_8.png",9:"assets/sonobo_9.png"
-};
-
 // 背景
 const bg = document.getElementById('bgCanvas');
 for (let i = 0; i < 60; i++) {
@@ -664,13 +630,12 @@ function closeDisclaimer(){document.getElementById('disclaimerModal').classList.
 
 // Tips
 const tips = [
+  'どのステップからでも始められるよ！気になるところから進もう🚀',
   '慣れてきたら4箇所を2分以内が目標！まずはゆっくり確認しよう⏱',
   '一気に覚えなくて大丈夫！スモールステップで進もう🤖',
   '4箇所の手順をしっかり身につければ、自信を持って動けるようになる！',
 ];
 let ti = 0;
-const mbt = document.getElementById('miniBubbleText');
-if (mbt) mbt.style.transition = 'opacity .3s ease';
 setInterval(() => {
   ti = (ti + 1) % tips.length;
   const e = document.getElementById('miniBubbleText');
