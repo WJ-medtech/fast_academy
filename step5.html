@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>STEP 5 – トレーニングモード | FAST Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue-deep:#0a1628;--blue-mid:#1a3a6e;--blue-vivid:#1565d8;
+  --blue-bright:#3d8ef0;--blue-light:#7bb8f8;
+  --white:#fff;--gold:#f5c842;--green:#22c55e;--red:#ef4444;--orange:#f97316;
+  --radius:20px;--radius-sm:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
+  background:var(--blue-deep);color:var(--white);overflow-x:hidden;}
+
+.bg-canvas{position:fixed;inset:0;z-index:0;overflow:hidden;
+  background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);}
+.bg-canvas::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(21,101,216,.25) 0%,transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 80%,rgba(61,142,240,.15) 0%,transparent 60%);}
+.star{position:absolute;border-radius:50%;background:white;opacity:0;
+  animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out;}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--op,.7);transform:scale(1)}}
+
+.app-wrapper{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+.page-header{background:rgba(8,16,36,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:14px 16px 12px;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.header-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.back-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;flex-shrink:0;text-decoration:none;color:white;}
+.header-meta{flex:1;}
+.step-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;}
+.header-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;}
+.vitals-bar{display:flex;gap:6px;flex-wrap:wrap;}
+.vital-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;
+  background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3);}
+.vital-chip.warn{background:rgba(249,115,22,.15);color:#fdba74;border-color:rgba(249,115,22,.3);}
+.vital-chip.ok{background:rgba(34,197,94,.12);color:#86efac;border-color:rgba(34,197,94,.25);}
+
+.sim-progress{height:3px;background:rgba(255,255,255,.05);flex-shrink:0;}
+.sim-progress-fill{height:100%;background:linear-gradient(90deg,var(--blue-bright),var(--blue-light));transition:width .6s ease;}
+
+/* SCROLL */
+.scroll-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 100px;}
+.top-area{padding:14px 16px 0;}
+
+/* MONITOR */
+.monitor-card{background:rgba(0,0,0,.55);border:1px solid rgba(34,197,94,.22);border-radius:var(--radius);
+  padding:11px 14px;margin-bottom:12px;}
+.monitor-label{font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(34,197,94,.65);margin-bottom:6px;}
+.monitor-vitals{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+.mv-item{text-align:center;}
+.mv-val{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#4ade80;line-height:1;margin-bottom:2px;}
+.mv-val.danger{color:#f87171;animation:pulse-red .9s ease-in-out infinite;}
+.mv-val.warn{color:#fb923c;}
+.mv-label{font-size:8px;color:rgba(255,255,255,.38);}
+@keyframes pulse-red{0%,100%{opacity:1}50%{opacity:.4}}
+.ecg-wrap{height:26px;overflow:hidden;margin-top:8px;}
+.ecg-svg{width:200%;height:100%;}
+
+/* FAST MAP */
+.fast-map{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:4px;}
+.fm-title{font-size:9px;font-weight:700;color:var(--blue-light);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+.fm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
+.fm-item{text-align:center;padding:7px 2px;border-radius:8px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);transition:all .35s ease;}
+.fm-item.now{background:rgba(21,101,216,.22);border-color:rgba(61,142,240,.45);
+  animation:now-pulse 1.4s ease-in-out infinite;}
+.fm-item.neg{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);}
+.fm-item.pos{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.35);}
+@keyframes now-pulse{0%,100%{box-shadow:0 0 0 0 rgba(61,142,240,.35)}60%{box-shadow:0 0 0 6px rgba(61,142,240,0)}}
+.fm-icon{font-size:16px;display:block;margin-bottom:2px;}
+.fm-name{font-size:8px;color:rgba(255,255,255,.42);line-height:1.3;}
+.fm-res{font-size:9px;font-weight:700;margin-top:3px;min-height:11px;}
+.fm-res.neg{color:#86efac;}
+.fm-res.pos{color:#fca5a5;}
+
+/* STREAM */
+.stream{padding-top:10px;}
+
+/* SONOBO */
+.sb-row{display:flex;align-items:flex-start;gap:10px;padding:0 16px;margin-bottom:12px;animation:fadeUp .35s ease;}
+.sb-img{width:48px;height:48px;flex-shrink:0;}
+.sb-img img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(21,101,216,.45));}
+.sb-bubble{flex:1;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);
+  border-radius:0 var(--radius) var(--radius) var(--radius);padding:11px 13px;}
+.sb-name{font-size:10px;color:var(--blue-light);font-weight:700;margin-bottom:4px;}
+.sb-text{font-size:13px;line-height:1.8;color:rgba(255,255,255,.9);}
+.sb-text strong{color:var(--gold);}
+.sb-text .red{color:#fca5a5;font-weight:700;}
+
+/* FINDING */
+.finding{margin:0 16px 12px;border-radius:var(--radius-sm);padding:13px 15px;animation:fadeUp .35s ease;}
+.finding.neg{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.28);}
+.finding.pos{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);}
+.finding.info{background:rgba(61,142,240,.09);border:1px solid rgba(61,142,240,.28);}
+.finding.warn{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.25);}
+.f-head{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;margin-bottom:6px;}
+.f-body{font-size:13px;line-height:1.82;color:rgba(255,255,255,.82);}
+.f-body strong{color:var(--white);}
+.f-body .pos-txt{color:#fca5a5;font-weight:700;}
+.f-body .neg-txt{color:#86efac;font-weight:700;}
+
+/* HINT */
+.hint{margin:0 16px 12px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.23);
+  border-radius:var(--radius-sm);padding:12px 14px;animation:fadeUp .35s ease;}
+.hint-head{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px;}
+.hint-body{font-size:12.5px;line-height:1.82;color:rgba(255,255,255,.78);}
+
+/* ALERT BAR */
+.alert-bar{margin:0 16px 12px;padding:10px 14px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;animation:fadeUp .3s ease;}
+.alert-bar.danger{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.38);color:#fca5a5;}
+.alert-bar.warn{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.28);color:#fdba74;}
+.alert-bar.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.28);color:#86efac;}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:10px;padding:6px 16px;margin-bottom:4px;}
+.div-line{flex:1;height:1px;background:rgba(255,255,255,.07);}
+.div-label{font-size:10px;color:rgba(255,255,255,.2);font-weight:700;letter-spacing:1px;}
+
+/* PATIENT CARD */
+.patient-card{margin:0 16px 12px;background:rgba(21,101,216,.09);
+  border:1px solid rgba(61,142,240,.18);border-radius:var(--radius-sm);padding:12px 14px;animation:fadeUp .4s ease;}
+.pc-title{font-size:10px;font-weight:700;color:var(--blue-light);letter-spacing:1px;margin-bottom:7px;}
+.pc-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.pc-tag{font-size:11px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.05);
+  padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.08);}
+.pc-tag.red{color:#fca5a5;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.07);}
+
+/* CHOICES */
+.choices-wrap{padding:0 16px;margin-bottom:12px;animation:fadeUp .3s ease;}
+.choices-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;}
+.choices-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(61,142,240,.3),transparent);}
+.choice-btn{width:100%;padding:13px 14px;border:1px solid rgba(61,142,240,.22);
+  background:rgba(255,255,255,.035);border-radius:var(--radius-sm);
+  text-align:left;cursor:pointer;color:var(--white);font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;line-height:1.5;margin-bottom:8px;
+  display:flex;align-items:center;gap:11px;transition:transform .15s ease;}
+.choice-btn:active{transform:scale(.975);}
+.choice-btn .c-icon{font-size:20px;flex-shrink:0;}
+.choice-btn .c-body .c-label{font-weight:700;display:block;margin-bottom:1px;}
+.choice-btn .c-body .c-sub{font-size:11px;color:rgba(255,255,255,.48);display:block;}
+.choice-btn.sel-ok{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.09);}
+.choice-btn.sel-ng{border-color:rgba(239,68,68,.45);background:rgba(239,68,68,.07);}
+.choice-btn.sel-nu{border-color:rgba(251,191,36,.38);background:rgba(251,191,36,.06);}
+.choice-btn:disabled{opacity:.35;cursor:default;transform:none;}
+
+/* NEXT */
+.next-wrap{padding:0 16px;margin-bottom:8px;animation:fadeUp .3s ease;}
+.next-btn{width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);
+  border:none;border-radius:var(--radius);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;
+  box-shadow:0 5px 20px rgba(21,101,216,.4);
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s ease;}
+.next-btn:active{transform:scale(.97);}
+.next-btn.soft{background:rgba(61,142,240,.18);box-shadow:none;border:1px solid rgba(61,142,240,.28);}
+
+/* RESULT */
+.result-wrap{padding:24px 16px 70px;text-align:center;display:none;animation:fadeUp .5s ease;}
+.result-wrap.show{display:block;}
+.res-sonobo{width:110px;height:110px;margin:0 auto 16px;}
+.res-sonobo img{width:100%;height:100%;object-fit:contain;}
+.res-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px;}
+.res-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:22px;}
+.score-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--radius);padding:18px;margin-bottom:18px;text-align:left;}
+.sc-row{display:flex;justify-content:space-between;align-items:flex-start;
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.sc-row:last-child{border-bottom:none;}
+.sc-label{font-size:12px;color:rgba(255,255,255,.5);}
+.sc-val{font-size:12px;font-weight:700;color:var(--gold);text-align:right;max-width:56%;}
+.review-card{background:rgba(21,101,216,.08);border:1px solid rgba(61,142,240,.18);
+  border-radius:var(--radius-sm);padding:14px;text-align:left;margin-bottom:20px;}
+.rev-title{font-size:11px;font-weight:700;color:var(--blue-light);margin-bottom:9px;letter-spacing:1px;}
+.rev-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.rev-dot{width:5px;height:5px;border-radius:50%;background:var(--blue-bright);margin-top:5px;flex-shrink:0;}
+.rev-text{font-size:12px;color:rgba(255,255,255,.75);line-height:1.7;}
+.btn-retry{width:100%;padding:15px;border:none;border-radius:var(--radius);cursor:pointer;
+  background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;margin-bottom:10px;}
+.btn-home{width:100%;padding:13px;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);
+  cursor:pointer;background:transparent;color:rgba(255,255,255,.55);
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.05)}30%{transform:scale(1)}}
+</style>
+</head>
+<body>
+<div class="bg-canvas" id="bgCanvas"></div>
+<div class="siren-flash" id="sirenFlash" style="display:none;position:fixed;inset:0;z-index:300;pointer-events:none;background:rgba(239,68,68,.07);"></div>
+
+<div class="app-wrapper">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-row">
+      <a class="back-btn" href="index.html">←</a>
+      <div class="header-meta">
+        <div class="step-label">STEP 5 — トレーニングモード</div>
+        <div class="header-title">症例シミュレーション 🚨</div>
+      </div>
+    </div>
+    <div class="vitals-bar">
+      <span class="vital-chip">BP 92/60 🔴</span>
+      <span class="vital-chip warn">HR 118 ⚡</span>
+      <span class="vital-chip warn">RR 22</span>
+      <span class="vital-chip ok">SpO2 98%</span>
+      <span class="vital-chip ok">GCS 15</span>
+    </div>
+  </div>
+  <div class="sim-progress"><div class="sim-progress-fill" id="progressBar" style="width:0%"></div></div>
+
+  <!-- CONTENT -->
+  <div class="scroll-content" id="scrollContent">
+
+    <!-- FIXED TOP WIDGETS -->
+    <div class="top-area">
+      <div class="monitor-card" id="monitorCard">
+        <div class="monitor-label">📡 VITAL MONITOR</div>
+        <div class="monitor-vitals">
+          <div class="mv-item"><div class="mv-val danger">92/60</div><div class="mv-label">BP mmHg</div></div>
+          <div class="mv-item"><div class="mv-val warn">118</div><div class="mv-label">HR /min</div></div>
+          <div class="mv-item"><div class="mv-val warn">22</div><div class="mv-label">RR /min</div></div>
+          <div class="mv-item"><div class="mv-val">98</div><div class="mv-label">SpO2 %</div></div>
+        </div>
+        <div class="ecg-wrap">
+          <svg class="ecg-svg" id="ecgSvg" viewBox="0 0 800 26" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+      <div class="fast-map" id="fastMap">
+        <div class="fm-title">FAST 進捗マップ</div>
+        <div class="fm-grid">
+          <div class="fm-item" id="fm-sub"><span class="fm-icon">💛</span><div class="fm-name">心窩部</div><div class="fm-res" id="fr-sub"></div></div>
+          <div class="fm-item" id="fm-rub"><span class="fm-icon">🫁</span><div class="fm-name">右上腹部</div><div class="fm-res" id="fr-rub"></div></div>
+          <div class="fm-item" id="fm-lub"><span class="fm-icon">🫀</span><div class="fm-name">左上腹部</div><div class="fm-res" id="fr-lub"></div></div>
+          <div class="fm-item" id="fm-pel"><span class="fm-icon">🔵</span><div class="fm-name">骨盤</div><div class="fm-res" id="fr-pel"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIALOGUE STREAM -->
+    <div class="stream" id="stream"></div>
+
+    <!-- RESULT -->
+    <div class="result-wrap" id="resultWrap">
+      <div class="res-sonobo" style="animation:heartbeat 2.2s ease-in-out infinite">
+        <img src="assets/sonobo_6.png" id="resSonobo" alt="">
+      </div>
+      <div class="res-title" id="resTitle">症例完了！</div>
+      <div class="res-sub" id="resSub">振り返りを確認しよう。</div>
+      <div class="score-card">
+        <div class="sc-row"><span class="sc-label">判断の正確さ</span><span class="sc-val" id="scScore">-</span></div>
+        <div class="sc-row"><span class="sc-label">FAST所見まとめ</span><span class="sc-val">脾腎窩・骨盤に液体貯留（陽性）</span></div>
+        <div class="sc-row"><span class="sc-label">診断</span><span class="sc-val">腹腔内出血（脾損傷疑い）</span></div>
+        <div class="sc-row"><span class="sc-label">緊急度</span><span class="sc-val">🔴 外科コール・緊急手術/IVR</span></div>
+      </div>
+      <div class="review-card">
+        <div class="rev-title">🎓 振り返りポイント</div>
+        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text"><strong>バイタル不安定＋FAST陽性</strong>のセットを見たら、即外科コール。CTはその後でいい。</div></div>
+        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">左側腹部打撲では<strong>脾損傷を先に疑う</strong>。脾腎窩は念入りに確認する習慣をつけよう。</div></div>
+        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">FASTは「ある / ない」のYES/NOツール。<strong>2分以内に答えを出す</strong>ことが目標。</div></div>
+        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">心窩部・モリソン窩が陰性でも<strong>脾腎窩を省略しない</strong>。4窓全部当てる習慣が命を救う。</div></div>
+      </div>
+      <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
+      <a href="index.html" style="display:block;"><button class="btn-home">🏠 ホームに戻る</button></a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══ AUDIO ════════════════════════════════════════════════════════
+const AC=window.AudioContext||window.webkitAudioContext;
+let actx=null;
+const getCtx=()=>{if(!actx)actx=new AC();if(actx.state==='suspended')actx.resume();return actx;};
+const beep=(f,d,t='sine',v=0.15,dl=0)=>{try{
+  const c=getCtx(),o=c.createOscillator(),g=c.createGain();
+  o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;
+  const s=c.currentTime+dl;
+  g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+0.02);g.gain.linearRampToValueAtTime(0,s+d);
+  o.start(s);o.stop(s+d+.05);
+}catch(e){}};
+const sndClick =()=>beep(1100,.04,'square',.07);
+const sndOk    =()=>{beep(660,.09,'sine',.13,0);beep(880,.12,'sine',.13,.11);beep(1100,.16,'sine',.12,.24);};
+const sndNg    =()=>{beep(240,.13,'sawtooth',.11,0);beep(190,.17,'sawtooth',.09,.17);};
+const sndNu    =()=>beep(440,.09,'triangle',.11);
+const sndAlert =()=>{beep(820,.07,'square',.13,0);beep(820,.07,'square',.13,.14);beep(620,.11,'square',.12,.30);};
+const sndPing  =()=>beep(1400,.06,'sine',.09);
+const sndSiren =()=>{for(let i=0;i<5;i++){beep(580+i*55,.18,'sawtooth',.09,i*.21);beep(870-i*35,.18,'sawtooth',.09,i*.21+.09);}};
+const sndHb    =()=>{beep(75,.045,'sine',.18,0);beep(75,.04,'sine',.16,.065);};
+let hbTimer=null;
+const startHb=(bpm=118)=>{stopHb();const ms=60000/bpm;hbTimer=setInterval(sndHb,ms);};
+const stopHb =()=>{if(hbTimer){clearInterval(hbTimer);hbTimer=null;}};
+document.body.addEventListener('click',()=>getCtx(),{once:true});
+document.body.addEventListener('touchstart',()=>getCtx(),{once:true,passive:true});
+
+// ══ STARS ════════════════════════════════════════════════════════
+(()=>{const bg=document.getElementById('bgCanvas');
+  for(let i=0;i<50;i++){const s=document.createElement('div');s.className='star';
+    const z=Math.random()*2+.5;
+    s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.5+.2};`;
+    bg.appendChild(s);}})();
+
+// ══ ECG ══════════════════════════════════════════════════════════
+(()=>{
+  const svg=document.getElementById('ecgSvg');
+  const W=800,H=26,base=H*.72,cyc=68;
+  let p=`M0 ${base}`;
+  for(let x=0;x<W;x+=cyc){
+    p+=` L${x+4} ${base} Q${x+7} ${base-3} ${x+10} ${base} L${x+13} ${base}`;
+    p+=` L${x+15} ${base+5} L${x+18} ${base-17} L${x+21} ${base+4} L${x+25} ${base}`;
+    p+=` Q${x+32} ${base-5} ${x+38} ${base} L${x+cyc} ${base}`;
+  }
+  svg.innerHTML=`<path d="${p}" fill="none" stroke="rgba(74,222,128,.65)" stroke-width="1.4"/>`;
+  let off=0;
+  (function go(){off=(off+1.4)%cyc;svg.style.transform=`translateX(-${off}px)`;requestAnimationFrame(go);})();
+})();
+
+// ══ STATE ════════════════════════════════════════════════════════
+let stepN=0,correct=0,total=0;
+const mapSt={sub:'',rub:'',lub:'',pel:''};
+
+// ══ DOM HELPERS ══════════════════════════════════════════════════
+const stream=document.getElementById('stream');
+const sc=document.getElementById('scrollContent');
+const scrollBot=()=>setTimeout(()=>sc.scrollTop=sc.scrollHeight,80);
+const setProgress=p=>document.getElementById('progressBar').style.width=p+'%';
+
+function setMap(v,st){
+  mapSt[v]=st;
+  const el=document.getElementById('fm-'+v);
+  const re=document.getElementById('fr-'+v);
+  if(!el)return;
+  el.classList.remove('now','neg','pos');
+  re.className='fm-res';re.textContent='';
+  if(st==='now')el.classList.add('now');
+  else if(st==='neg'){el.classList.add('neg');re.classList.add('neg');re.textContent='陰性';}
+  else if(st==='pos'){el.classList.add('pos');re.classList.add('pos');re.textContent='陽性!';}
+}
+function clearNow(){['sub','rub','lub','pel'].forEach(v=>{if(mapSt[v]==='now')setMap(v,'');});}
+
+function app(el){stream.appendChild(el);scrollBot();}
+
+// ── sonobo ──
+function sb(img,txt,urgent=false){
+  const d=document.createElement('div');d.className='sb-row';
+  d.innerHTML=`<div class="sb-img"><img src="assets/${img}" alt=""></div>
+    <div class="sb-bubble"><div class="sb-name">🤖 指導医・ソノボ</div><div class="sb-text">${txt}</div></div>`;
+  app(d);
+}
+
+// ── finding ──
+function fnd(cls,icon,head,body){
+  const d=document.createElement('div');d.className=`finding ${cls}`;
+  d.innerHTML=`<div class="f-head">${icon} <strong>${head}</strong></div><div class="f-body">${body}</div>`;
+  app(d);
+}
+
+// ── hint ──
+function hnt(head,body){
+  const d=document.createElement('div');d.className='hint';
+  d.innerHTML=`<div class="hint-head">💡 ${head}</div><div class="hint-body">${body}</div>`;
+  app(d);
+}
+
+// ── alert bar ──
+function alrt(cls,icon,txt){
+  const d=document.createElement('div');d.className=`alert-bar ${cls}`;
+  d.innerHTML=`<span>${icon}</span><span>${txt}</span>`;app(d);
+}
+
+// ── divider ──
+function div(txt){
+  const d=document.createElement('div');d.className='divider';
+  d.innerHTML=`<div class="div-line"></div><div class="div-label">${txt}</div><div class="div-line"></div>`;
+  app(d);
+}
+
+// ── choices ──
+function cho(label,opts,cb){
+  const wrap=document.createElement('div');wrap.className='choices-wrap';
+  wrap.innerHTML=`<div class="choices-label">${label}</div>`;
+  opts.forEach(o=>{
+    const btn=document.createElement('button');btn.className='choice-btn';
+    btn.innerHTML=`<span class="c-icon">${o.icon}</span><div class="c-body"><span class="c-label">${o.label}</span>${o.sub?`<span class="c-sub">${o.sub}</span>`:''}</div>`;
+    btn.addEventListener('click',()=>{
+      sndClick();
+      wrap.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;b.style.opacity='.32';});
+      btn.style.opacity='1';
+      btn.classList.add(o.res==='ok'?'sel-ok':o.res==='ng'?'sel-ng':'sel-nu');
+      total++;if(o.res==='ok')correct++;
+      cb(o);
+    });
+    wrap.appendChild(btn);
+  });
+  app(wrap);
+}
+
+// ── next button ──
+function nxt(label,cb,soft=false){
+  const wrap=document.createElement('div');wrap.className='next-wrap';
+  const btn=document.createElement('button');btn.className='next-btn'+(soft?' soft':'');
+  btn.innerHTML=`<span>${label}</span><span>→</span>`;
+  btn.addEventListener('click',()=>{sndClick();cb();});
+  wrap.appendChild(btn);app(wrap);
+}
+
+// ── "描出できましたか？" prompt ──
+function askDep(viewLabel,onYes,hintHead,hintBody){
+  cho(`▶ ${viewLabel}：描出できましたか？`,[
+    {icon:'✅',label:'できた',sub:'目的の構造が画面に映っている',res:'ok'},
+    {icon:'❓',label:'うまく映らない…',sub:'像がぶれる・構造が見つからない',res:'nu'},
+  ],o=>{
+    if(o.res==='ok'){sndOk();onYes();}
+    else{
+      sndNu();
+      hnt(hintHead,hintBody);
+      nxt('コツを参考にしながら進む',onYes,true);
+    }
+  });
+}
+
+// ── siren ──
+function sirenEffect(){
+  sndSiren();
+  const sf=document.getElementById('sirenFlash');
+  sf.style.display='block';
+  let n=0;
+  const fl=setInterval(()=>{
+    sf.style.opacity=n%2===0?'1':'0';
+    n++;if(n>8){clearInterval(fl);sf.style.display='none';}
+  },280);
+}
+
+// ══ STEPS ════════════════════════════════════════════════════════
+
+const STEPS=[
+
+/* 0: 搬入 ─────────────────────────────────────────────────────── */
+()=>{
+  setProgress(5);
+  sirenEffect();
+  setTimeout(()=>{
+    alrt('danger','🚨','救急搬送！バイク事故 — 25歳男性 搬入');
+    const pc=document.createElement('div');
+    pc.className='patient-card';
+    pc.innerHTML=`<div class="pc-title">🧑 患者情報</div>
+      <div class="pc-tags">
+        <span class="pc-tag">25歳 男性</span>
+        <span class="pc-tag red">BP 92/60 🔴</span>
+        <span class="pc-tag red">HR 118 ⚡</span>
+        <span class="pc-tag">RR 22</span><span class="pc-tag">SpO2 98%</span><span class="pc-tag">GCS 15</span>
+      </div>
+      <div class="pc-tags" style="margin-top:6px;">
+        <span class="pc-tag red">左側腹部打撲</span>
+        <span class="pc-tag red">左上腹部圧痛</span>
+        <span class="pc-tag">外出血なし</span>
+        <span class="pc-tag">冷汗あり</span>
+      </div>`;
+    app(pc);
+    sb('sonobo_8.png',
+      `搬入された。<span class="red">BP 92/60、HR 118</span>。バイタルが不安定だ。<br>
+       外出血はない。<strong>内出血を疑う状況</strong>だ。<br>まず何をする？`,true);
+    cho('▶ 最初に何をするか？',[
+      {icon:'🔊',label:'FASTを実施する',sub:'ベッドサイドで出血を超音波検索',res:'ok'},
+      {icon:'🖥',label:'造影CTへ搬送',sub:'詳細な画像評価を先行させる',res:'ng'},
+      {icon:'💉',label:'ルート確保・採血を先に',sub:'輸液ラインをまず確保する',res:'nu'},
+      {icon:'📞',label:'外科を先に呼ぶ',sub:'外科医を呼んでから動く',res:'nu'},
+    ],o=>{
+      if(o.res==='ok'){sndOk();fnd('neg','✅','正しい判断','バイタル不安定＋外出血なし → 腹腔内出血を疑い<strong>FASTが最優先</strong>。ルート確保は並行作業でOK。');}
+      else if(o.res==='ng'){sndNg();fnd('pos','⚠️','待って','バイタル不安定例のCT搬送は移動中急変のリスクが高い。<strong>まずベッドサイドでFAST</strong>を行うのが鉄則。');}
+      else{sndNu();fnd('info','💡','順序を意識して','ルート確保も重要だが、FASTは<strong>2分で終わる</strong>。並行しながらまずFASTを始めよう。');}
+      nxt('FASTを開始する',()=>run(1));
+    });
+  },700);
+},
+
+/* 1: 心窩部 ─────────────────────────────────────────────────────── */
+()=>{
+  setProgress(20);
+  clearNow();setMap('sub','now');
+  div('FAST ① ─ 心窩部ビュー');
+  sb('sonobo_5.png',
+    `最初は<strong>心窩部</strong>。剣状突起のすぐ下にプローブを当てる。<br>
+     プローブマーカーは<strong>患者の右肩方向</strong>。<br>
+     心臓を画面全体に描出して、心膜腔を確認しよう。`);
+  askDep('心窩部ビュー',
+    ()=>{
+      sndPing();
+      fnd('neg','📋','心窩部ビュー ─ 所見',
+        `<strong>心膜腔：液体貯留なし</strong><br>
+         心臓の周囲（心膜腔）に黒いエコーフリースペースを認めない。<br>
+         ➜ <span class="neg-txt">心タンポナーデは否定的。</span>`);
+      setMap('sub','neg');
+      nxt('次：右上腹部を確認する',()=>run(2));
+    },
+    '心窩部が映らないときは',
+    `・みぞおちの「くぼみ」にプローブを深く押し込む<br>
+     ・角度を頭側（頭の方向）に傾ける<br>
+     ・深吸気してもらうと横隔膜が下がり見えやすくなる<br>
+     ・プローブマーカーは患者の右肩方向`
+  );
+},
+
+/* 2: 右上腹部（モリソン窩）────────────────────────────────────── */
+()=>{
+  setProgress(38);
+  clearNow();setMap('rub','now');
+  div('FAST ② ─ 右上腹部（モリソン窩）');
+  sb('sonobo_5.png',
+    `次は<strong>右上腹部・モリソン窩</strong>。<br>
+     右の肋骨弓の下、中腋窩線〜後腋窩線あたりにプローブを当てる。<br>
+     <strong>肝臓と右腎臓の間</strong>に液体がないか探す。`);
+  askDep('モリソン窩ビュー',
+    ()=>{
+      sndPing();
+      fnd('neg','📋','右上腹部（モリソン窩）─ 所見',
+        `<strong>モリソン窩：液体貯留なし</strong><br>
+         肝臓と右腎臓の間にエコーフリースペースを認めない。<br>
+         ➜ <span class="neg-txt">この部位での出血は否定的。</span>`);
+      setMap('rub','neg');
+      nxt('次：左上腹部を確認する',()=>run(3));
+    },
+    'モリソン窩が映らないときは',
+    `・プローブを肋骨弓下に当て、やや内側上方へ傾ける<br>
+     ・肋骨の影が邪魔なら1〜2肋間ずつ動かして肋間から狙う<br>
+     ・深吸気で肝臓が下がって見えやすくなる<br>
+     ・扇動（ファン操作）で肝腎境界を丁寧に探す`
+  );
+},
+
+/* 3: 左上腹部（脾腎窩）────────────────────────────────────────── */
+()=>{
+  setProgress(56);
+  clearNow();setMap('lub','now');
+  div('FAST ③ ─ 左上腹部（脾腎窩）');
+  sndAlert();
+  alrt('warn','⚡','左側腹部打撲の症例！ → 脾損傷を最優先に疑う。念入りに確認する');
+  sb('sonobo_8.png',
+    `<strong>左上腹部・脾腎窩</strong>だ。<br>
+     <span class="red">今回の症例は左側腹部打撲。脾損傷の可能性が高い。</span><br>
+     左肋骨弓の下、後腋窩線よりやや背中側にプローブを当てる。<br>
+     <strong>脾臓と左腎臓の間</strong>を探せ。`,true);
+  askDep('脾腎窩ビュー',
+    ()=>{
+      sndPing();
+      setTimeout(()=>sndAlert(),400);
+      fnd('pos','🔴','左上腹部（脾腎窩）─ 所見',
+        `<strong>脾腎窩：明らかな液体貯留あり</strong><br>
+         脾臓と左腎臓の間に<strong>エコーフリーの暗い領域</strong>を認める。<br>
+         脾臓の上方・周囲にも液体が広がっている。<br>
+         ➜ <span class="pos-txt">脾損傷による腹腔内出血を強く疑う。<br>この時点でFAST陽性！</span>`);
+      setMap('lub','pos');
+      alrt('danger','🚨','FAST陽性確認！ — 引き続き骨盤を確認する');
+      nxt('次：骨盤を確認する',()=>run(4));
+    },
+    '脾腎窩が映らないときは',
+    `・右上腹部より難しい。プローブを<strong>左の背中側へ回す</strong>イメージ<br>
+     ・後腋窩線〜肩甲骨中線あたりを狙う<br>
+     ・肋骨弓下から肋間を狙うと描出しやすいことがある<br>
+     ・呼気で止めてもらうと脾臓が下がりやすい<br>
+     ・「映らない＝ない」ではない。体位変換（右側臥位）も有効`
+  );
+},
+
+/* 4: 骨盤 ─────────────────────────────────────────────────────── */
+()=>{
+  setProgress(73);
+  clearNow();setMap('pel','now');
+  div('FAST ④ ─ 骨盤（膀胱直腸窩）');
+  sb('sonobo_7.png',
+    `最後は<strong>骨盤</strong>。恥骨の上にプローブを当てる。<br>
+     膀胱を音響窓として使うので、<strong>尿が溜まっているほど見やすい</strong>。<br>
+     膀胱の後方〜直腸の周囲に液体がないか確認する。`);
+  askDep('骨盤ビュー',
+    ()=>{
+      sndPing();
+      setTimeout(()=>sndAlert(),300);
+      fnd('pos','🔴','骨盤（膀胱直腸窩）─ 所見',
+        `<strong>膀胱直腸窩：少量の液体貯留あり</strong><br>
+         膀胱の後方〜直腸の周囲に、少量のエコーフリーな液体を認める。<br>
+         ➜ <span class="pos-txt">骨盤腔にも出血が流れ込んでいる。</span><br>
+         脾腎窩と合わせて<strong>FAST陽性（2箇所）が確定</strong>した。`);
+      setMap('pel','pos');
+      alrt('danger','🚨','FAST完了 ─ 2箇所陽性：腹腔内出血の診断');
+      nxt('FASTの結果をまとめる',()=>run(5));
+    },
+    '骨盤ビューが映らないときは',
+    `・恥骨に押し当てるようにプローブを下向きに傾ける<br>
+     ・横断像（マーカー右）と縦断像（マーカー頭側）の両方を確認<br>
+     ・尿が少ない場合は描出困難なことがある`
+  );
+},
+
+/* 5: 総括・判断 ─────────────────────────────────────────────────── */
+()=>{
+  setProgress(88);
+  clearNow();
+  div('FAST 完了 ─ 総合評価と次の判断');
+  sb('sonobo_8.png',
+    `<strong>FASTの結果を整理する。</strong><br><br>
+     ・心窩部　　：<span class="neg-txt">陰性（液体なし）</span><br>
+     ・右上腹部　：<span class="neg-txt">陰性（液体なし）</span><br>
+     ・左上腹部　：<span class="pos-txt">陽性 ← 脾腎窩に液体貯留あり</span><br>
+     ・骨盤　　　：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
+     バイタルは依然として<span class="red">BP 92/60、HR 118</span>。<br>
+     <strong>今すぐ何をする？</strong>`,true);
+
+  cho('▶ FAST陽性・バイタル不安定 → 次のアクションは？',[
+    {icon:'📞',label:'外科コール（手術/IVR）',sub:'緊急外科的介入を要請する',res:'ok'},
+    {icon:'🖥',label:'造影CTを実施する',sub:'出血源の詳細評価を先に行う',res:'ng'},
+    {icon:'👁',label:'経過観察する',sub:'バイタル推移をしばらく見る',res:'ng'},
+    {icon:'💊',label:'鎮痛薬を投与して様子見',sub:'痛みを和らげながら経過観察',res:'ng'},
+  ],o=>{
+    if(o.res==='ok'){
+      sndOk();
+      fnd('neg','✅','正解：外科コールが最優先',
+        `バイタル不安定＋FAST陽性 → <strong>即外科コール</strong>。<br>
+         CTはバイタルが安定している場合か、外科医の判断を待ってから。<br>
+         この症例では緊急手術またはIVRの適応を外科医が判断する。`);
+    }else if(o.label.includes('CT')){
+      sndNg();
+      fnd('pos','⚠️','CTは後回し',
+        `バイタル不安定例のCT搬送は<strong>急変リスクが高い</strong>。<br>
+         FASTで出血が確認された以上、まず外科コール。<br>
+         CT適応は外科医と判断してから。`);
+    }else if(o.label.includes('経過')){
+      sndNg();
+      fnd('pos','⚠️','経過観察は危険',
+        `FAST陽性＋バイタル不安定は<strong>外科的緊急症</strong>だ。<br>
+         「様子を見る」時間的猶予はない。今すぐ外科を呼べ。`);
+    }else{
+      sndNg();
+      fnd('pos','⚠️','鎮痛だけでは止まらない',
+        `鎮痛は苦痛軽減に必要だが<strong>根本治療にならない</strong>。<br>
+         腹腔内出血を止めるには外科的介入が必要。まず外科コールを。`);
+    }
+    nxt('🏁 結果・振り返りを見る',()=>run(6));
+  });
+},
+
+/* 6: RESULT ─────────────────────────────────────────────────────── */
+()=>{
+  setProgress(100);
+  stopHb();
+  document.getElementById('monitorCard').style.display='none';
+  document.getElementById('fastMap').style.display='none';
+  stream.style.display='none';
+  const rw=document.getElementById('resultWrap');
+  rw.classList.add('show');
+  const ratio=total>0?correct/total:0;
+  document.getElementById('scScore').textContent=`${correct} / ${total} 正解`;
+  if(ratio>=0.75){
+    sndOk();setTimeout(sndOk,500);
+    document.getElementById('resSonobo').src='assets/sonobo_6.png';
+    document.getElementById('resTitle').textContent='素晴らしい判断でした！🏆';
+    document.getElementById('resSub').textContent='FASTの手順・臨床判断ともに的確。本番でもこの判断で動ける。';
+  }else if(ratio>=0.4){
+    document.getElementById('resSonobo').src='assets/sonobo_3.png';
+    document.getElementById('resTitle').textContent='よくできました ✅';
+    document.getElementById('resSub').textContent='基本の流れは正しい。判断の根拠を意識してもう一度チャレンジしよう。';
+  }else{
+    document.getElementById('resSonobo').src='assets/sonobo_4.png';
+    document.getElementById('resTitle').textContent='振り返ろう 💡';
+    document.getElementById('resSub').textContent='バイタルとFAST所見を組み合わせて判断する感覚を養おう。何度でも挑戦を。';
+  }
+  scrollBot();
+}
+
+];
+
+function run(n){stepN=n;STEPS[n]&&STEPS[n]();}
+
+function resetSim(){
+  stepN=0;correct=0;total=0;
+  Object.keys(mapSt).forEach(k=>mapSt[k]='');
+  ['sub','rub','lub','pel'].forEach(v=>{
+    document.getElementById('fm-'+v).classList.remove('now','neg','pos');
+    const re=document.getElementById('fr-'+v);re.className='fm-res';re.textContent='';
+  });
+  stream.innerHTML='';stream.style.display='';
+  document.getElementById('monitorCard').style.display='';
+  document.getElementById('fastMap').style.display='';
+  document.getElementById('resultWrap').classList.remove('show');
+  setProgress(0);
+  startHb(118);
+  setTimeout(()=>run(0),400);
+}
+
+// ══ INIT ════════════════════════════════════════════════════
+startHb(118);
+setTimeout(()=>run(0),600);
+</script>
+</body>
+</html>
