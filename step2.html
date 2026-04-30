@@ -51,30 +51,31 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
 /* CONTENT */
 .scroll-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.lesson-body{padding:20px 16px 40px;display:flex;flex-direction:column;gap:0;}
+.lesson-body{padding:20px 16px 40px;display:flex;flex-direction:column;gap:0;min-width:0;overflow:hidden;}
 
 /* SLIDE */
-.slide{display:none;flex-direction:column;gap:14px;animation:fadeInSlide .35s ease;}
+.slide{display:none;flex-direction:column;gap:14px;animation:fadeInSlide .35s ease;min-width:0;overflow:hidden;}
 .slide.active{display:flex;}
 @keyframes fadeInSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fadeInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
 .slide.going-back{animation:fadeInLeft .35s ease;}
 
 /* SONOBO ROW */
-.sonobo-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px;}
+.sonobo-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px;min-width:0;overflow:hidden;}
 .sonobo-sm{width:54px;height:54px;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(21,101,216,.5));}
 .sonobo-sm img{width:100%;height:100%;object-fit:contain;}
 .sonobo-speech{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-  border-radius:0 14px 14px 14px;padding:11px 14px;flex:1;}
+  border-radius:0 14px 14px 14px;padding:11px 14px;flex:1;min-width:0;overflow:hidden;}
 .sonobo-speech .name{font-size:10px;color:var(--blue-light);font-weight:700;margin-bottom:4px;}
-.sonobo-speech p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.88);}
+.sonobo-speech p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.88);
+  word-break:break-all;overflow-wrap:break-word;}
 
 /* SLIDE TITLE */
 .slide-heading{text-align:center;margin:4px 0 2px;}
 .slide-tag{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--blue-light);
   text-transform:uppercase;margin-bottom:6px;display:block;}
 .slide-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:22px;font-weight:900;
-  line-height:1.2;color:white;}
+  line-height:1.2;color:white;word-break:break-all;overflow-wrap:break-word;}
 .slide-title .accent{color:var(--blue-bright);}
 
 /* CARD */
@@ -83,10 +84,10 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .info-card h3{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;
   color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .info-card p{font-size:13px;color:rgba(255,255,255,.8);line-height:1.75;
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .info-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:4px;}
 .info-card li{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6;
-  display:flex;align-items:flex-start;gap:8px;}
+  display:flex;align-items:flex-start;gap:8px;min-width:0;}
 .info-card li::before{content:"▸";color:var(--blue-bright);flex-shrink:0;margin-top:1px;}
 
 .highlight-box{background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(245,200,66,.05));
@@ -94,11 +95,12 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   padding:12px 14px;display:flex;align-items:flex-start;gap:9px;}
 .hi-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
 .highlight-box p{font-size:13px;color:rgba(255,255,255,.88);line-height:1.7;
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 .warning-box{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);
   border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:flex-start;gap:9px;}
-.warning-box p{font-size:13px;color:rgba(255,200,200,.9);line-height:1.7;}
+.warning-box p{font-size:13px;color:rgba(255,200,200,.9);line-height:1.7;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 /* ANATOMY DIAGRAM AREAS */
 .img-card{border-radius:var(--radius-sm);overflow:hidden;
@@ -111,10 +113,10 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .point-list{display:flex;flex-direction:column;gap:9px;}
 .point-item{display:flex;align-items:flex-start;gap:11px;
   background:rgba(21,101,216,.1);border:1px solid rgba(61,142,240,.18);
-  border-radius:var(--radius-sm);padding:12px 13px;}
+  border-radius:var(--radius-sm);padding:12px 13px;min-width:0;overflow:hidden;}
 .point-icon{font-size:20px;flex-shrink:0;line-height:1.3;}
 .point-text{font-size:13px;color:rgba(255,255,255,.85);line-height:1.65;
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .point-text strong{color:var(--blue-light);}
 
 /* SVG DIAGRAM */
@@ -133,13 +135,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .quiz-opt{padding:13px 15px;border-radius:var(--radius-sm);
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
   cursor:pointer;font-size:13px;color:rgba(255,255,255,.85);
-  transition:all .2s ease;text-align:left;}
+  transition:all .2s ease;text-align:left;
+  word-break:break-all;overflow-wrap:break-word;width:100%;}
 .quiz-opt:active{transform:scale(.98);}
 .quiz-opt.correct{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:#4ade80;}
 .quiz-opt.wrong{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.4);color:#fca5a5;}
 .quiz-opt.disabled{pointer-events:none;}
 .quiz-result{margin-top:12px;border-radius:var(--radius-sm);padding:12px 14px;
-  display:none;font-size:13px;line-height:1.7;}
+  display:none;font-size:13px;line-height:1.7;
+  word-break:break-all;overflow-wrap:break-word;}
 .quiz-result.correct{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:#86efac;}
 .quiz-result.wrong{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;}
 .quiz-result.show{display:block;}
@@ -450,19 +454,19 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="quiz-q"><span class="q-num">Q3</span>剣状突起について正しいものはどれか？</div>
     <div class="quiz-options">
       <button class="quiz-opt" onclick="answerQuiz('quiz3',0,3)">A. 胸骨の最上部にある</button>
-      <button class="quiz-opt" onclick="answerQuiz('quiz3',1,3)">B. 肋骨の一部である</button>
-      <button class="quiz-opt" onclick="answerQuiz('quiz3',2,3)">C. 胸骨の最下部にある</button>
-      <button class="quiz-opt" onclick="answerQuiz('quiz3',3,3)">D. 背骨の一部である</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz3',1,3)">B. 胸骨の最下部にある突起で、体表から触れて確認できる</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz3',2,3)">C. 肋骨の一部である</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz3',3,3)">D. 背骨（脊椎）の一部である</button>
     </div>
     <div class="quiz-result" id="quiz3-result"></div>
   </div>
   <div class="quiz-wrap" id="quiz4" style="margin-top:14px;">
-    <div class="quiz-q"><span class="q-num">Q4</span>肋骨の走行として正しいものはどれか？</div>
+    <div class="quiz-q"><span class="q-num">Q4</span>腹部エコー（FAST）で肋骨の走行を把握することが重要な理由として、最も正しいものはどれか？</div>
     <div class="quiz-options">
-      <button class="quiz-opt" onclick="answerQuiz('quiz4',0,4)">A. 前胸部では水平に走っている</button>
-      <button class="quiz-opt" onclick="answerQuiz('quiz4',1,4)">B. 前胸部では斜め下向きに走り、背部では縦に近づく</button>
-      <button class="quiz-opt" onclick="answerQuiz('quiz4',2,4)">C. 前胸部では斜め上向きに走っている</button>
-      <button class="quiz-opt" onclick="answerQuiz('quiz4',3,4)">D. 背部では水平になる</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz4',0,4)">A. 肋骨は超音波を通さないため、肋骨と肋骨の間（肋間）にプローブを当てる必要があるから</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz4',1,4)">B. 肋骨の上にプローブを当てると、より鮮明な画像が得られるから</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz4',2,4)">C. 肋骨の走行を知ると、心臓の正確な位置がわかるから</button>
+      <button class="quiz-opt" onclick="answerQuiz('quiz4',3,4)">D. 肋骨に沿ってプローブを動かすと、腹腔内全体が観察できるから</button>
     </div>
     <div class="quiz-result" id="quiz4-result"></div>
   </div>
