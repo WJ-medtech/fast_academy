@@ -217,11 +217,11 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 /* FASTポイントリスト */
 .fast-points{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
 .fast-point{display:flex;align-items:flex-start;gap:10px;
-  background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 12px;}
+  background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 12px;
+  min-width:0;overflow:hidden;}
 .fp-icon{font-size:20px;flex-shrink:0;line-height:1.4;}
 .fp-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.65;
-  /* ★ 改行制御：単語途中で切らない、でも枠に収める */
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .fp-text strong{color:var(--blue-light);}
 
 /* スライド画像カード */
@@ -231,10 +231,11 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
 .highlight-box{background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(245,200,66,.05));
   border:1px solid rgba(245,200,66,.28);border-radius:var(--radius-sm);
-  padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-top:12px;}
+  padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-top:12px;
+  min-width:0;overflow:hidden;}
 .hi-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
 .highlight-box p{font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 .btn-goto-home{width:100%;padding:17px 24px;margin-top:6px;
   background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
