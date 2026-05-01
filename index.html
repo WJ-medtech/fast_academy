@@ -72,7 +72,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .speech-bubble::before{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
   border:9px solid transparent;border-bottom-color:rgba(255,255,255,.12);border-top:none;}
 .bubble-name{font-size:11px;font-weight:700;color:var(--blue-light);letter-spacing:1px;margin-bottom:6px;}
-.bubble-text{font-size:14px;line-height:1.7;color:rgba(255,255,255,.9);min-height:56px;}
+.bubble-text{font-size:14px;line-height:1.7;color:rgba(255,255,255,.9);min-height:56px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .cursor-blink{display:inline-block;width:2px;height:14px;background:var(--blue-bright);
   margin-left:2px;animation:blink .8s infinite;vertical-align:middle;}
 .btn-start{display:flex;align-items:center;justify-content:center;gap:10px;
@@ -111,7 +111,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .mini-sonobo{width:56px;height:56px;flex-shrink:0;}
 .mini-sonobo img{width:100%;height:100%;object-fit:contain;}
 .mini-bubble-name{font-size:10px;color:var(--blue-light);font-weight:700;margin-bottom:3px;}
-.mini-bubble-text{font-size:13px;line-height:1.5;color:rgba(255,255,255,.82);
+.mini-bubble-text{font-size:13px;line-height:1.5;color:rgba(255,255,255,.82);word-break:break-all;overflow-wrap:break-word;min-width:0;
   transition:opacity .3s ease;}
 
 .section-label{margin:26px 16px 10px;font-size:11px;font-weight:700;letter-spacing:3px;
@@ -124,9 +124,9 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .module-card{border-radius:var(--radius);overflow:hidden;position:relative;
   cursor:pointer;transition:transform .2s ease;box-shadow:0 4px 20px rgba(0,0,0,.3);
   text-decoration:none;display:block;color:inherit;}
-.module-card:active:not(.locked){transform:scale(.98);}
-.module-card.locked{opacity:.5;cursor:default;pointer-events:none;}
-.module-card-inner{padding:18px;display:flex;align-items:center;gap:14px;position:relative;z-index:2;}
+.module-card:active{transform:scale(.98);}
+
+.module-card-inner{padding:18px;display:flex;align-items:center;gap:14px;position:relative;z-index:2;min-width:0;overflow:hidden;}
 .card-glow{position:absolute;inset:0;opacity:.4;z-index:1;
   background:radial-gradient(ellipse 80% 60% at 15% 50%,rgba(61,142,240,.15) 0%,transparent 60%);}
 .card-intro{background:linear-gradient(135deg,#0a2a5e 0%,#0f3a82 100%);border:1px solid rgba(61,142,240,.3);}
@@ -444,15 +444,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 2 -->
-      <a class="module-card card-2 locked" href="step2.html">
+      <a class="module-card card-2" href="step2.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">🫀<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">🫀<div class="module-badge">2</div></div>
           <div class="module-info">
             <div class="module-step">STEP 2</div>
             <div class="module-title">解剖知識</div>
             <div class="module-desc">FASTに必要な最小限の解剖。クイズ形式で楽しく習得</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">15分</span></div>
+            <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">15分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -460,15 +460,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 3 -->
-      <a class="module-card card-3 locked" href="step3.html">
+      <a class="module-card card-3" href="step3.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">🔧<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">🔧<div class="module-badge">3</div></div>
           <div class="module-info">
             <div class="module-step">STEP 3</div>
             <div class="module-title">準備〜エコーを当てる前に</div>
             <div class="module-desc">機器の準備・プローブの動かし方をアニメーションで解説</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">20分</span></div>
+            <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">20分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -476,15 +476,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 4 -->
-      <a class="module-card card-4 locked" href="step4.html">
+      <a class="module-card card-4" href="step4.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">📡<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">📡<div class="module-badge">4</div></div>
           <div class="module-info">
             <div class="module-step">STEP 4</div>
             <div class="module-title">実際に当ててみよう</div>
             <div class="module-desc">FASTの4窓を実践。正しい描出ポイントを解説</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">25分</span></div>
+            <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">25分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
@@ -492,15 +492,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </a>
 
       <!-- STEP 5 -->
-      <a class="module-card card-5 locked" href="step5.html">
+      <a class="module-card card-5" href="step5.html">
         <div class="card-glow"></div>
         <div class="module-card-inner">
-          <div class="module-icon-wrap">🏆<div class="module-badge badge-lock">🔒</div></div>
+          <div class="module-icon-wrap">🏆<div class="module-badge">5</div></div>
           <div class="module-info">
             <div class="module-step">STEP 5</div>
             <div class="module-title">トレーニングモード</div>
             <div class="module-desc">リアル症例シミュレーション。あなたが患者を救え！</div>
-            <div class="module-meta"><span class="meta-chip">🔒 ロック中</span><span class="meta-chip">30分</span></div>
+            <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">30分</span></div>
           </div>
           <div class="module-arrow">›</div>
         </div>
