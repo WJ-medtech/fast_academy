@@ -274,7 +274,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">心窩部・モリソン窩が陰性でも<strong>脾腎窩を省略しない</strong>。4窓全部当てる習慣が命を救う。</div></div>
       </div>
       <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
-      <a href="index.html" style="display:block;"><button class="btn-home">🏠 ホームに戻る</button></a>
+      <a href="index.html?screen=home&from=step5" style="display:block;"><button class="btn-home">🏠 ホームに戻る</button></a>
     </div>
 
   </div>
@@ -509,8 +509,7 @@ const STEPS=[
     '心窩部が映らないときは',
     `・みぞおちの「くぼみ」にプローブを深く押し込む<br>
      ・角度を頭側（頭の方向）に傾ける<br>
-     ・深吸気してもらうと横隔膜が下がり見えやすくなる<br>
-     ・プローブマーカーは患者の右肩方向`
+     ・深吸気してもらうと横隔膜が下がり見えやすくなる`
   );
 },
 
@@ -581,27 +580,21 @@ const STEPS=[
   clearNow();setMap('pel','now');
   div('FAST ④ ─ 骨盤（膀胱直腸窩）');
   sb('sonobo_7.png',
-    `最後は<strong>骨盤</strong>。恥骨の上にプローブを当てる。<br>
-     膀胱を音響窓として使うので、<strong>尿が溜まっているほど見やすい</strong>。<br>
-     膀胱の後方〜直腸の周囲に液体がないか確認する。`);
-  askDep('骨盤ビュー',
-    ()=>{
-      sndPing();
-      setTimeout(()=>sndAlert(),300);
-      fnd('pos','🔴','骨盤（膀胱直腸窩）─ 所見',
-        `<strong>膀胱直腸窩：少量の液体貯留あり</strong><br>
-         膀胱の後方〜直腸の周囲に、少量のエコーフリーな液体を認める。<br>
-         ➜ <span class="pos-txt">骨盤腔にも出血が流れ込んでいる。</span><br>
-         脾腎窩と合わせて<strong>FAST陽性（2箇所）が確定</strong>した。`);
-      setMap('pel','pos');
-      alrt('danger','🚨','FAST完了 ─ 2箇所陽性：腹腔内出血の診断');
-      nxt('FASTの結果をまとめる',()=>run(5));
-    },
-    '骨盤ビューが映らないときは',
-    `・恥骨に押し当てるようにプローブを下向きに傾ける<br>
-     ・横断像（マーカー右）と縦断像（マーカー頭側）の両方を確認<br>
-     ・尿が少ない場合は描出困難なことがある`
-  );
+    `最後は<strong>骨盤（膀胱直腸窩）</strong>。<br>
+     恥骨の上にプローブを当て、膀胱の後方〜直腸の周囲を確認する。<br>
+     ※このステップでは所見を自動で確認します。`);
+  nxt('🔵 骨盤を確認する',()=>{
+    sndPing();
+    setTimeout(()=>sndAlert(),300);
+    fnd('pos','🔴','骨盤（膀胱直腸窩）─ 所見',
+      `<strong>膀胱直腸窩：少量の液体貯留あり</strong><br>
+       膀胱の後方〜直腸の周囲に、少量のエコーフリーな液体を認める。<br>
+       ➜ <span class="pos-txt">骨盤腔にも出血が流れ込んでいる。</span><br>
+       脾腎窩と合わせて<strong>FAST陽性（2箇所）が確定</strong>した。`);
+    setMap('pel','pos');
+    alrt('danger','🚨','FAST完了 ─ 2箇所陽性：腹腔内出血の診断');
+    nxt('FASTの結果をまとめる',()=>run(5));
+  });
 },
 
 /* 5: 総括・判断 ─────────────────────────────────────────────────── */
