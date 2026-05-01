@@ -220,7 +220,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 12px;}
 .fp-icon{font-size:20px;flex-shrink:0;line-height:1.4;}
 .fp-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.65;
-  word-break:keep-all;overflow-wrap:break-word;min-width:0;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .fp-text strong{color:var(--blue-light);}
 
 /* スライド画像カード */
@@ -720,6 +720,27 @@ function animateHomeBar() {
       }, 4000);
 
       // URLをクリーンに（履歴を汚さない）
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    // step2完了から戻ってきた場合
+    if (from === 'step2') {
+      const banner = document.getElementById('step1DoneBanner');
+      if (banner) {
+        banner.querySelector('.s1-title').textContent = '✅ STEP 2 クリア！お帰り！';
+        banner.querySelector('.s1-text').textContent = 'FASTの解剖知識をマスターした。次はSTEP 3の準備編に挑戦しよう！';
+        banner.style.display = 'flex';
+      }
+      setTimeout(() => {
+        document.getElementById('overallBar').style.width = '40%';
+        document.getElementById('overallPct').textContent = '40%';
+        document.getElementById('progressChip').textContent = '2 / 5 完了';
+      }, 400);
+      setTimeout(() => {
+        const b = document.getElementById('step1DoneBanner');
+        if (b) { b.style.transition = 'opacity 1s ease'; b.style.opacity = '0'; }
+        setTimeout(() => { if (b) b.style.display = 'none'; }, 1000);
+      }, 4000);
       history.replaceState(null, '', window.location.pathname);
     }
   }

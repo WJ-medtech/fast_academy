@@ -176,9 +176,10 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .completion-screen{display:none;flex-direction:column;align-items:center;
   padding:40px 20px 60px;text-align:center;}
 .completion-screen.show{display:flex;}
-.comp-sonobo{width:80px;height:80px;margin-bottom:16px;
+.comp-sonobo{width:100px;height:100px;margin:0 auto 16px;
   filter:drop-shadow(0 4px 14px rgba(21,101,216,.6));
   animation:bounceIn .7s cubic-bezier(.34,1.56,.64,1) forwards;}
+.comp-sonobo img{width:100%;height:100%;object-fit:contain;}
 @keyframes bounceIn{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
 .comp-stars{font-size:28px;margin-bottom:10px;letter-spacing:4px;}
 .comp-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:26px;font-weight:900;
@@ -208,7 +209,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
 <!-- HEADER -->
 <div class="page-header">
-  <a class="back-btn" href="index.html">←</a>
+  <a class="back-btn" href="index.html?screen=home">←</a>
   <div class="header-info">
     <div class="page-step-label">STEP 2 — 解剖知識</div>
     <div class="page-title">FASTに必要な解剖🫀</div>
@@ -577,7 +578,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="comp-score-num" id="compScore">－</div>
   </div>
   <button class="btn-next-step" onclick="location.href='step3.html'">STEP 3 へ進む →</button>
-  <button class="btn-home" onclick="location.href='index.html'">← ステップ選択に戻る</button>
+  <button class="btn-home" onclick="location.href='index.html?screen=home&from=step2'">← ステップ選択に戻る</button>
 </div>
 
 </div><!-- /scroll-content -->
