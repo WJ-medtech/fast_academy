@@ -35,7 +35,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 .back-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
   cursor:pointer;font-size:16px;flex-shrink:0;text-decoration:none;color:white;}
-.header-info{flex:1;min-width:0;}
+.header-info{flex:1;min-width:0;overflow:hidden;}
 .page-step-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;}
 .page-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -78,6 +78,8 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 @keyframes alarm{0%,100%{background:rgba(239,68,68,.08)}50%{background:rgba(239,68,68,.18)}}
 @keyframes glowRed{0%,100%{box-shadow:0 0 10px rgba(239,68,68,.2)}50%{box-shadow:0 0 26px rgba(239,68,68,.5)}}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmerGold{0%{background-position:-200% center}100%{background-position:200% center}}
 
 .an{animation:fadeSlide .42s ease both;}
 .d1{animation-delay:.07s;}.d2{animation-delay:.14s;}.d3{animation-delay:.21s;}
@@ -85,16 +87,19 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 
 /* COMPONENTS */
 .sonobo-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  border-radius:var(--radius);padding:14px;display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;
+  min-width:0;overflow:hidden;}
 .sonobo-card.warn{border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.06);}
 .sonobo-card.grn{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.06);}
 .sonobo-card.red{border-color:rgba(239,68,68,.28);background:rgba(239,68,68,.07);}
 .sb-img{width:64px;height:64px;flex-shrink:0;}
 .sb-img img{width:100%;height:100%;object-fit:contain;
   filter:drop-shadow(0 4px 10px rgba(21,101,216,.4));animation:float 3s ease-in-out infinite;}
+.sb-body{flex:1;min-width:0;overflow:hidden;}
 .sb-name{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:3px;color:var(--blue-light);}
 .sb-name.w{color:var(--gold);}.sb-name.g{color:#4ade80;}.sb-name.r{color:#fca5a5;}
-.sb-text{font-size:13px;line-height:1.68;color:rgba(255,255,255,.88);}
+.sb-text{font-size:13px;line-height:1.68;color:rgba(255,255,255,.88);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 .sec-ttl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;
   margin-bottom:12px;display:flex;align-items:center;gap:8px;}
@@ -103,32 +108,37 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 .bar-g{background:var(--green);}.bar-y{background:var(--gold);}
 
 .stat-list{display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
-.sc{border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:flex-start;gap:11px;border:1px solid rgba(255,255,255,.07);}
+.sc{border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:flex-start;gap:11px;
+  border:1px solid rgba(255,255,255,.07);min-width:0;overflow:hidden;}
 .sc.d{background:linear-gradient(135deg,rgba(127,29,29,.22),rgba(69,10,10,.28));border-color:rgba(239,68,68,.2);}
 .sc.i{background:rgba(21,101,216,.1);border-color:rgba(61,142,240,.16);}
 .sc.s{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.16);}
 .sc-icon{font-size:22px;flex-shrink:0;line-height:1.2;}
+.sc-body{flex:1;min-width:0;overflow:hidden;}
 .sc-lbl{font-size:9px;font-weight:700;letter-spacing:.8px;color:rgba(255,255,255,.38);margin-bottom:2px;}
-.sc-txt{font-size:13px;line-height:1.6;color:rgba(255,255,255,.85);}
+.sc-txt{font-size:13px;line-height:1.6;color:rgba(255,255,255,.85);
+  word-break:break-all;overflow-wrap:break-word;}
 .hi{color:#fca5a5;font-weight:900;}.hig{color:#4ade80;font-weight:900;}.hiy{color:var(--gold);font-weight:900;}
 
 .kp{background:linear-gradient(135deg,rgba(239,68,68,.13),rgba(127,29,29,.18));
   border:1px solid rgba(239,68,68,.36);border-radius:var(--radius);
   padding:14px;display:flex;gap:11px;align-items:flex-start;
-  animation:alarm 2.8s ease-in-out infinite;}
+  animation:alarm 2.8s ease-in-out infinite;min-width:0;overflow:hidden;}
 .kp-icon{font-size:24px;flex-shrink:0;}
-.kp-txt{font-size:13px;line-height:1.7;color:rgba(255,255,255,.9);}
+.kp-txt{font-size:13px;line-height:1.7;color:rgba(255,255,255,.9);flex:1;min-width:0;
+  word-break:break-all;overflow-wrap:break-word;}
 .kp-txt strong{color:#fca5a5;font-size:14px;}
 
 .dispatch{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(10,26,60,.35));
   border:1px solid rgba(239,68,68,.26);border-radius:var(--radius);
   padding:14px;margin-bottom:14px;animation:glowRed 3s ease-in-out infinite;}
-.d-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.d-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;flex-wrap:wrap;}
 .d-badge{font-size:10px;font-weight:900;letter-spacing:1px;background:var(--red);
-  color:white;padding:3px 8px;border-radius:4px;animation:pulse 1.5s ease-in-out infinite;}
+  color:white;padding:3px 8px;border-radius:4px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0;}
 .d-time{font-size:11px;color:rgba(255,255,255,.36);}
 .d-text{font-size:13px;line-height:1.72;color:rgba(255,255,255,.88);
-  font-style:italic;border-left:2px solid rgba(239,68,68,.38);padding-left:11px;}
+  font-style:italic;border-left:2px solid rgba(239,68,68,.38);padding-left:11px;
+  word-break:break-all;overflow-wrap:break-word;}
 .d-from{font-size:11px;color:rgba(255,255,255,.36);margin-top:5px;}
 
 .vitals-card{background:rgba(8,16,36,.6);border:1px solid rgba(255,255,255,.08);
@@ -147,14 +157,15 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
   border-radius:var(--radius-sm);padding:12px;margin-bottom:11px;}
 .fl-lbl{font-size:9px;font-weight:700;letter-spacing:.8px;color:rgba(255,255,255,.4);margin-bottom:6px;}
 .fi{display:flex;align-items:flex-start;gap:6px;font-size:13px;color:rgba(255,255,255,.8);
-  line-height:1.6;margin-bottom:3px;}
+  line-height:1.6;margin-bottom:3px;word-break:break-all;overflow-wrap:break-word;}
 .fi::before{content:'▸';color:var(--blue-bright);flex-shrink:0;margin-top:1px;}
 
 .deceptive{background:linear-gradient(135deg,rgba(245,200,66,.09),rgba(120,90,0,.13));
   border:1px solid rgba(245,200,66,.26);border-radius:var(--radius-sm);
-  padding:12px 14px;display:flex;gap:9px;}
+  padding:12px 14px;display:flex;gap:9px;min-width:0;overflow:hidden;}
 .dec-icon{font-size:20px;flex-shrink:0;}
-.dec-txt{font-size:13px;line-height:1.68;color:rgba(255,255,255,.88);}
+.dec-txt{font-size:13px;line-height:1.68;color:rgba(255,255,255,.88);flex:1;min-width:0;
+  word-break:break-all;overflow-wrap:break-word;}
 
 .va{background:linear-gradient(135deg,rgba(127,29,29,.24),rgba(69,10,10,.3));
   border:1px solid rgba(239,68,68,.32);border-radius:var(--radius);padding:13px;margin-bottom:11px;}
@@ -170,43 +181,52 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 .bc{border-radius:var(--radius);padding:13px;margin-bottom:11px;}
 .bc.no{background:linear-gradient(135deg,rgba(127,29,29,.2),rgba(69,10,10,.26));border:1px solid rgba(239,68,68,.26);}
 .bc.yes{background:linear-gradient(135deg,rgba(21,128,61,.13),rgba(20,83,45,.18));border:1px solid rgba(34,197,94,.26);}
-.bc-h{display:flex;align-items:center;gap:7px;margin-bottom:9px;}
+.bc-h{display:flex;align-items:center;gap:7px;margin-bottom:9px;flex-wrap:wrap;}
 .bc-badge{font-size:10px;font-weight:900;padding:3px 9px;border-radius:4px;letter-spacing:.8px;}
 .bno{background:rgba(239,68,68,.28);color:#fca5a5;border:1px solid rgba(239,68,68,.38);}
 .byes{background:rgba(34,197,94,.18);color:#4ade80;border:1px solid rgba(34,197,94,.36);}
 .bc-sub{font-size:11px;color:rgba(255,255,255,.38);}
 .bc-items{display:flex;flex-direction:column;gap:5px;margin-bottom:9px;}
-.bc-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:rgba(255,255,255,.8);line-height:1.6;}
+.bc-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:rgba(255,255,255,.8);
+  line-height:1.6;word-break:break-all;overflow-wrap:break-word;}
 .bc-item-icon{flex-shrink:0;font-size:13px;}
-.oc{padding:9px 11px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;font-weight:700;}
+.oc{padding:9px 11px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;font-weight:700;
+  word-break:break-all;overflow-wrap:break-word;}
 .oc.bad{background:rgba(239,68,68,.09);color:#fca5a5;border:1px solid rgba(239,68,68,.18);}
 .oc.good{background:rgba(34,197,94,.09);color:#4ade80;border:1px solid rgba(34,197,94,.18);}
 
 .fb{background:rgba(61,142,240,.09);border:1px solid rgba(61,142,240,.24);
   border-radius:var(--radius-sm);padding:11px;margin-bottom:9px;}
 .fb-title{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--blue-light);margin-bottom:6px;}
-.fb-fi{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:rgba(255,255,255,.85);line-height:1.6;margin-bottom:3px;}
+.fb-fi{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:rgba(255,255,255,.85);
+  line-height:1.6;margin-bottom:3px;word-break:break-all;overflow-wrap:break-word;}
 .fb-dot{width:5px;height:5px;border-radius:50%;background:var(--blue-bright);flex-shrink:0;margin-top:5px;}
 
 .res{background:linear-gradient(135deg,rgba(21,128,61,.16),rgba(20,83,45,.22));
   border:1px solid rgba(34,197,94,.3);border-radius:var(--radius);
-  padding:14px;display:flex;align-items:flex-start;gap:11px;margin-bottom:13px;}
+  padding:14px;display:flex;align-items:flex-start;gap:11px;margin-bottom:13px;
+  min-width:0;overflow:hidden;}
 .res-sb{width:66px;height:66px;flex-shrink:0;}
 .res-sb img{width:100%;height:100%;object-fit:contain;animation:float 2.5s ease-in-out infinite;}
+.res-body{flex:1;min-width:0;overflow:hidden;}
 .res-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:#4ade80;margin-bottom:4px;}
-.res-txt{font-size:12px;line-height:1.68;color:rgba(255,255,255,.8);}
+.res-txt{font-size:12px;line-height:1.68;color:rgba(255,255,255,.8);
+  word-break:break-all;overflow-wrap:break-word;}
 
 .ql{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:7px;}
-.qq{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;line-height:1.5;margin-bottom:13px;}
+.qq{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;line-height:1.5;
+  margin-bottom:13px;word-break:break-all;overflow-wrap:break-word;}
 .qopts{display:flex;flex-direction:column;gap:8px;}
 .qopt{padding:11px 14px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.11);
   background:rgba(255,255,255,.04);font-size:13px;cursor:pointer;transition:all .18s;
-  text-align:left;color:rgba(255,255,255,.85);font-family:'Noto Sans JP',sans-serif;}
+  text-align:left;color:rgba(255,255,255,.85);font-family:'Noto Sans JP',sans-serif;
+  word-break:break-all;overflow-wrap:break-word;width:100%;}
 .qopt:active{transform:scale(.98);}
 .qopt.correct{background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.35);color:#4ade80;}
 .qopt.wrong{background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.28);color:#fca5a5;}
 .qopt.disabled{pointer-events:none;}
-.qfb{margin-top:11px;padding:11px 13px;border-radius:var(--radius-sm);font-size:13px;line-height:1.65;display:none;}
+.qfb{margin-top:11px;padding:11px 13px;border-radius:var(--radius-sm);font-size:13px;line-height:1.65;display:none;
+  word-break:break-all;overflow-wrap:break-word;}
 .qfb.show{display:block;}
 .qfb.ok{background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.22);color:#86efac;}
 .qfb.ng{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.18);color:#fca5a5;}
@@ -218,25 +238,67 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 .sp:last-child{margin-bottom:0;}
 .sp-n{width:20px;height:20px;border-radius:50%;background:var(--blue-vivid);
   font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.sp-t{font-size:12px;line-height:1.65;color:rgba(255,255,255,.85);}
+.sp-t{font-size:12px;line-height:1.65;color:rgba(255,255,255,.85);flex:1;min-width:0;
+  word-break:break-all;overflow-wrap:break-word;}
 .sp-t strong{color:var(--blue-light);}
 
+/* ===== COMPLETE SCREEN (最終スライド専用) ===== */
+.complete-screen{padding:20px 16px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.complete-badge{
+  width:82px;height:82px;border-radius:50%;margin:0 auto 16px;
+  background:linear-gradient(135deg,#166534,#15803d);
+  border:3px solid rgba(34,197,94,.4);
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+  box-shadow:0 0 32px rgba(34,197,94,.35);
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+.complete-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:22px;font-weight:900;
+  color:#4ade80;margin-bottom:6px;
+  animation:fadeSlide .5s .1s ease both;}
+.complete-sub{font-size:13px;color:rgba(255,255,255,.58);line-height:1.7;margin-bottom:22px;
+  animation:fadeSlide .5s .18s ease both;}
+
+.complete-sonobo{width:96px;height:96px;margin:0 auto 18px;
+  animation:float 2.8s ease-in-out infinite;}
+.complete-sonobo img{width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 6px 20px rgba(34,197,94,.4));}
+
+.complete-sum{width:100%;background:rgba(21,101,216,.09);border:1px solid rgba(61,142,240,.18);
+  border-radius:var(--radius-sm);padding:14px;margin-bottom:18px;text-align:left;
+  animation:fadeSlide .5s .26s ease both;}
+.complete-sum .sum-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--blue-light);margin-bottom:9px;}
+
+.btn-group{width:100%;display:flex;flex-direction:column;gap:10px;
+  animation:fadeSlide .5s .34s ease both;}
+.btn-step2{width:100%;padding:15px 20px;border:none;border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;
+  background:linear-gradient(135deg,#166534,#15803d);
+  box-shadow:0 5px 20px rgba(22,101,52,.4);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .15s;}
+.btn-step2:active{transform:scale(.97);}
+.btn-home{width:100%;padding:13px 20px;border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-sm);
+  cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .15s;}
+.btn-home:active{transform:scale(.97);}
+.btn-home:hover{background:rgba(255,255,255,.1);color:white;}
+
+/* choice buttons on s5 */
+.choice-btn{width:100%;border-radius:var(--radius-sm);padding:13px 14px;
+  display:flex;align-items:center;gap:10px;border:none;cursor:pointer;text-align:left;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;transition:transform .15s;}
+.choice-btn:active{transform:scale(.98);}
+.choice-bad{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:rgba(255,255,255,.8);}
+.choice-good{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);color:rgba(255,255,255,.8);}
+.choice-icon{font-size:22px;flex-shrink:0;}
+.choice-txt{flex:1;min-width:0;word-break:break-all;overflow-wrap:break-word;}
+
 .gap{height:16px;}.gap-sm{height:8px;}
-
-/* MUTE BTN */
-.mute-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:16px;flex-shrink:0;transition:background .2s;}
-.mute-btn.muted{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.3);}
-
-/* HEARTBEAT flash overlay */
-.hb-flash{pointer-events:none;position:fixed;inset:0;z-index:999;
-  background:rgba(239,68,68,.12);opacity:0;transition:opacity .06s;}
 </style>
 </head>
 <body>
 <div class="bg-canvas" id="bgCanvas"></div>
-<div class="hb-flash" id="hbFlash"></div>
 <div class="app-wrapper">
 
   <div class="page-header">
@@ -245,13 +307,12 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="page-step-label">STEP 1 — FASTの重要性</div>
       <div class="page-title" id="hTitle">なぜFASTが必要なのか？</div>
     </div>
-    <button class="mute-btn" id="muteBtn" title="音ON/OFF">🔊</button>
   </div>
 
   <div class="progress-bar-wrap">
     <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
     <div class="progress-meta">
-      <div class="prog-step" id="pStep">1 / 10</div>
+      <div class="prog-step" id="pStep">1 / 11</div>
       <div class="prog-sub" id="pSub"></div>
     </div>
   </div>
@@ -263,15 +324,15 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s0">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">STEP 1 スタートだ！まず<strong>「なぜFASTが必要なのか」</strong>を知ろう。これだけで学ぶ気が変わるよ！</div></div>
         </div>
         <div class="sec-ttl an d1"><div class="bar bar-r"></div>FASTが重要な理由</div>
         <div class="stat-list">
-          <div class="sc d an d2"><span class="sc-icon">💀</span><div><div class="sc-lbl">外傷死の主原因</div><div class="sc-txt">外傷による死亡の主原因は<br><span class="hi">「出血性ショック」</span>だ。</div></div></div>
-          <div class="sc d an d3"><span class="sc-icon">🫀</span><div><div class="sc-lbl">最大の危険</div><div class="sc-txt">腹腔内出血は<span class="hi">外見からわかりにくい</span>。<br>= 見逃しが命取りになる。</div></div></div>
-          <div class="sc i an d4"><span class="sc-icon">🔊</span><div><div class="sc-lbl">FASTの強み</div><div class="sc-txt">被曝なし・リアルタイム・<span class="hiy">繰り返し実施できる</span></div></div></div>
-          <div class="sc s an d5"><span class="sc-icon">⏱</span><div><div class="sc-lbl">スピード</div><div class="sc-txt">熟練者なら<span class="hig">2分以内に完了</span>＠ベッドサイド</div></div></div>
+          <div class="sc d an d2"><span class="sc-icon">💀</span><div class="sc-body"><div class="sc-lbl">外傷死の主原因</div><div class="sc-txt">外傷による死亡の主原因は<br><span class="hi">「出血性ショック」</span>だ。</div></div></div>
+          <div class="sc d an d3"><span class="sc-icon">🫀</span><div class="sc-body"><div class="sc-lbl">最大の危険</div><div class="sc-txt">腹腔内出血は<span class="hi">外見からわかりにくい</span>。<br>= 見逃しが命取りになる。</div></div></div>
+          <div class="sc i an d4"><span class="sc-icon">🔊</span><div class="sc-body"><div class="sc-lbl">FASTの強み</div><div class="sc-txt">被曝なし・リアルタイム・<span class="hiy">繰り返し実施できる</span></div></div></div>
+          <div class="sc s an d5"><span class="sc-icon">⏱</span><div class="sc-body"><div class="sc-lbl">スピード</div><div class="sc-txt">熟練者なら<span class="hig">2分以内に完了</span>＠ベッドサイド</div></div></div>
         </div>
       </div>
 
@@ -279,7 +340,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s1">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">ここが一番大事なポイント！<br>頭に焼き付けておいてね🔥</div></div>
         </div>
         <div class="kp an d1">
@@ -290,7 +351,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
         <div class="gap"></div>
         <div class="sonobo-card warn an d2">
           <div class="sb-img"><img src="assets/sonobo_1.png" alt="ソノボくん"></div>
-          <div><div class="sb-name w">💡 ポイント</div>
+          <div class="sb-body"><div class="sb-name w">💡 ポイント</div>
           <div class="sb-text">CTは詳しいけど<strong style="color:rgba(255,255,255,.9);">移動・準備・被曝</strong>が必要。FASTは<strong style="color:var(--gold);">その場で即スキャン</strong>できるのが強みだよ！</div></div>
         </div>
       </div>
@@ -299,7 +360,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s2">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_5.png" alt="ソノボくん"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">じゃあ実際の救急現場を体験しよう！<br>あなたは<strong>研修医</strong>としてこの患者さんを担当するよ👩‍⚕️</div></div>
         </div>
         <div class="sec-ttl an d1"><div class="bar bar-r"></div>🏥 緊迫の救急現場</div>
@@ -310,8 +371,8 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="sonobo-card red an d3">
           <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん驚き"></div>
-          <div><div class="sb-name r">🚨 ソノボくん</div>
-          <div class="sb-text" style="color:rgba(255,255,255,.88);">「徐々にぐったり」「血圧低下」…<strong style="color:#fca5a5;">赤信号</strong>だ！受け入れ準備をしながら診察計画を立てよう。</div></div>
+          <div class="sb-body"><div class="sb-name r">🚨 ソノボくん</div>
+          <div class="sb-text">「徐々にぐったり」「血圧低下」…<strong style="color:#fca5a5;">赤信号</strong>だ！受け入れ準備をしながら診察計画を立てよう。</div></div>
         </div>
       </div>
 
@@ -319,7 +380,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s3">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_7.png" alt="ソノボくん"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">患者さんが搬入された！バイタルと外表をチェックしよう。</div></div>
         </div>
         <div class="vitals-card an d1">
@@ -348,8 +409,8 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s4">
         <div class="sonobo-card red an">
           <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん驚き"></div>
-          <div><div class="sb-name r">🚨 ソノボくん</div>
-          <div class="sb-text" style="color:rgba(255,255,255,.9);">搬入から<strong style="color:#fca5a5;">わずか2分</strong>で状況が一変した！</div></div>
+          <div class="sb-body"><div class="sb-name r">🚨 ソノボくん</div>
+          <div class="sb-text">搬入から<strong style="color:#fca5a5;">わずか2分</strong>で状況が一変した！</div></div>
         </div>
         <div class="va an d1">
           <div class="va-title">⬇️ バイタル急激に悪化（2分後）</div>
@@ -360,12 +421,12 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="sc d an d2" style="margin-bottom:14px;">
           <span class="sc-icon">🥶</span>
-          <div><div class="sc-lbl">身体所見</div><div class="sc-txt">末梢冷感・発汗あり。<br><span class="hi">出血性ショックが進行している。</span></div></div>
+          <div class="sc-body"><div class="sc-lbl">身体所見</div><div class="sc-txt">末梢冷感・発汗あり。<br><span class="hi">出血性ショックが進行している。</span></div></div>
         </div>
         <div class="sonobo-card red an d3">
           <div class="sb-img"><img src="assets/sonobo_9.png" alt="ソノボくん困り顔"></div>
-          <div><div class="sb-name r">🤖 ソノボくん</div>
-          <div class="sb-text" style="color:rgba(255,255,255,.9);">これが<strong style="color:#fca5a5;">「見えない出血」の怖さ</strong>。外見は普通でも体の中で大量出血している。次の一手が命を左右する！</div></div>
+          <div class="sb-body"><div class="sb-name r">🤖 ソノボくん</div>
+          <div class="sb-text">これが<strong style="color:#fca5a5;">「見えない出血」の怖さ</strong>。外見は普通でも体の中で大量出血している。次の一手が命を左右する！</div></div>
         </div>
       </div>
 
@@ -373,7 +434,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s5">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">ここが<strong>分岐点</strong>！次の行動で患者さんの運命が変わる。<br>あなたならどう動く？</div></div>
         </div>
         <div class="kp an d1" style="animation:none;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);">
@@ -385,13 +446,13 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="gap"></div>
         <div style="display:flex;flex-direction:column;gap:9px;" class="an d2">
-          <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius-sm);padding:13px;display:flex;align-items:center;gap:10px;">
-            <span style="font-size:22px;">❌</span>
-            <div style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6;">採血・CT準備を優先する</div>
+          <div class="choice-btn choice-bad">
+            <span class="choice-icon">❌</span>
+            <span class="choice-txt">採血・CT準備を優先する</span>
           </div>
-          <div style="background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:var(--radius-sm);padding:13px;display:flex;align-items:center;gap:10px;">
-            <span style="font-size:22px;">✅</span>
-            <div style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6;">ベッドサイドでFASTを即実施</div>
+          <div class="choice-btn choice-good">
+            <span class="choice-icon">✅</span>
+            <span class="choice-txt">ベッドサイドでFASTを即実施</span>
           </div>
         </div>
       </div>
@@ -400,7 +461,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s6">
         <div class="sonobo-card red an">
           <div class="sb-img"><img src="assets/sonobo_9.png" alt="ソノボくん注意"></div>
-          <div><div class="sb-name r">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name r">🤖 ソノボくん</div>
           <div class="sb-text">もし<strong style="color:#fca5a5;">FASTをやらずに</strong>検査を進めたら…どうなる？</div></div>
         </div>
         <div class="bc no an d1">
@@ -414,7 +475,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="sonobo-card red an d2">
           <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん驚き"></div>
-          <div><div class="sb-name r">😱 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name r">😱 ソノボくん</div>
           <div class="sb-text">CTは大事だけど、<strong style="color:#fca5a5;">「まず出血があるかどうか」</strong>を確認しないで動くのは危険。貴重な数分を失う。</div></div>
         </div>
       </div>
@@ -423,7 +484,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s7">
         <div class="sonobo-card grn an">
           <div class="sb-img"><img src="assets/sonobo_3.png" alt="ソノボくんサムズアップ"></div>
-          <div><div class="sb-name g">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name g">🤖 ソノボくん</div>
           <div class="sb-text"><strong style="color:#4ade80;">FASTを即実施</strong>したら？実際の所見を見てみよう！</div></div>
         </div>
         <div class="bc yes an d1">
@@ -446,14 +507,14 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s8">
         <div class="res an">
           <div class="res-sb"><img src="assets/sonobo_6.png" alt="ソノボくんジャンプ"></div>
-          <div>
+          <div class="res-body">
             <div class="res-title">🎉 FASTが命を救った！</div>
             <div class="res-txt">わずか数分のスキャンが、10〜15分の検査ロスを防ぎ、患者さんの命をつないだ。<br><strong style="color:#4ade80;">これがFASTの力。</strong></div>
           </div>
         </div>
         <div class="sonobo-card grn an d1">
           <div class="sb-img"><img src="assets/sonobo_3.png" alt="ソノボくんサムズアップ"></div>
-          <div><div class="sb-name g">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name g">🤖 ソノボくん</div>
           <div class="sb-text">FASTを<strong style="color:#4ade80;">「知っていた」から</strong>救えた命。これがこのアプリで学ぶ意味だよ。<br>次はクイズで確認しよう！</div></div>
         </div>
       </div>
@@ -462,7 +523,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s9">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん電球"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">理解チェック！クイズに答えてみよう 🧠</div></div>
         </div>
         <div class="an d1">
@@ -481,7 +542,7 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
       <div class="slide" id="s10">
         <div class="sonobo-card an">
           <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん電球"></div>
-          <div><div class="sb-name">🤖 ソノボくん</div>
+          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
           <div class="sb-text">もう1問！これができればSTEP 1 クリアだ✨</div></div>
         </div>
         <div class="an d1">
@@ -503,10 +564,39 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
         <div class="gap"></div>
       </div>
 
+      <!-- S11: 完了画面 ★NEW -->
+      <div class="slide" id="s11">
+        <div class="complete-screen">
+          <div class="complete-badge">🏅</div>
+          <div class="complete-title">STEP 1 クリア！</div>
+          <div class="complete-sub">FASTの重要性をマスターした！<br>なぜFASTが命を救うのか、しっかり理解できたね。</div>
+
+          <div class="complete-sonobo">
+            <img src="assets/sonobo_6.png" alt="ソノボくんジャンプ">
+          </div>
+
+          <div class="complete-sum">
+            <div class="sum-lbl">✅ 今日の学び</div>
+            <div class="sp"><div class="sp-n">1</div><div class="sp-t">出血性ショックは外見ではわからない</div></div>
+            <div class="sp"><div class="sp-n">2</div><div class="sp-t">FASTは2分でベッドサイドで判断できる</div></div>
+            <div class="sp"><div class="sp-n">3</div><div class="sp-t">早期FASTが救命率を上げる</div></div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn-step2" onclick="window.location.href='step2.html'">
+              <span>📚 STEP 2へ進む</span><span style="font-size:18px;">→</span>
+            </button>
+            <button class="btn-home" onclick="window.location.href='index.html'">
+              <span>🏠</span><span>ホーム（モジュール選択）に戻る</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /slides-track -->
   </div><!-- /slide-viewport -->
 
-  <div class="bottom-nav">
+  <div class="bottom-nav" id="bottomNav">
     <button class="btn-prev" id="bPrev" onclick="go(-1)" disabled>←</button>
     <button class="btn-next" id="bNext" onclick="go(1)">次へ →</button>
   </div>
@@ -514,178 +604,70 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 </div>
 
 <script>
-// ── STARS ──────────────────────────────────────────────
+// stars
 const bg=document.getElementById('bgCanvas');
 for(let i=0;i<50;i++){const s=document.createElement('div');s.className='star';const z=Math.random()*2+.4;s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.5+.12};`;bg.appendChild(s);}
 
-// ══════════════════════════════════════════════════════
-//  AUDIO ENGINE
-//  GitHub Pages (https) + サイレントスイッチOFF で動作
-//  iOS Safari: 最初のタップで AudioContext をアンロック
-// ══════════════════════════════════════════════════════
-let actx = null;
-let muted = false;
-let hbInterval = null;
+// TOTAL = 12 slides (s0〜s11)
+const TOTAL=12;
+const TITLES=['なぜFASTが必要か','一番大事なポイント','緊迫の救急現場','搬入時バイタル','2分後の急変','ここが分岐点！','FASTなし → 最悪の展開','FASTあり → 救命へ','結末','クイズ 1','クイズ 2 + まとめ','✅ STEP 1 クリア！'];
+let cur=0;
 
-function getCtx() {
-  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-  if (actx.state === 'suspended') actx.resume();
-  return actx;
+const track=document.getElementById('sTrack');
+const pFill=document.getElementById('pFill');
+const pStep=document.getElementById('pStep');
+const pSub=document.getElementById('pSub');
+const bPrev=document.getElementById('bPrev');
+const bNext=document.getElementById('bNext');
+const hTitle=document.getElementById('hTitle');
+const bottomNav=document.getElementById('bottomNav');
+
+function updateUI(){
+  track.style.transform=`translateX(-${cur*100}%)`;
+  const pct=Math.round((cur+1)/TOTAL*100);
+  pFill.style.width=pct+'%';
+  pStep.textContent=`${cur+1} / ${TOTAL}`;
+  pSub.textContent=TITLES[cur];
+  hTitle.textContent=TITLES[cur];
+  bPrev.disabled=cur===0;
+
+  const isComplete = cur===TOTAL-1;
+  // 完了画面ではボトムナビを非表示
+  bottomNav.style.display = isComplete ? 'none' : 'flex';
+
+  if(!isComplete){
+    bNext.textContent='次へ →';
+    bNext.className='btn-next';
+  }
+
+  // re-trigger animations
+  const sl=document.getElementById('s'+cur);
+  sl.querySelectorAll('.an').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
 }
 
-function beep(freq, type, start, dur, vol) {
-  const ctx = getCtx();
-  const now = ctx.currentTime;
-  const osc = ctx.createOscillator();
-  const g   = ctx.createGain();
-  osc.connect(g); g.connect(ctx.destination);
-  osc.type = type;
-  osc.frequency.value = freq;
-  g.gain.setValueAtTime(0,   now + start);
-  g.gain.linearRampToValueAtTime(vol, now + start + 0.01);
-  g.gain.setValueAtTime(vol, now + start + dur - 0.03);
-  g.gain.linearRampToValueAtTime(0,   now + start + dur);
-  osc.start(now + start);
-  osc.stop( now + start + dur + 0.01);
-}
-
-// ミュートボタン
-const muteBtn = document.getElementById('muteBtn');
-muteBtn.addEventListener('click', () => {
-  getCtx();
-  muted = !muted;
-  muteBtn.textContent = muted ? '🔇' : '🔊';
-  muteBtn.classList.toggle('muted', muted);
-  if (muted) stopHeartbeat();
-});
-
-// 🚨 ホットラインブザー
-function playBuzzer() {
-  if (muted) return;
-  [0, 0.60].forEach(off => {
-    [0, 0.13, 0.26].forEach(d => beep(900, 'square',   off+d, 0.09, 0.22));
-    beep(110, 'sawtooth', off, 0.40, 0.08);
-  });
-}
-
-// 💓 心拍音
-const hbFlash = document.getElementById('hbFlash');
-function playOneBeat() {
-  if (muted || !actx) return;
-  const ctx = actx;
-  const now = ctx.currentTime;
-  const osc = ctx.createOscillator();
-  const g   = ctx.createGain();
-  osc.connect(g); g.connect(ctx.destination);
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(900, now);
-  osc.frequency.linearRampToValueAtTime(450, now + 0.08);
-  g.gain.setValueAtTime(0.28, now);
-  g.gain.linearRampToValueAtTime(0, now + 0.18);
-  osc.start(now); osc.stop(now + 0.19);
-  hbFlash.style.opacity = '1';
-  setTimeout(() => { hbFlash.style.opacity = '0'; }, 100);
-}
-function startHeartbeat(bpm) {
-  stopHeartbeat();
-  playOneBeat();
-  hbInterval = setInterval(playOneBeat, Math.round(60000 / bpm));
-}
-function stopHeartbeat() {
-  if (hbInterval) { clearInterval(hbInterval); hbInterval = null; }
-  hbFlash.style.opacity = '0';
-}
-
-// ✅ 正解音
-function playCorrect() {
-  if (muted) return;
-  [523.25, 659.25, 783.99, 1046.5].forEach((f,i) => beep(f, 'sine', i*0.10, 0.25, 0.22));
-}
-
-// ❌ 不正解音
-function playWrong() {
-  if (muted) return;
-  beep(320, 'sawtooth', 0.00, 0.22, 0.18);
-  beep(220, 'sawtooth', 0.23, 0.28, 0.18);
-}
-
-// 🎺 ファンファーレ
-function playFanfare() {
-  if (muted) return;
-  [[523.25,0.00,0.16],[659.25,0.14,0.16],[783.99,0.28,0.16],
-   [1046.5,0.42,0.48],[880.00,0.44,0.48],[659.25,0.46,0.48]
-  ].forEach(([f,s,d]) => beep(f, 'triangle', s, d, 0.18));
-  beep(130, 'sine', 0.42, 0.55, 0.28);
-}
-
-// ══════════════════════════════════════════════════════
-//  SLIDE ENGINE
-// ══════════════════════════════════════════════════════
-const TOTAL  = 11;
-const TITLES = [
-  'なぜFASTが必要か','一番大事なポイント','緊迫の救急現場',
-  '搬入時バイタル','2分後の急変','ここが分岐点！',
-  'FASTなし → 最悪の展開','FASTあり → 救命へ',
-  '結末','クイズ 1','クイズ 2 + まとめ'
-];
-let cur = 0;
-const track  = document.getElementById('sTrack');
-const pFill  = document.getElementById('pFill');
-const pStep  = document.getElementById('pStep');
-const pSub   = document.getElementById('pSub');
-const bPrev  = document.getElementById('bPrev');
-const bNext  = document.getElementById('bNext');
-const hTitle = document.getElementById('hTitle');
-
-function triggerSlideAudio(idx) {
-  stopHeartbeat();
-  if (idx === 2) playBuzzer();
-  if (idx === 4) startHeartbeat(130);
-  if (idx === 8) playFanfare();
-}
-
-function updateUI() {
-  track.style.transform = `translateX(-${cur*100}%)`;
-  const pct = Math.round((cur+1)/TOTAL*100);
-  pFill.style.width = pct + '%';
-  pStep.textContent  = `${cur+1} / ${TOTAL}`;
-  pSub.textContent   = TITLES[cur];
-  hTitle.textContent = TITLES[cur];
-  bPrev.disabled = cur === 0;
-  const last = cur === TOTAL-1;
-  bNext.textContent = last ? '✅ STEP 2へ進む →' : '次へ →';
-  bNext.className   = 'btn-next' + (last ? ' finish' : '');
-  const sl = document.getElementById('s'+cur);
-  sl.querySelectorAll('.an').forEach(el => {
-    el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
-  });
-}
-
-function go(dir) {
-  getCtx(); // ← タップ文脈内でアンロック（iOS必須）
-  if (dir > 0 && cur === TOTAL-1) { window.location.href = 'step2.html'; return; }
-  cur = Math.max(0, Math.min(TOTAL-1, cur+dir));
+function go(dir){
+  const next=cur+dir;
+  if(next<0||next>=TOTAL)return;
+  cur=next;
   updateUI();
-  triggerSlideAudio(cur); // ← 同じタップ文脈内で発火
 }
 
-const FB = {
+// quiz
+const FB={
   q1:{ok:'✅ 正解！腹腔内出血は「外見からわからない」のが怖い。傷も血も見えないまま体の中で出血が続く。だからFASTで素早く確認が必要！',
       ng:'❌ 残念…正解は②。腹腔内出血は外表から判断できない。見逃されやすいから致命的になる。'},
   q2:{ok:'✅ 正解！CTと違い、移動・準備・被曝なしでベッドサイドで即スキャンできる。「出血あり/なし」を数分で判断できるのが最大の武器！',
       ng:'❌ 残念…正解は③。FASTは骨折診断には向かないし、画質もCT・MRIに劣る。でも「出血の有無を即座に判断する」能力は唯一無二！'}
 };
 
-function ansQ(id, idx, ok) {
-  getCtx(); // ← タップ文脈内でアンロック
-  document.querySelectorAll(`#${id}opts .qopt`).forEach((o,i) => {
+function ansQ(id,idx,ok){
+  document.querySelectorAll(`#${id}opts .qopt`).forEach((o,i)=>{
     o.classList.add('disabled');
-    if (i === idx) o.classList.add(ok ? 'correct' : 'wrong');
+    if(i===idx)o.classList.add(ok?'correct':'wrong');
   });
-  const fb = document.getElementById(`${id}fb`);
-  fb.textContent = ok ? FB[id].ok : FB[id].ng;
-  fb.className   = 'qfb show ' + (ok ? 'ok' : 'ng');
-  if (ok) playCorrect(); else playWrong();
+  const fb=document.getElementById(`${id}fb`);
+  fb.textContent=ok?FB[id].ok:FB[id].ng;
+  fb.className='qfb show '+(ok?'ok':'ng');
 }
 
 updateUI();
