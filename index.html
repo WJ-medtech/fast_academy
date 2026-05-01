@@ -746,6 +746,27 @@ function animateHomeBar() {
       }, 4000);
       history.replaceState(null, '', window.location.pathname);
     }
+
+    // step3完了から戻ってきた場合
+    if (from === 'step3') {
+      const banner = document.getElementById('step1DoneBanner');
+      if (banner) {
+        banner.querySelector('.s1-title').textContent = '✅ STEP 3 クリア！お帰り！';
+        banner.querySelector('.s1-text').textContent = '準備〜プローブ操作をマスターした。次はSTEP 4で実際に当ててみよう！';
+        banner.style.display = 'flex';
+      }
+      setTimeout(() => {
+        document.getElementById('overallBar').style.width = '60%';
+        document.getElementById('overallPct').textContent = '60%';
+        document.getElementById('progressChip').textContent = '3 / 5 完了';
+      }, 400);
+      setTimeout(() => {
+        const b = document.getElementById('step1DoneBanner');
+        if (b) { b.style.transition = 'opacity 1s ease'; b.style.opacity = '0'; }
+        setTimeout(() => { if (b) b.style.display = 'none'; }, 1000);
+      }, 4000);
+      history.replaceState(null, '', window.location.pathname);
+    }
   }
 })();
 
