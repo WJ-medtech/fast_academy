@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FAST Academy – ホーム</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue-deep:#0a1628;--blue-mid:#1a3a6e;--blue-vivid:#1565d8;
+  --blue-bright:#3d8ef0;--blue-light:#7bb8f8;
+  --white:#fff;--gold:#f5c842;--green:#22c55e;
+  --radius:20px;--radius-sm:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
+  background:var(--blue-deep);color:var(--white);overflow-x:hidden;}
+
+.bg-canvas{position:fixed;inset:0;z-index:0;overflow:hidden;
+  background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);}
+.bg-canvas::before{content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(21,101,216,.25) 0%,transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 80%,rgba(61,142,240,.15) 0%,transparent 60%);}
+.star{position:absolute;border-radius:50%;background:white;opacity:0;
+  animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out;}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--op,.7);transform:scale(1)}}
+
+.app-wrapper{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+
+/* ===== HOME ===== */
+.home-header{background:rgba(8,16,36,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:16px 20px 12px;position:sticky;top:0;z-index:50;}
+.home-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.app-logo{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;color:var(--white);
+  letter-spacing:2px;text-shadow:0 0 18px rgba(61,142,240,.6);}
+.app-logo span{color:var(--blue-bright);}
+.progress-chip{font-size:11px;color:var(--blue-light);font-weight:700;
+  background:rgba(21,101,216,.2);border:1px solid rgba(61,142,240,.3);
+  padding:4px 10px;border-radius:20px;}
+.overall-bar-wrap{display:flex;align-items:center;gap:10px;}
+.overall-bar-bg{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
+.overall-bar-fill{height:100%;border-radius:10px;
+  background:linear-gradient(90deg,var(--blue-bright) 0%,var(--blue-light) 100%);
+  width:0%;transition:width 1s ease;}
+.overall-pct{font-size:11px;color:var(--blue-light);font-weight:700;min-width:28px;}
+
+.mini-banner{margin:18px 16px 0;
+  background:linear-gradient(135deg,rgba(21,101,216,.18) 0%,rgba(10,60,150,.25) 100%);
+  border:1px solid rgba(61,142,240,.22);border-radius:var(--radius);
+  padding:14px;display:flex;align-items:center;gap:12px;}
+.mini-sonobo{width:56px;height:56px;flex-shrink:0;}
+.mini-sonobo img{width:100%;height:100%;object-fit:contain;}
+.mini-bubble-name{font-size:10px;color:var(--blue-light);font-weight:700;margin-bottom:3px;}
+.mini-bubble-text{font-size:13px;line-height:1.5;color:rgba(255,255,255,.82);word-break:break-all;overflow-wrap:break-word;min-width:0;
+  transition:opacity .3s ease;}
+
+.section-label{margin:26px 16px 10px;font-size:11px;font-weight:700;letter-spacing:3px;
+  color:var(--blue-light);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(61,142,240,.3) 0%,transparent 100%);}
+
+/* MODULE CARDS */
+.modules-list{padding:0 16px 40px;display:flex;flex-direction:column;gap:12px;}
+.module-card{border-radius:var(--radius);overflow:hidden;position:relative;
+  cursor:pointer;transition:transform .2s ease;box-shadow:0 4px 20px rgba(0,0,0,.3);
+  text-decoration:none;display:block;color:inherit;}
+.module-card:active{transform:scale(.98);}
+
+.module-card-inner{padding:18px;display:flex;align-items:center;gap:14px;position:relative;z-index:2;min-width:0;overflow:hidden;}
+.card-glow{position:absolute;inset:0;opacity:.4;z-index:1;
+  background:radial-gradient(ellipse 80% 60% at 15% 50%,rgba(61,142,240,.15) 0%,transparent 60%);}
+.card-intro{background:linear-gradient(135deg,#0a2a5e 0%,#0f3a82 100%);border:1px solid rgba(61,142,240,.3);}
+.card-1{background:linear-gradient(135deg,#0d1f4d 0%,#1a3875 100%);border:1px solid rgba(61,142,240,.22);}
+.card-2{background:linear-gradient(135deg,#0d2a52 0%,#0f4080 100%);border:1px solid rgba(61,142,240,.22);}
+.card-3{background:linear-gradient(135deg,#0d2244 0%,#0f3566 100%);border:1px solid rgba(61,142,240,.22);}
+.card-4{background:linear-gradient(135deg,#0a1f42 0%,#0d3060 100%);border:1px solid rgba(61,142,240,.22);}
+.card-5{background:linear-gradient(135deg,#0a1c3d 0%,#0d2a55 100%);border:1px solid rgba(61,142,240,.22);}
+.card-ai{background:linear-gradient(135deg,#1a0a3d 0%,#2d0f6e 100%);border:1px solid rgba(147,112,219,.4);}
+.card-ai::after{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--radius);
+  background:linear-gradient(105deg,transparent 40%,rgba(168,85,247,.08) 50%,transparent 60%);
+  background-size:200% 100%;animation:shimmer 3s infinite linear;}
+
+.module-icon-wrap{width:52px;height:52px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);}
+.module-badge{position:absolute;top:-5px;right:-5px;width:20px;height:20px;border-radius:50%;
+  font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;
+  background:var(--gold);color:var(--blue-deep);}
+.badge-lock{background:rgba(255,255,255,.2);color:white;}
+.badge-ai{background:linear-gradient(135deg,#a855f7,#6366f1);color:white;}
+
+.module-info{flex:1;min-width:0;overflow:hidden;}
+.module-step{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:2px;color:rgba(255,255,255,.55);}
+.module-step.ai-label{color:#c084fc;}
+.module-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;
+  line-height:1.3;margin-bottom:4px;color:var(--white);
+  word-break:break-all;overflow-wrap:break-word;}
+.module-desc{font-size:11px;color:rgba(255,255,255,.5);line-height:1.5;
+  word-break:break-all;overflow-wrap:break-word;}
+.module-meta{display:flex;align-items:center;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.meta-chip{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;
+  background:rgba(255,255,255,.07);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.1);}
+.meta-chip.done{background:rgba(34,197,94,.15);color:#4ade80;border-color:rgba(34,197,94,.3);}
+.meta-chip.active{background:rgba(21,101,216,.3);color:var(--blue-light);border-color:rgba(61,142,240,.4);}
+.meta-chip.ai{background:rgba(168,85,247,.2);color:#c084fc;border-color:rgba(168,85,247,.4);}
+.meta-chip.warn{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.3);}
+.module-arrow{font-size:18px;color:rgba(255,255,255,.28);flex-shrink:0;}
+.card-progress-bar{height:3px;position:relative;z-index:2;background:rgba(255,255,255,.05);}
+.card-progress-fill{height:100%;
+  background:linear-gradient(90deg,var(--blue-bright) 0%,var(--blue-light) 100%);
+  transition:width 1.2s ease;}
+
+/* AI sub-buttons */
+.ai-sub-btns{padding:0 16px 14px;display:flex;gap:10px;position:relative;z-index:2;}
+.ai-sub-btn{flex:1;padding:12px 8px;border:none;border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:12px;font-weight:900;
+  display:flex;flex-direction:column;align-items:center;gap:4px;transition:transform .15s ease;}
+.ai-sub-btn:active{transform:scale(.96);}
+.ai-sub-btn .btn-icon{font-size:20px;}
+.ai-sub-btn.guide{background:linear-gradient(135deg,rgba(99,102,241,.25),rgba(99,102,241,.15));
+  color:#a5b4fc;border:1px solid rgba(99,102,241,.3);}
+.ai-sub-btn.analyze{background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(124,58,237,.2));
+  color:#c084fc;border:1px solid rgba(168,85,247,.4);}
+
+.scroll-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
+/* STEP1完了バナー */
+.step1-done-banner{
+  margin:16px 16px 0;
+  background:linear-gradient(135deg,rgba(22,101,52,.22),rgba(20,83,45,.28));
+  border:1px solid rgba(34,197,94,.35);border-radius:var(--radius);
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  animation:fadeIn .5s ease;
+}
+.step1-done-banner .s1-icon{font-size:28px;flex-shrink:0;}
+.step1-done-banner .s1-body{flex:1;min-width:0;overflow:hidden;}
+.step1-done-banner .s1-title{font-size:12px;font-weight:900;color:#4ade80;margin-bottom:2px;}
+.step1-done-banner .s1-text{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;
+  word-break:break-all;overflow-wrap:break-word;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(4,13,31,.85);backdrop-filter:blur(8px);
+  align-items:flex-end;justify-content:center;}
+.modal-overlay.open{display:flex;animation:fadeIn .25s ease;}
+.modal-sheet{width:100%;max-width:430px;
+  background:linear-gradient(180deg,#0f2050 0%,#081530 100%);
+  border-top:1px solid rgba(61,142,240,.28);border-radius:24px 24px 0 0;
+  padding:28px 24px 50px;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);text-align:center;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:38px;height:4px;background:rgba(255,255,255,.14);border-radius:2px;margin:0 auto 22px;}
+.modal-btn{width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
+  border:none;border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;}
+.modal-btn:active{transform:scale(.98);}
+</style>
+</head>
+<body>
+<div class="bg-canvas" id="bgCanvas"></div>
+<div class="app-wrapper">
+
+<!-- ========== HOME ========== -->
+<div class="home-header">
+  <div class="home-header-top">
+    <div class="app-logo">FAST<span>Academy</span></div>
+    <div class="progress-chip" id="progressChip">0 / 5 完了</div>
+  </div>
+  <div class="overall-bar-wrap">
+    <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallBar"></div></div>
+    <div class="overall-pct" id="overallPct">0%</div>
+  </div>
+</div>
+<div class="scroll-content">
+  <div class="mini-banner">
+    <div class="mini-sonobo"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
+    <div style="flex:1;min-width:0;overflow:hidden;">
+      <div class="mini-bubble-name">🤖 ソノボくんTips</div>
+      <div class="mini-bubble-text" id="miniBubbleText">一緒に学んでいこう！どのステップから始める？</div>
+    </div>
+  </div>
+
+  <!-- STEP完了バナー -->
+  <div class="step1-done-banner" id="step1DoneBanner" style="display:none;">
+    <span class="s1-icon">🎉</span>
+    <div class="s1-body">
+      <div class="s1-title" id="bannerTitle">✅ STEP 1 クリア！お帰り！</div>
+      <div class="s1-text" id="bannerText">FASTの重要性をマスターした。次はSTEP 2の解剖知識に挑戦しよう！</div>
+    </div>
+  </div>
+
+  <div class="section-label">学習モジュール</div>
+  <div class="modules-list">
+
+    <!-- INTRO -->
+    <a class="module-card card-intro" href="intro.html">
+      <div class="card-glow"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap">🤖<div class="module-badge">✓</div></div>
+        <div class="module-info">
+          <div class="module-step">INTRO</div>
+          <div class="module-title">FASTとは？</div>
+          <div class="module-desc">ソノボくんの自己紹介・FASTの世界へようこそ</div>
+          <div class="module-meta"><span class="meta-chip done">✓ 完了</span><span class="meta-chip">5分</span></div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:100%"></div></div>
+    </a>
+
+    <!-- STEP 1 -->
+    <a class="module-card card-1" href="step1.html" id="step1Card">
+      <div class="card-glow"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap">🚨<div class="module-badge" id="step1Badge">1</div></div>
+        <div class="module-info">
+          <div class="module-step">STEP 1</div>
+          <div class="module-title">FASTの重要性</div>
+          <div class="module-desc">会話劇で緊迫の救急現場を体験。なぜFASTが命を救うのか</div>
+          <div class="module-meta" id="step1Meta">
+            <span class="meta-chip active">次に学ぼう</span>
+            <span class="meta-chip">10分</span>
+          </div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" id="step1Bar" style="width:0%"></div></div>
+    </a>
+
+    <!-- STEP 2 -->
+    <a class="module-card card-2" href="step2.html">
+      <div class="card-glow"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap">🫀<div class="module-badge">2</div></div>
+        <div class="module-info">
+          <div class="module-step">STEP 2</div>
+          <div class="module-title">解剖知識</div>
+          <div class="module-desc">FASTに必要な最小限の解剖。クイズ形式で楽しく習得</div>
+          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">15分</span></div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+    </a>
+
+    <!-- STEP 3 -->
+    <a class="module-card card-3" href="step3.html">
+      <div class="card-glow"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap">🔧<div class="module-badge">3</div></div>
+        <div class="module-info">
+          <div class="module-step">STEP 3</div>
+          <div class="module-title">準備〜エコーを当てる前に</div>
+          <div class="module-desc">機器の準備・プローブの動かし方をアニメーションで解説</div>
+          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">20分</span></div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+    </a>
+
+    <!-- STEP 4 -->
+    <a class="module-card card-4" href="step4.html">
+      <div class="card-glow"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap">📡<div class="module-badge">4</div></div>
+        <div class="module-info">
+          <div class="module-step">STEP 4</div>
+          <div class="module-title">実際に当ててみよう</div>
+          <div class="module-desc">FASTの4窓を実践。正しい描出ポイントを解説</div>
+          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">25分</span></div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+    </a>
+
+    <!-- STEP 5 -->
+    <a class="module-card card-5" href="step5.html">
+      <div class="card-glow"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap">🏆<div class="module-badge">5</div></div>
+        <div class="module-info">
+          <div class="module-step">STEP 5</div>
+          <div class="module-title">トレーニングモード</div>
+          <div class="module-desc">リアル症例シミュレーション。あなたが患者を救え！</div>
+          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">30分</span></div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+    </a>
+
+    <!-- AI TOOL -->
+    <div class="module-card card-ai">
+      <div class="card-glow"></div>
+      <div class="module-card-inner" style="padding-bottom:10px;">
+        <div class="module-icon-wrap" style="background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.3);">
+          🤖<div class="module-badge badge-ai">AI</div>
+        </div>
+        <div class="module-info">
+          <div class="module-step ai-label">AI TOOL — 画像解析</div>
+          <div class="module-title">エコー画像をAIに聞く</div>
+          <div class="module-desc">うまく描出できない・プローブの動かし方に迷ったときにAIが改善策を提示してくれる！</div>
+          <div class="module-meta">
+            <span class="meta-chip ai">✨ 無料で使える</span>
+            <span class="meta-chip warn">⚠️ モリソン窩のみ対応</span>
+          </div>
+        </div>
+      </div>
+      <div class="ai-sub-btns">
+        <a class="ai-sub-btn guide" href="ai-guide.html" style="text-decoration:none;">
+          <span class="btn-icon">📖</span>
+          <span>使い方ガイド</span>
+        </a>
+        <button class="ai-sub-btn analyze" onclick="window.open('https://sonoforge.streamlit.app/','_blank')">
+          <span class="btn-icon">🔬</span>
+          <span>AI解析を開く</span>
+        </button>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- QUICK CHECK -->
+    <a class="module-card" href="quickcheck.html" style="background:linear-gradient(135deg,#0a2a1a 0%,#0f4030 100%);border:1px solid rgba(34,197,94,.3);text-decoration:none;display:block;color:inherit;">
+      <div class="card-glow" style="background:radial-gradient(ellipse 80% 60% at 15% 50%,rgba(34,197,94,.1) 0%,transparent 60%);"></div>
+      <div class="module-card-inner">
+        <div class="module-icon-wrap" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);">
+          ⚡<div class="module-badge" style="background:var(--green);color:var(--blue-deep);">2周</div>
+        </div>
+        <div class="module-info">
+          <div class="module-step" style="color:#4ade80;">2周目以降の方へ</div>
+          <div class="module-title">クイックチェック</div>
+          <div class="module-desc">重要ポイントを素早く復習。すでに学んだ知識を確認しよう</div>
+          <div class="module-meta">
+            <span class="meta-chip done">✓ 復習用</span>
+            <span class="meta-chip">準備中</span>
+          </div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%;background:linear-gradient(90deg,var(--green),#4ade80);"></div></div>
+    </a>
+
+    <!-- DISCLAIMER BUTTON -->
+    <button class="module-card" onclick="openDisclaimer()" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);width:100%;text-align:left;cursor:pointer;">
+      <div class="module-card-inner" style="padding:14px 18px;">
+        <div class="module-icon-wrap" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);font-size:20px;">⚠️</div>
+        <div class="module-info">
+          <div class="module-step" style="color:rgba(255,255,255,.4);">LEGAL</div>
+          <div class="module-title" style="font-size:14px;">注意事項・免責事項</div>
+          <div class="module-desc">本アプリの利用にあたって必ずご確認ください</div>
+        </div>
+        <div class="module-arrow">›</div>
+      </div>
+    </button>
+
+  </div>
+</div>
+
+<!-- DISCLAIMER MODAL -->
+<div class="modal-overlay" id="disclaimerModal" onclick="if(event.target===this)closeDisclaimer()">
+  <div class="modal-sheet" style="text-align:left;max-height:85vh;overflow-y:auto;">
+    <div class="modal-handle" style="margin:0 auto 18px;"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <span style="font-size:24px;">⚠️</span>
+      <h2 style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;">注意事項・免責事項</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 本アプリの目的は、初学者がFASTの基本的手技を身につけることにあります。本アプリのみでFASTを完全に習得できるものではありません。</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 標準的な体型の健康な若年男性を被検者として想定しています。</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 本アプリでは練習中のプライバシーに配慮し、膀胱直腸窩（ダグラス窩）の描出は省略しています。</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 一部、医学的に厳密ではない表現が含まれる場合があります。</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 14px;">
+        <p style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.8;">■ 本アプリに掲載されているイラストはイメージです。</p>
+      </div>
+      <div style="background:rgba(255,200,50,.07);border:1px solid rgba(245,200,66,.25);border-radius:12px;padding:13px 14px;">
+        <p style="font-size:12px;color:rgba(255,220,100,.85);line-height:1.8;">■ 本アプリの無断での共有はご遠慮ください。</p>
+      </div>
+    </div>
+    <button class="modal-btn" onclick="closeDisclaimer()">閉じる</button>
+  </div>
+</div>
+
+</div><!-- /app-wrapper -->
+
+<script>
+// ===== 背景 =====
+const bg = document.getElementById('bgCanvas');
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const sz = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.6+.2};`;
+  bg.appendChild(s);
+}
+
+// ===== モーダル =====
+function openDisclaimer(){ document.getElementById('disclaimerModal').classList.add('open'); }
+function closeDisclaimer(){ document.getElementById('disclaimerModal').classList.remove('open'); }
+
+// ===== ソノボくんTips =====
+const tips = [
+  '慣れてきたら4箇所を2分以内が目標！まずはゆっくり確認しよう⏱',
+  '一気に覚えなくて大丈夫！スモールステップで進もう🤖',
+  '4箇所の手順をしっかり身につければ、自信を持って動けるようになる！',
+];
+let ti = 0;
+setInterval(() => {
+  ti = (ti + 1) % tips.length;
+  const e = document.getElementById('miniBubbleText');
+  if (e) {
+    e.style.opacity = '0';
+    setTimeout(() => { e.textContent = tips[ti]; e.style.opacity = '1'; }, 300);
+  }
+}, 4500);
+
+// ===== URLパラメータ判定（stepXから戻ってきた場合） =====
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+
+  // 進捗バーアニメ（デフォルト）
+  setTimeout(() => {
+    document.getElementById('overallBar').style.width = '8%';
+    document.getElementById('overallPct').textContent = '8%';
+  }, 400);
+
+  const bannerConfigs = {
+    step1: { title: '✅ STEP 1 クリア！お帰り！', text: 'FASTの重要性をマスターした。次はSTEP 2の解剖知識に挑戦しよう！', pct: '20%', chip: '1 / 5 完了', bar: '20%',
+      badgeText: '✓', badgeBg: '#22c55e', metaHTML: '<span class="meta-chip done">✓ 完了</span><span class="meta-chip">10分</span>' },
+    step2: { title: '✅ STEP 2 クリア！お帰り！', text: 'FASTの解剖知識をマスターした。次はSTEP 3の準備編に挑戦しよう！', pct: '40%', chip: '2 / 5 完了', bar: '40%' },
+    step3: { title: '✅ STEP 3 クリア！お帰り！', text: '準備・プローブ操作をマスターした。次はSTEP 4の実践編に挑戦しよう！', pct: '60%', chip: '3 / 5 完了', bar: '60%' },
+    step4: { title: '✅ STEP 4 クリア！お帰り！', text: '実践描出をマスターした。次はSTEP 5のトレーニングモードで腕試し！', pct: '80%', chip: '4 / 5 完了', bar: '80%' },
+    step5: { title: '✅ STEP 5 クリア！お帰り！', text: 'トレーニングモードを完了！FASTの全ステップをマスターした。おめでとう🏆', pct: '100%', chip: '5 / 5 完了', bar: '100%' },
+  };
+
+  const cfg = bannerConfigs[from];
+  if (cfg) {
+    const banner = document.getElementById('step1DoneBanner');
+    if (banner) {
+      document.getElementById('bannerTitle').textContent = cfg.title;
+      document.getElementById('bannerText').textContent = cfg.text;
+      banner.style.display = 'flex';
+    }
+    setTimeout(() => {
+      document.getElementById('overallBar').style.width = cfg.bar;
+      document.getElementById('overallPct').textContent = cfg.pct;
+      document.getElementById('progressChip').textContent = cfg.chip;
+    }, 400);
+    if (from === 'step1' && cfg.badgeText) {
+      const badge = document.getElementById('step1Badge');
+      const meta = document.getElementById('step1Meta');
+      if (badge) { badge.textContent = cfg.badgeText; badge.style.background = cfg.badgeBg; badge.style.color = 'white'; }
+      if (meta) meta.innerHTML = cfg.metaHTML;
+      const bar = document.getElementById('step1Bar');
+      if (bar) bar.style.width = '100%';
+    }
+    setTimeout(() => {
+      const b = document.getElementById('step1DoneBanner');
+      if (b) { b.style.transition = 'opacity 1s ease'; b.style.opacity = '0'; }
+      setTimeout(() => { if (b) b.style.display = 'none'; }, 1000);
+    }, 4000);
+    history.replaceState(null, '', window.location.pathname);
+  }
+})();
+</script>
+</body>
+</html>
