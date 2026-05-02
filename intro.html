@@ -156,7 +156,8 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
 .btn-prev:disabled{opacity:.3;pointer-events:none;}
 .btn-next{background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);color:white;
   box-shadow:0 4px 20px rgba(21,101,216,.45);}
-.btn-finish{background:linear-gradient(135deg,var(--green),#16a34a);color:white;
+.btn-finish{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.18);}
+.btn-step1{background:linear-gradient(135deg,var(--green),#16a34a);color:white;
   box-shadow:0 4px 20px rgba(34,197,94,.35);}
 </style>
 </head>
@@ -348,9 +349,21 @@ function updateNav(){
   prev.disabled=current===0;
   if(current===TOTAL-1){
     next.className='nav-btn btn-finish';
-    next.textContent='📚 学習モジュールへ進む';
+    next.innerHTML='🏠 ホームへ戻る';
     next.onclick=()=>location.href='home.html';
+    // Step1ボタンを追加（まだなければ）
+    if(!document.getElementById('btnStep1')){
+      const step1Btn=document.createElement('button');
+      step1Btn.id='btnStep1';
+      step1Btn.className='nav-btn btn-step1';
+      step1Btn.innerHTML='Step 1 へ進む →';
+      step1Btn.onclick=()=>location.href='step1.html';
+      next.parentNode.appendChild(step1Btn);
+    }
   } else {
+    // Step1ボタンがあれば削除
+    const s1=document.getElementById('btnStep1');
+    if(s1) s1.remove();
     next.className='nav-btn btn-next';
     next.textContent='次へ →';
     next.onclick=()=>navigate(1);
