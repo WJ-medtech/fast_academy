@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FAST Academy – ホーム</title>
+<title>FAST Journey – ホーム</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -168,12 +168,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 <!-- ========== HOME ========== -->
 <div class="home-header">
   <div class="home-header-top">
-    <div class="app-logo">FAST<span>Academy</span></div>
-    <div class="progress-chip" id="progressChip">0 / 5 完了</div>
-  </div>
-  <div class="overall-bar-wrap">
-    <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallBar"></div></div>
-    <div class="overall-pct" id="overallPct">0%</div>
+    <div class="app-logo">FAST<span>Journey</span></div>
   </div>
 </div>
 <div class="scroll-content">
@@ -181,7 +176,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="mini-sonobo"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
     <div style="flex:1;min-width:0;overflow:hidden;">
       <div class="mini-bubble-name">🤖 ソノボくんTips</div>
-      <div class="mini-bubble-text" id="miniBubbleText">一緒に学んでいこう！どのステップから始める？</div>
+      <div class="mini-bubble-text" id="miniBubbleText">初めてでも大丈夫。自分のレベルに合ったSTEPから始めよう🚀</div>
     </div>
   </div>
 
@@ -190,7 +185,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <span class="s1-icon">🎉</span>
     <div class="s1-body">
       <div class="s1-title" id="bannerTitle">✅ STEP 1 クリア！お帰り！</div>
-      <div class="s1-text" id="bannerText">FASTの重要性をマスターした。次はSTEP 2の解剖知識に挑戦しよう！</div>
+      <div class="s1-text" id="bannerText">FASTの重要性をマスターした。次はSTEP 2の解剖知識へ進もう！</div>
     </div>
   </div>
 
@@ -201,16 +196,16 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <a class="module-card card-intro" href="intro.html">
       <div class="card-glow"></div>
       <div class="module-card-inner">
-        <div class="module-icon-wrap">🤖<div class="module-badge">✓</div></div>
+        <div class="module-icon-wrap">🤖</div>
         <div class="module-info">
           <div class="module-step">INTRO</div>
           <div class="module-title">FASTとは？</div>
           <div class="module-desc">ソノボくんの自己紹介・FASTの世界へようこそ</div>
-          <div class="module-meta"><span class="meta-chip done">✓ 完了</span><span class="meta-chip">5分</span></div>
+          <div class="module-meta"></div>
         </div>
         <div class="module-arrow">›</div>
       </div>
-      <div class="card-progress-bar"><div class="card-progress-fill" style="width:100%"></div></div>
+      <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
     </a>
 
     <!-- STEP 1 -->
@@ -222,10 +217,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="module-step">STEP 1</div>
           <div class="module-title">FASTの重要性</div>
           <div class="module-desc">会話劇で緊迫の救急現場を体験。なぜFASTが命を救うのか</div>
-          <div class="module-meta" id="step1Meta">
-            <span class="meta-chip active">次に学ぼう</span>
-            <span class="meta-chip">10分</span>
-          </div>
+          <div class="module-meta" id="step1Meta"></div>
         </div>
         <div class="module-arrow">›</div>
       </div>
@@ -241,7 +233,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="module-step">STEP 2</div>
           <div class="module-title">解剖知識</div>
           <div class="module-desc">FASTに必要な最小限の解剖。クイズ形式で楽しく習得</div>
-          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">15分</span></div>
+          <div class="module-meta"></div>
         </div>
         <div class="module-arrow">›</div>
       </div>
@@ -257,7 +249,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="module-step">STEP 3</div>
           <div class="module-title">準備〜エコーを当てる前に</div>
           <div class="module-desc">機器の準備・プローブの動かし方をアニメーションで解説</div>
-          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">20分</span></div>
+          <div class="module-meta"></div>
         </div>
         <div class="module-arrow">›</div>
       </div>
@@ -273,7 +265,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="module-step">STEP 4</div>
           <div class="module-title">実際に当ててみよう</div>
           <div class="module-desc">FASTの4窓を実践。正しい描出ポイントを解説</div>
-          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">25分</span></div>
+          <div class="module-meta"></div>
         </div>
         <div class="module-arrow">›</div>
       </div>
@@ -289,7 +281,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="module-step">STEP 5</div>
           <div class="module-title">トレーニングモード</div>
           <div class="module-desc">リアル症例シミュレーション。あなたが患者を救え！</div>
-          <div class="module-meta"><span class="meta-chip active">挑戦しよう</span><span class="meta-chip">30分</span></div>
+          <div class="module-meta"></div>
         </div>
         <div class="module-arrow">›</div>
       </div>
@@ -414,6 +406,8 @@ function closeDisclaimer(){ document.getElementById('disclaimerModal').classList
 
 // ===== ソノボくんTips =====
 const tips = [
+  '初めてでも大丈夫。自分のレベルに合ったSTEPから始めよう🚀',
+  'FASTが初めてならSTEP 1から。解剖に自信があればSTEP 3から始めてもOK！',
   '慣れてきたら4箇所を2分以内が目標！まずはゆっくり確認しよう⏱',
   '一気に覚えなくて大丈夫！スモールステップで進もう🤖',
   '4箇所の手順をしっかり身につければ、自信を持って動けるようになる！',
@@ -433,19 +427,15 @@ setInterval(() => {
   const params = new URLSearchParams(window.location.search);
   const from = params.get('from');
 
-  // 進捗バーアニメ（デフォルト）
-  setTimeout(() => {
-    document.getElementById('overallBar').style.width = '8%';
-    document.getElementById('overallPct').textContent = '8%';
-  }, 400);
+  // 進捗バーアニメ（デフォルト）- 削除済み
 
   const bannerConfigs = {
-    step1: { title: '✅ STEP 1 クリア！お帰り！', text: 'FASTの重要性をマスターした。次はSTEP 2の解剖知識に挑戦しよう！', pct: '20%', chip: '1 / 5 完了', bar: '20%',
-      badgeText: '✓', badgeBg: '#22c55e', metaHTML: '<span class="meta-chip done">✓ 完了</span><span class="meta-chip">10分</span>' },
-    step2: { title: '✅ STEP 2 クリア！お帰り！', text: 'FASTの解剖知識をマスターした。次はSTEP 3の準備編に挑戦しよう！', pct: '40%', chip: '2 / 5 完了', bar: '40%' },
-    step3: { title: '✅ STEP 3 クリア！お帰り！', text: '準備・プローブ操作をマスターした。次はSTEP 4の実践編に挑戦しよう！', pct: '60%', chip: '3 / 5 完了', bar: '60%' },
-    step4: { title: '✅ STEP 4 クリア！お帰り！', text: '実践描出をマスターした。次はSTEP 5のトレーニングモードで腕試し！', pct: '80%', chip: '4 / 5 完了', bar: '80%' },
-    step5: { title: '✅ STEP 5 クリア！お帰り！', text: 'トレーニングモードを完了！FASTの全ステップをマスターした。おめでとう🏆', pct: '100%', chip: '5 / 5 完了', bar: '100%' },
+    step1: { title: '✅ STEP 1 クリア！お帰り！', text: 'FASTの重要性をマスターした。次はSTEP 2の解剖知識へ進もう！',
+      badgeText: '✓', badgeBg: '#22c55e', metaHTML: '<span class="meta-chip done">✓ 完了</span>' },
+    step2: { title: '✅ STEP 2 クリア！お帰り！', text: 'FASTの解剖知識をマスターした。次はSTEP 3の準備編へ進もう！' },
+    step3: { title: '✅ STEP 3 クリア！お帰り！', text: '準備・プローブ操作をマスターした。次はSTEP 4の実践編へ進もう！' },
+    step4: { title: '✅ STEP 4 クリア！お帰り！', text: '実践描出をマスターした。次はSTEP 5のトレーニングモードへ進もう！' },
+    step5: { title: '✅ STEP 5 クリア！お帰り！', text: 'トレーニングモードを完了！FASTの全ステップをマスターした。おめでとう🏆' },
   };
 
   const cfg = bannerConfigs[from];
@@ -456,11 +446,6 @@ setInterval(() => {
       document.getElementById('bannerText').textContent = cfg.text;
       banner.style.display = 'flex';
     }
-    setTimeout(() => {
-      document.getElementById('overallBar').style.width = cfg.bar;
-      document.getElementById('overallPct').textContent = cfg.pct;
-      document.getElementById('progressChip').textContent = cfg.chip;
-    }, 400);
     if (from === 'step1' && cfg.badgeText) {
       const badge = document.getElementById('step1Badge');
       const meta = document.getElementById('step1Meta');
