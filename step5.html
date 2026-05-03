@@ -206,7 +206,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <!-- HEADER -->
   <div class="page-header">
     <div class="header-row">
-      <a class="back-btn" href="index.html">←</a>
+      <a class="back-btn" href="home.html">←</a>
       <div class="header-meta">
         <div class="step-label">STEP 5 — トレーニングモード</div>
         <div class="header-title">症例シミュレーション 🚨</div>
@@ -239,15 +239,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <svg class="ecg-svg" id="ecgSvg" viewBox="0 0 800 26" preserveAspectRatio="none"></svg>
         </div>
       </div>
-      <div class="fast-map" id="fastMap">
-        <div class="fm-title">FAST 進捗マップ</div>
-        <div class="fm-grid">
-          <div class="fm-item" id="fm-sub"><span class="fm-icon">💛</span><div class="fm-name">心窩部</div><div class="fm-res" id="fr-sub"></div></div>
-          <div class="fm-item" id="fm-rub"><span class="fm-icon">🫁</span><div class="fm-name">右上腹部</div><div class="fm-res" id="fr-rub"></div></div>
-          <div class="fm-item" id="fm-lub"><span class="fm-icon">🫀</span><div class="fm-name">左上腹部</div><div class="fm-res" id="fr-lub"></div></div>
-          <div class="fm-item" id="fm-pel"><span class="fm-icon">🔵</span><div class="fm-name">骨盤</div><div class="fm-res" id="fr-pel"></div></div>
-        </div>
-      </div>
     </div>
 
     <!-- DIALOGUE STREAM -->
@@ -262,19 +253,19 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       <div class="res-sub" id="resSub">振り返りを確認しよう。</div>
       <div class="score-card">
         <div class="sc-row"><span class="sc-label">判断の正確さ</span><span class="sc-val" id="scScore">-</span></div>
-        <div class="sc-row"><span class="sc-label">FAST所見まとめ</span><span class="sc-val">脾腎窩・骨盤に液体貯留（陽性）</span></div>
+        <div class="sc-row"><span class="sc-label">FAST所見まとめ</span><span class="sc-val">脾周囲・骨盤に液体貯留（陽性）</span></div>
         <div class="sc-row"><span class="sc-label">診断</span><span class="sc-val">腹腔内出血（脾損傷疑い）</span></div>
         <div class="sc-row"><span class="sc-label">緊急度</span><span class="sc-val">🔴 外科コール・緊急手術/IVR</span></div>
       </div>
       <div class="review-card">
         <div class="rev-title">🎓 振り返りポイント</div>
         <div class="rev-item"><div class="rev-dot"></div><div class="rev-text"><strong>バイタル不安定＋FAST陽性</strong>のセットを見たら、即外科コール。CTはその後でいい。</div></div>
-        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">左側腹部打撲では<strong>脾損傷を先に疑う</strong>。脾腎窩は念入りに確認する習慣をつけよう。</div></div>
+        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">左側腹部打撲では<strong>脾損傷を先に疑う</strong>。脾周囲は念入りに確認する習慣をつけよう。</div></div>
         <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">FASTは「ある / ない」のYES/NOツール。<strong>2分以内に答えを出す</strong>ことが目標。</div></div>
-        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">心窩部・モリソン窩が陰性でも<strong>脾腎窩を省略しない</strong>。4窓全部当てる習慣が命を救う。</div></div>
+        <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">心窩部・モリソン窩が陰性でも<strong>脾周囲を省略しない</strong>。4窓全部当てる習慣が命を救う。</div></div>
       </div>
       <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
-      <a href="index.html?screen=home&from=step5" style="display:block;"><button class="btn-home">🏠 ホームに戻る</button></a>
+      <a href="home.html?screen=home&from=step5" style="display:block;"><button class="btn-home">🏠 ホームに戻る</button></a>
     </div>
 
   </div>
@@ -494,7 +485,6 @@ const STEPS=[
   div('FAST ① ─ 心窩部ビュー');
   sb('sonobo_5.png',
     `最初は<strong>心窩部</strong>。剣状突起のすぐ下にプローブを当てる。<br>
-     プローブマーカーは<strong>患者の右肩方向</strong>。<br>
      心臓を画面全体に描出して、心膜腔を確認しよう。`);
   askDep('心窩部ビュー',
     ()=>{
@@ -517,20 +507,20 @@ const STEPS=[
 ()=>{
   setProgress(38);
   clearNow();setMap('rub','now');
-  div('FAST ② ─ 右上腹部（モリソン窩）');
+  div('FAST ② ─ モリソン窩・右側腹部');
   sb('sonobo_5.png',
-    `次は<strong>右上腹部・モリソン窩</strong>。<br>
-     右の肋骨弓の下、中腋窩線〜後腋窩線あたりにプローブを当てる。<br>
+    `次は<strong>モリソン窩・右側腹部</strong>。<br>
+     剣状突起の高さ、中腋窩線あたりに肋間に沿ってプローブを当てる。<br>
      <strong>肝臓と右腎臓の間</strong>に液体がないか探す。`);
   askDep('モリソン窩ビュー',
     ()=>{
       sndPing();
-      fnd('neg','📋','右上腹部（モリソン窩）─ 所見',
+      fnd('neg','📋','モリソン窩・右側腹部─ 所見',
         `<strong>モリソン窩：液体貯留なし</strong><br>
-         肝臓と右腎臓の間にエコーフリースペースを認めない。<br>
+         肝臓と右腎臓の間にエコーフリースペースを認めない。胸水も認めない。<br>
          ➜ <span class="neg-txt">この部位での出血は否定的。</span>`);
       setMap('rub','neg');
-      nxt('次：左上腹部を確認する',()=>run(3));
+      nxt('次：脾周囲を確認する',()=>run(3));
     },
     'モリソン窩が映らないときは',
     `・プローブを肋骨弓下に当て、やや内側上方へ傾ける<br>
@@ -540,34 +530,32 @@ const STEPS=[
   );
 },
 
-/* 3: 左上腹部（脾腎窩）────────────────────────────────────────── */
+/* 3: 脾周囲────────────────────────────────────────── */
 ()=>{
   setProgress(56);
   clearNow();setMap('lub','now');
-  div('FAST ③ ─ 左上腹部（脾腎窩）');
+  div('FAST ③ ─ 脾周囲');
   sndAlert();
   alrt('warn','⚡','左側腹部打撲の症例！ → 脾損傷を最優先に疑う。念入りに確認する');
   sb('sonobo_8.png',
-    `<strong>左上腹部・脾腎窩</strong>だ。<br>
+    `<strong>脾周囲</strong>だ。<br>
      <span class="red">今回の症例は左側腹部打撲。脾損傷の可能性が高い。</span><br>
-     左肋骨弓の下、後腋窩線よりやや背中側にプローブを当てる。<br>
-     <strong>脾臓と左腎臓の間</strong>を探せ。`,true);
+     液体貯留が無いか念入りに探せ。`,true);
   askDep('脾腎窩ビュー',
     ()=>{
       sndPing();
       setTimeout(()=>sndAlert(),400);
-      fnd('pos','🔴','左上腹部（脾腎窩）─ 所見',
-        `<strong>脾腎窩：明らかな液体貯留あり</strong><br>
-         脾臓と左腎臓の間に<strong>エコーフリーの暗い領域</strong>を認める。<br>
-         脾臓の上方・周囲にも液体が広がっている。<br>
+      fnd('pos','🔴','脾周囲─ 所見',
+        `<strong>脾周囲：明らかな液体貯留あり</strong><br>
+         脾周囲に<strong>エコーフリーの暗い領域</strong>を認める。<br>
          ➜ <span class="pos-txt">脾損傷による腹腔内出血を強く疑う。<br>この時点でFAST陽性！</span>`);
       setMap('lub','pos');
       alrt('danger','🚨','FAST陽性確認！ — 引き続き骨盤を確認する');
       nxt('次：骨盤を確認する',()=>run(4));
     },
-    '脾腎窩が映らないときは',
-    `・右上腹部より難しい。プローブを<strong>左の背中側へ回す</strong>イメージ<br>
-     ・後腋窩線〜肩甲骨中線あたりを狙う<br>
+    '脾周囲が映らないときは',
+    `・モリソン窩より難しい。プローブを<strong>左の背中側へ回す</strong>イメージ<br>
+     ・後腋窩線あたりを狙う<br>
      ・肋骨弓下から肋間を狙うと描出しやすいことがある<br>
      ・呼気で止めてもらうと脾臓が下がりやすい<br>
      ・「映らない＝ない」ではない。体位変換（右側臥位）も有効`
@@ -605,8 +593,8 @@ const STEPS=[
   sb('sonobo_8.png',
     `<strong>FASTの結果を整理する。</strong><br><br>
      ・心窩部　　：<span class="neg-txt">陰性（液体なし）</span><br>
-     ・右上腹部　：<span class="neg-txt">陰性（液体なし）</span><br>
-     ・左上腹部　：<span class="pos-txt">陽性 ← 脾腎窩に液体貯留あり</span><br>
+     ・モリソン窩：<span class="neg-txt">陰性（液体なし）</span><br>
+     ・脾周囲　：<span class="pos-txt">陽性 ← 脾周囲に液体貯留あり</span><br>
      ・骨盤　　　：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
      バイタルは依然として<span class="red">BP 92/60、HR 118</span>。<br>
      <strong>今すぐ何をする？</strong>`,true);
