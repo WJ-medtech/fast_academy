@@ -15,6 +15,8 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   background:var(--blue-deep);color:var(--white);overflow-x:hidden;}
+/* ===== GLOBAL OVERFLOW PREVENTION ===== */
+*{max-width:100%;word-break:break-word;overflow-wrap:break-word;}
 
 .bg-canvas{position:fixed;inset:0;z-index:0;overflow:hidden;
   background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);}
@@ -98,7 +100,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 .img-card{border-radius:var(--radius-sm);overflow:hidden;
   border:1px solid rgba(61,142,240,.2);box-shadow:0 4px 20px rgba(0,0,0,.5);
   margin-bottom:12px;}
-.img-card img{width:100%;height:auto;display:block;}
+.img-card img{width:100%;height:auto;display:block;object-fit:contain;}
 .img-caption{padding:8px 12px;background:rgba(21,101,216,.15);
   font-size:11px;color:var(--blue-light);font-weight:700;}
 
@@ -109,7 +111,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   border:1px solid rgba(255,255,255,.07);}
 .info-icon{font-size:18px;flex-shrink:0;line-height:1.4;}
 .info-text{font-size:13px;line-height:1.7;color:rgba(255,255,255,.85);
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-word;overflow-wrap:break-word;}
 .info-text strong{color:var(--blue-light);}
 
 /* ===== HIGHLIGHT BOX ===== */
@@ -118,7 +120,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
 .hi-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
 .highlight-box p{font-size:13px;color:rgba(255,255,255,.88);line-height:1.7;
-  word-break:keep-all;overflow-wrap:break-word;}
+  word-break:break-word;overflow-wrap:break-word;}
 
 .warn-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);
   border-radius:var(--radius-sm);padding:12px 14px;
@@ -186,72 +188,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,.7);
   transition:transform .2s ease;text-decoration:none;display:flex;align-items:center;justify-content:center;}
 
-/* ===== CURTAIN ANIMATION ===== */
-.curtain-demo{position:relative;width:100%;height:200px;
-  background:#0a1628;border-radius:var(--radius-sm);overflow:hidden;
-  border:1px solid rgba(61,142,240,.2);margin-bottom:12px;}
-
-/* 超音波画面風の背景 */
-.curtain-screen{position:absolute;inset:0;
-  background:linear-gradient(180deg,#000510 0%,#001020 40%,#000820 100%);}
-.curtain-screen-label{position:absolute;top:8px;left:10px;font-size:10px;
-  color:rgba(61,142,240,.7);font-family:'Orbitron',sans-serif;letter-spacing:1px;}
-.curtain-screen-label2{position:absolute;top:8px;right:10px;font-size:9px;
-  color:rgba(61,142,240,.5);font-family:'Orbitron',sans-serif;}
-
-/* 横隔膜ライン */
-.diaphragm-line{position:absolute;bottom:55px;left:0;right:0;height:2px;
-  background:rgba(180,200,255,.4);border-radius:1px;}
-
-/* 肺テクスチャ（上部・明るいグレー） */
-.lung-area{position:absolute;top:0;left:0;right:0;bottom:57px;
-  background:linear-gradient(180deg,rgba(120,140,160,.25) 0%,rgba(80,100,120,.15) 100%);}
-.lung-text{position:absolute;top:20px;left:50%;transform:translateX(-50%);
-  font-size:11px;color:rgba(180,200,255,.6);font-weight:700;}
-
-/* 腹部（下部） */
-.abdomen-area{position:absolute;bottom:0;left:0;right:0;height:55px;
-  background:rgba(40,60,80,.3);}
-.abdomen-text{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-  font-size:10px;color:rgba(100,150,200,.5);}
-
-/* カーテン本体（肺が横隔膜を越えて動く） */
-.curtain{position:absolute;left:0;bottom:57px;width:60%;height:85px;
-  background:linear-gradient(180deg,rgba(120,140,160,.55) 0%,rgba(90,110,130,.35) 100%);
-  border-radius:0 0 8px 0;transform-origin:top left;}
-
-/* 呼吸インジケーター */
-.breath-indicator{position:absolute;bottom:8px;right:10px;
-  font-size:10px;color:rgba(61,142,240,.8);font-weight:700;}
-
-/* カーテンサインあり（正常）＝カーテンが動くアニメーション */
-@keyframes curtainNormal{
-  0%  {width:35%;bottom:57px;height:70px;opacity:.9;}
-  30% {width:55%;bottom:45px;height:95px;opacity:.85;}
-  60% {width:35%;bottom:57px;height:70px;opacity:.9;}
-  100%{width:35%;bottom:57px;height:70px;opacity:.9;}
-}
-/* カーテンサインなし（胸水あり）＝ほぼ動かない */
-@keyframes curtainAbnormal{
-  0%  {width:35%;height:70px;opacity:.6;}
-  100%{width:36%;height:71px;opacity:.6;}
-}
-
-.curtain.normal-anim{animation:curtainNormal 3.5s ease-in-out infinite;}
-.curtain.abnormal-anim{animation:curtainAbnormal 3.5s ease-in-out infinite;}
-
-/* カーテンデモ切り替えボタン */
-.curtain-toggle-wrap{display:flex;gap:8px;margin-bottom:8px;}
-.curtain-toggle{flex:1;padding:10px;border-radius:var(--radius-sm);cursor:pointer;
-  font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif;
-  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
-  color:rgba(255,255,255,.6);transition:all .25s ease;}
-.curtain-toggle.active-normal{background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.4);color:#4ade80;}
-.curtain-toggle.active-abnormal{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);color:#fca5a5;}
-.curtain-status{text-align:center;font-size:12px;font-weight:700;padding:6px;
-  border-radius:8px;margin-bottom:12px;}
-.curtain-status.normal{color:#4ade80;background:rgba(34,197,94,.1);}
-.curtain-status.abnormal{color:#fca5a5;background:rgba(239,68,68,.08);}
+/* ===== CURTAIN ANIMATION (removed) ===== */
 
 /* ===== OVERALL PROGRESS ===== */
 .progress-section{background:rgba(21,101,216,.12);border:1px solid rgba(61,142,240,.2);
@@ -650,12 +587,12 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     </div>
   </div>
 
-  <!-- カーテンサイン アニメーション -->
+  <!-- カーテンサイン 画像 -->
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">🪟</div>
       <div>
-        <div class="step-num-label">POINT 3 — アニメーション</div>
+        <div class="step-num-label">POINT 3</div>
         <div class="step-title">カーテンサインとは？</div>
       </div>
     </div>
@@ -666,36 +603,9 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         <p>プローブを<strong>1肋間頭側に上げて</strong>息を吸ってもらう→カーテンサインを確認（胸水評価）</p>
       </div>
 
-      <div style="margin-bottom:10px;">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:rgba(255,255,255,.8);">🎬 アニメーションで確認：</div>
-        <div class="curtain-toggle-wrap">
-          <button class="curtain-toggle active-normal" id="btn-normal" onclick="setCurtain('normal')">✅ 正常（胸水なし）</button>
-          <button class="curtain-toggle" id="btn-abnormal" onclick="setCurtain('abnormal')">🚨 胸水あり</button>
-        </div>
-        <div class="curtain-status normal" id="curtain-status">✅ カーテンサインあり → 胸水なし（正常）</div>
-      </div>
-
-      <!-- カーテンアニメーション本体 -->
-      <div class="curtain-demo">
-        <div class="curtain-screen">
-          <div class="curtain-screen-label">ECHO</div>
-          <div class="curtain-screen-label2">6C3</div>
-        </div>
-        <!-- 肺エリア -->
-        <div class="lung-area">
-          <div class="lung-text" id="lungText">肺 💨</div>
-        </div>
-        <!-- 横隔膜ライン -->
-        <div class="diaphragm-line"></div>
-        <div style="position:absolute;bottom:53px;right:10px;font-size:9px;color:rgba(180,200,255,.5);font-weight:700;">横隔膜</div>
-        <!-- 腹部 -->
-        <div class="abdomen-area">
-          <div class="abdomen-text">腹部</div>
-        </div>
-        <!-- カーテン（肺が動く） -->
-        <div class="curtain normal-anim" id="curtainEl"></div>
-        <!-- 呼吸インジケーター -->
-        <div class="breath-indicator" id="breathInd">😮‍💨 息を吸う...</div>
+      <div class="img-card">
+        <img src="images/img_08.jpeg" alt="カーテンサイン">
+        <div class="img-caption">▲ カーテンサイン：正常（左）vs 胸水あり（右）</div>
       </div>
 
       <div class="info-list" style="margin-top:12px;">
@@ -768,6 +678,16 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       <div class="highlight-box">
         <span class="hi-icon">💡</span>
         <p>膀胱に尿が入っていると見やすい。尿が少ない場合は<strong style="color:#f5c842">描出が難しいことも</strong>ある。</p>
+      </div>
+
+      <!-- 膀胱直腸窩/ダグラス窩 準備中 -->
+      <div style="background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.2);
+        border-radius:var(--radius-sm);padding:16px;text-align:center;margin-top:8px;">
+        <div style="font-size:24px;margin-bottom:8px;">🚧</div>
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;">膀胱直腸窩 / ダグラス窩</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;">
+          実際の手技動画・画像は準備中です<br>近日公開予定！
+        </div>
       </div>
     </div>
   </div>
@@ -922,39 +842,6 @@ function toggleCheck(el) {
   const done = document.querySelectorAll('.check-item.checked');
   if (done.length === all.length) {
     document.getElementById('complete-msg').style.display = 'block';
-  }
-}
-
-// Curtain animation toggle
-let curtainMode = 'normal';
-function setCurtain(mode) {
-  curtainMode = mode;
-  const el = document.getElementById('curtainEl');
-  const status = document.getElementById('curtain-status');
-  const btnN = document.getElementById('btn-normal');
-  const btnA = document.getElementById('btn-abnormal');
-  const breathInd = document.getElementById('breathInd');
-  const lungText = document.getElementById('lungText');
-
-  el.className = 'curtain';
-  void el.offsetWidth; // reflow
-
-  if (mode === 'normal') {
-    el.classList.add('normal-anim');
-    status.className = 'curtain-status normal';
-    status.textContent = '✅ カーテンサインあり → 胸水なし（正常）';
-    btnN.className = 'curtain-toggle active-normal';
-    btnA.className = 'curtain-toggle';
-    breathInd.textContent = '😮‍💨 息を吸う...';
-    lungText.textContent = '肺 💨';
-  } else {
-    el.classList.add('abnormal-anim');
-    status.className = 'curtain-status abnormal';
-    status.textContent = '🚨 カーテンサインなし → 胸水貯留を疑う！';
-    btnN.className = 'curtain-toggle';
-    btnA.className = 'curtain-toggle active-abnormal';
-    breathInd.textContent = '⚠️ 肺が動かない...';
-    lungText.textContent = '肺 ⚠️';
   }
 }
 
