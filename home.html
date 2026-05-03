@@ -241,7 +241,55 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
 .nav-icon{font-size:22px;line-height:1;}
 .nav-label{font-size:9px;letter-spacing:.3px;white-space:nowrap;}
 
-/* ===== モーダル ===== */
+/* ===== AI TOOL カード ===== */
+.ai-tool-card{
+  margin:6px 16px 0;
+  background:linear-gradient(135deg,rgba(80,20,160,.28),rgba(40,10,90,.35));
+  border:1.5px solid rgba(168,85,247,.45);border-radius:var(--radius);
+  padding:16px 16px 14px;
+  box-shadow:0 0 28px rgba(140,50,230,.15),inset 0 1px 0 rgba(255,255,255,.07);
+  min-width:0;overflow:hidden;}
+.ai-tool-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;
+  min-width:0;overflow:hidden;}
+.ai-tool-badge{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:10px;font-weight:900;color:white;
+  box-shadow:0 0 14px rgba(168,85,247,.5);}
+.ai-tool-title-block{flex:1;min-width:0;overflow:hidden;}
+.ai-tool-subtitle{font-size:9px;color:rgba(168,85,247,.7);letter-spacing:1.5px;font-weight:700;
+  word-break:break-all;overflow-wrap:break-word;}
+.ai-tool-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;
+  color:white;word-break:break-all;overflow-wrap:break-word;}
+.ai-tool-desc{font-size:12px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:10px;
+  word-break:break-all;overflow-wrap:break-word;}
+.ai-tool-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-width:0;}
+.ai-chip{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;
+  white-space:nowrap;}
+.ai-chip.free{
+  background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.4);
+  color:#d8b4fe;}
+.ai-chip.warn{
+  background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);
+  color:#fcd34d;}
+.ai-tool-btns{display:flex;gap:10px;min-width:0;}
+.ai-btn-guide,.ai-btn-open{
+  flex:1;min-width:0;padding:12px 8px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;font-weight:900;
+  text-decoration:none;cursor:pointer;transition:transform .18s ease;
+  word-break:break-all;overflow-wrap:break-word;}
+.ai-btn-guide:active,.ai-btn-open:active{transform:scale(.96);}
+.ai-btn-guide{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.8);}
+.ai-btn-open{
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  border:none;color:white;
+  box-shadow:0 4px 18px rgba(140,50,230,.4);}
+
+
 .modal-overlay{display:none;position:fixed;inset:0;z-index:200;
   background:rgba(2,6,18,.9);backdrop-filter:blur(10px);
   align-items:flex-end;justify-content:center;}
@@ -309,6 +357,27 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
     <div class="clear-body">
       <p class="clear-title" id="clearTitle">ミッションクリア！</p>
       <p class="clear-text" id="clearText">次のミッションへ進もう！</p>
+    </div>
+  </div>
+
+  <!-- ===== AI TOOL カード ===== -->
+  <div class="section-label">🤖 AI TOOL</div>
+  <div class="ai-tool-card">
+    <div class="ai-tool-header">
+      <div class="ai-tool-badge">AI</div>
+      <div class="ai-tool-title-block">
+        <div class="ai-tool-subtitle">AI TOOL — 画像解析</div>
+        <div class="ai-tool-title">エコー画像をAIに聞く</div>
+      </div>
+    </div>
+    <p class="ai-tool-desc">うまく描出できない・プローブの動かし方に迷ったときにAIが改善策を提示してくれる！</p>
+    <div class="ai-tool-chips">
+      <span class="ai-chip free">✦ 無料で使える</span>
+      <span class="ai-chip warn">⚠ モリソン窩のみ対応</span>
+    </div>
+    <div class="ai-tool-btns">
+      <a class="ai-btn-guide" href="ai-guide.html" onclick="playSound('tap')">📖 使い方ガイド</a>
+      <a class="ai-btn-open" href="https://sonoforge.streamlit.app/" target="_blank" onclick="playSound('warp')">🔬 AI解析を開く</a>
     </div>
   </div>
 
@@ -523,7 +592,7 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
     <span class="nav-icon">🗺️</span>
     <span class="nav-label">MAP</span>
   </button>
-  <a class="nav-btn" href="ai-guide.html" onclick="playSound('tap')">
+  <a class="nav-btn" href="https://sonoforge.streamlit.app/" target="_blank" onclick="playSound('tap')">
     <span class="nav-icon">🤖</span>
     <span class="nav-label">AI TOOL</span>
   </a>
