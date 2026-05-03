@@ -3,608 +3,867 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>STEP 1 – FASTの重要性 | FAST Academy</title>
+<title>FAST Journey — 惑星オリジン | Step 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --blue-deep:#0a1628;--blue-mid:#1a3a6e;--blue-vivid:#1565d8;
-  --blue-bright:#3d8ef0;--blue-light:#7bb8f8;
-  --white:#fff;--gold:#f5c842;--green:#22c55e;
-  --red:#ef4444;--radius:20px;--radius-sm:12px;
+:root {
+  --blue-deep:   #0a1628;
+  --blue-mid:    #1a3a6e;
+  --blue-vivid:  #1565d8;
+  --blue-bright: #3d8ef0;
+  --blue-light:  #7bb8f8;
+  --white:       #ffffff;
+  --gold:        #f5c842;
+  --green:       #22c55e;
+  --red:         #ef4444;
+  --purple:      #a855f7;
+  --radius:    20px;
+  --radius-sm: 12px;
+  --radius-lg: 28px;
+  --nav-h: 64px;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
-  background:var(--blue-deep);color:var(--white);overflow:hidden;}
 
-.bg-canvas{position:fixed;inset:0;z-index:0;
-  background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);}
-.bg-canvas::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(21,101,216,.22) 0%,transparent 70%),
-             radial-gradient(ellipse 50% 40% at 90% 80%,rgba(61,142,240,.12) 0%,transparent 60%);}
-.star{position:absolute;border-radius:50%;background:#fff;opacity:0;
-  animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out;}
-@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--op,.6);transform:scale(1)}}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { width:100%; min-height:100vh; overflow-x:hidden; font-family:'Noto Sans JP',sans-serif; background:var(--blue-deep); color:var(--white); }
 
-.app-wrapper{position:relative;z-index:1;max-width:430px;margin:0 auto;
-  height:100dvh;display:flex;flex-direction:column;}
+/* ===== BG ===== */
+.bg-canvas {
+  position:fixed; inset:0; z-index:0; overflow:hidden;
+  background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);
+}
+.bg-canvas::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(21,101,216,.25) 0%,transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 80%,rgba(61,142,240,.15) 0%,transparent 60%);
+}
+.star { position:absolute; border-radius:50%; background:white; opacity:0; animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out; }
+@keyframes twinkle { 0%,100%{opacity:0;transform:scale(.5)} 50%{opacity:var(--op,.7);transform:scale(1)} }
 
-/* HEADER */
-.page-header{display:flex;align-items:center;gap:12px;
-  padding:14px 16px 10px;background:rgba(8,16,36,.97);backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;}
-.back-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:16px;flex-shrink:0;text-decoration:none;color:white;}
-.header-info{flex:1;min-width:0;overflow:hidden;}
-.page-step-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;}
-.page-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* ===== LAYOUT ===== */
+.app-wrapper {
+  position:relative; z-index:1;
+  max-width:430px; margin:0 auto;
+  min-height:100vh; display:flex; flex-direction:column;
+  min-width:0; overflow:hidden;
+}
 
-/* PROGRESS */
-.progress-bar-wrap{flex-shrink:0;padding:0 16px;background:rgba(8,16,36,.97);
-  border-bottom:1px solid rgba(255,255,255,.05);}
-.progress-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin:8px 0;}
-.progress-fill{height:100%;border-radius:2px;
-  background:linear-gradient(90deg,var(--blue-bright),var(--blue-light));
-  transition:width .45s cubic-bezier(.4,0,.2,1);}
-.progress-meta{display:flex;justify-content:space-between;padding-bottom:8px;}
-.prog-step{font-size:10px;color:rgba(255,255,255,.4);font-weight:700;}
-.prog-sub{font-size:10px;color:var(--blue-light);font-weight:700;
-  max-width:64%;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* ===== HEADER ===== */
+.page-header {
+  display:flex; align-items:center; gap:12px;
+  padding:14px 16px 10px;
+  background:rgba(8,16,36,.97); backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.07); flex-shrink:0;
+  min-width:0; overflow:hidden;
+}
+.back-btn {
+  width:36px; height:36px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:16px; flex-shrink:0;
+  text-decoration:none; color:white; transition:background .2s;
+}
+.back-btn:active { background:rgba(255,255,255,.15); }
+.header-info { flex:1; min-width:0; overflow:hidden; }
+.header-planet {
+  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:700;
+  letter-spacing:2px; color:var(--gold); opacity:.8; margin-bottom:1px;
+  word-break:break-all; overflow-wrap:break-word; min-width:0;
+}
+.header-title {
+  font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; font-weight:900;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
+}
+.fuel-display {
+  display:flex; align-items:center; gap:4px; flex-shrink:0;
+  min-width:0; overflow:hidden;
+}
+.fuel-icon { font-size:16px; }
+.fuel-bar-wrap { width:40px; height:6px; background:rgba(255,255,255,.1); border-radius:3px; overflow:hidden; }
+.fuel-bar { height:100%; background:linear-gradient(90deg,var(--gold),#fbbf24); border-radius:3px; transition:width .6s ease; width:0%; }
 
-/* SLIDE AREA */
-.slide-viewport{flex:1;overflow:hidden;position:relative;}
-.slides-track{display:flex;height:100%;transition:transform .38s cubic-bezier(.4,0,.2,1);will-change:transform;}
-.slide{min-width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 16px 16px;}
+/* ===== PROGRESS ===== */
+.progress-wrap {
+  flex-shrink:0; padding:0 16px;
+  background:rgba(8,16,36,.97);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.prog-track { height:3px; background:rgba(255,255,255,.08); border-radius:2px; margin:8px 0 0; }
+.prog-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--blue-bright),var(--blue-light)); transition:width .45s cubic-bezier(.4,0,.2,1); }
+.prog-meta { display:flex; justify-content:space-between; padding:5px 0 8px; min-width:0; overflow:hidden; }
+.prog-count { font-size:10px; color:rgba(255,255,255,.4); font-weight:700; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.prog-title { font-size:10px; color:var(--blue-light); font-weight:700; max-width:64%; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
 
-/* BOTTOM */
-.bottom-nav{flex-shrink:0;padding:10px 16px 18px;
-  background:rgba(8,16,36,.97);border-top:1px solid rgba(255,255,255,.07);
-  display:flex;gap:10px;align-items:center;}
-.btn-prev{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:18px;flex-shrink:0;transition:opacity .2s;color:white;}
-.btn-prev:disabled{opacity:.22;cursor:default;}
-.btn-next{flex:1;padding:14px;border:none;border-radius:var(--radius-sm);cursor:pointer;
-  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;
+/* ===== SLIDES ===== */
+.slide-viewport { flex:1; overflow:hidden; position:relative; }
+.slides-track { display:flex; height:100%; transition:transform .4s cubic-bezier(.4,0,.2,1); will-change:transform; }
+.slide { min-width:100%; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:18px 16px calc(var(--nav-h) + 24px); }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-bar {
+  flex-shrink:0; padding:8px 16px 16px;
+  background:rgba(8,16,36,.97); border-top:1px solid rgba(255,255,255,.07);
+  display:flex; gap:10px; align-items:center;
+  min-width:0; overflow:hidden;
+}
+.btn-prev {
+  width:44px; height:44px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:18px; flex-shrink:0;
+  transition:opacity .2s; color:white;
+}
+.btn-prev:disabled { opacity:.22; cursor:default; }
+.btn-next {
+  flex:1; padding:13px; border:none; border-radius:var(--radius-sm);
+  cursor:pointer; font-family:'Zen Kaku Gothic New',sans-serif;
+  font-size:15px; font-weight:900; color:white;
   background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
-  box-shadow:0 5px 20px rgba(21,101,216,.4);transition:transform .15s;}
-.btn-next:active{transform:scale(.97);}
-.btn-next.finish{background:linear-gradient(135deg,#166534,#15803d);box-shadow:0 5px 20px rgba(22,101,52,.4);}
+  box-shadow:0 5px 20px rgba(21,101,216,.4); transition:transform .15s;
+  word-break:break-all; overflow-wrap:break-word; min-width:0;
+}
+.btn-next:active { transform:scale(.97); }
 
-/* ANIMATIONS */
-@keyframes fadeSlide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@keyframes alarm{0%,100%{background:rgba(239,68,68,.08)}50%{background:rgba(239,68,68,.18)}}
-@keyframes glowRed{0%,100%{box-shadow:0 0 10px rgba(239,68,68,.2)}50%{box-shadow:0 0 26px rgba(239,68,68,.5)}}
-@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-@keyframes shimmerGold{0%{background-position:-200% center}100%{background-position:200% center}}
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideDown { from{opacity:0;transform:translateY(-14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes popIn     { from{opacity:0;transform:scale(.3)} to{opacity:1;transform:scale(1)} }
+@keyframes float     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes glowPulse { 0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1)} 50%{opacity:.9;transform:translateX(-50%) scaleX(1.2)} }
+@keyframes pulse     { 0%,100%{opacity:1} 50%{opacity:.5} }
+@keyframes alarm     { 0%,100%{background:rgba(239,68,68,.08)} 50%{background:rgba(239,68,68,.2)} }
+@keyframes shake     { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+@keyframes shimmer   { 0%{background-position:-200% center} 100%{background-position:200% center} }
+@keyframes scan      { 0%{transform:translateY(0)} 100%{transform:translateY(100%)} }
+@keyframes blink     { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes orbitRing { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+@keyframes fuelFill  { from{width:0%} to{width:100%} }
 
-.an{animation:fadeSlide .42s ease both;}
-.d1{animation-delay:.07s;}.d2{animation-delay:.14s;}.d3{animation-delay:.21s;}
-.d4{animation-delay:.28s;}.d5{animation-delay:.35s;}
+.an  { animation:fadeIn .42s ease both; }
+.d1  { animation-delay:.07s; }
+.d2  { animation-delay:.14s; }
+.d3  { animation-delay:.21s; }
+.d4  { animation-delay:.28s; }
+.d5  { animation-delay:.35s; }
 
-/* COMPONENTS */
-.sonobo-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  border-radius:var(--radius);padding:14px;display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;
-  min-width:0;overflow:hidden;}
-.sonobo-card.warn{border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.06);}
-.sonobo-card.grn{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.06);}
-.sonobo-card.red{border-color:rgba(239,68,68,.28);background:rgba(239,68,68,.07);}
-.sb-img{width:64px;height:64px;flex-shrink:0;}
-.sb-img img{width:100%;height:100%;object-fit:contain;
-  filter:drop-shadow(0 4px 10px rgba(21,101,216,.4));animation:float 3s ease-in-out infinite;}
-.sb-body{flex:1;min-width:0;overflow:hidden;}
-.sb-name{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:3px;color:var(--blue-light);}
-.sb-name.w{color:var(--gold);}.sb-name.g{color:#4ade80;}.sb-name.r{color:#fca5a5;}
-.sb-text{font-size:13px;line-height:1.68;color:rgba(255,255,255,.88);
-  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+/* ===== COMMON COMPONENTS ===== */
 
-.sec-ttl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;
-  margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.bar{width:4px;height:20px;border-radius:2px;flex-shrink:0;}
-.bar-r{background:var(--red);}.bar-b{background:linear-gradient(180deg,var(--blue-bright),var(--blue-vivid));}
-.bar-g{background:var(--green);}.bar-y{background:var(--gold);}
+/* glass card */
+.glass-card {
+  background:rgba(255,255,255,.06); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.12); border-radius:var(--radius);
+  box-shadow:0 4px 30px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);
+}
 
-.stat-list{display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
-.sc{border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:flex-start;gap:11px;
-  border:1px solid rgba(255,255,255,.07);min-width:0;overflow:hidden;}
-.sc.d{background:linear-gradient(135deg,rgba(127,29,29,.22),rgba(69,10,10,.28));border-color:rgba(239,68,68,.2);}
-.sc.i{background:rgba(21,101,216,.1);border-color:rgba(61,142,240,.16);}
-.sc.s{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.16);}
-.sc-icon{font-size:22px;flex-shrink:0;line-height:1.2;}
-.sc-body{flex:1;min-width:0;overflow:hidden;}
-.sc-lbl{font-size:9px;font-weight:700;letter-spacing:.8px;color:rgba(255,255,255,.38);margin-bottom:2px;}
-.sc-txt{font-size:13px;line-height:1.6;color:rgba(255,255,255,.85);
-  word-break:break-all;overflow-wrap:break-word;}
-.hi{color:#fca5a5;font-weight:900;}.hig{color:#4ade80;font-weight:900;}.hiy{color:var(--gold);font-weight:900;}
+/* sonobo */
+.sonobo-row {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:13px; border-radius:var(--radius);
+  margin-bottom:14px; min-width:0; overflow:hidden;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+}
+.sonobo-row.warn { border-color:rgba(245,200,66,.25); background:rgba(245,200,66,.06); }
+.sonobo-row.good { border-color:rgba(34,197,94,.25); background:rgba(34,197,94,.06); }
+.sonobo-row.danger { border-color:rgba(239,68,68,.28); background:rgba(239,68,68,.07); }
+.sonobo-img { width:64px; height:64px; flex-shrink:0; position:relative; }
+.sonobo-img img { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(21,101,216,.4)); animation:float 3.2s ease-in-out infinite; }
+.sonobo-glow { position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:50px; height:14px; background:radial-gradient(ellipse,rgba(21,101,216,.5) 0%,transparent 70%); border-radius:50%; animation:glowPulse 3.2s ease-in-out infinite; }
+.sonobo-body { flex:1; min-width:0; overflow:hidden; }
+.sonobo-label { font-size:9px; font-weight:700; letter-spacing:1px; margin-bottom:3px; color:var(--blue-light); word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.sonobo-label.warn { color:var(--gold); }
+.sonobo-label.good { color:#4ade80; }
+.sonobo-label.danger { color:#fca5a5; }
+.sonobo-text { font-size:13px; line-height:1.7; color:rgba(255,255,255,.9); word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
-.kp{background:linear-gradient(135deg,rgba(239,68,68,.13),rgba(127,29,29,.18));
-  border:1px solid rgba(239,68,68,.36);border-radius:var(--radius);
-  padding:14px;display:flex;gap:11px;align-items:flex-start;
-  animation:alarm 2.8s ease-in-out infinite;min-width:0;overflow:hidden;}
-.kp-icon{font-size:24px;flex-shrink:0;}
-.kp-txt{font-size:13px;line-height:1.7;color:rgba(255,255,255,.9);flex:1;min-width:0;
-  word-break:break-all;overflow-wrap:break-word;}
-.kp-txt strong{color:#fca5a5;font-size:14px;}
+/* section title */
+.sec-title { font-family:'Zen Kaku Gothic New',sans-serif; font-size:17px; font-weight:900; margin-bottom:12px; display:flex; align-items:center; gap:8px; min-width:0; overflow:hidden; }
+.sec-bar { width:4px; height:20px; border-radius:2px; flex-shrink:0; }
+.bar-red { background:var(--red); }
+.bar-blue { background:linear-gradient(180deg,var(--blue-bright),var(--blue-vivid)); }
+.bar-green { background:var(--green); }
+.bar-gold { background:var(--gold); }
+.sec-title span { word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
-.dispatch{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(10,26,60,.35));
-  border:1px solid rgba(239,68,68,.26);border-radius:var(--radius);
-  padding:14px;margin-bottom:14px;animation:glowRed 3s ease-in-out infinite;}
-.d-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;flex-wrap:wrap;}
-.d-badge{font-size:10px;font-weight:900;letter-spacing:1px;background:var(--red);
-  color:white;padding:3px 8px;border-radius:4px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0;}
-.d-time{font-size:11px;color:rgba(255,255,255,.36);}
-.d-text{font-size:13px;line-height:1.72;color:rgba(255,255,255,.88);
-  font-style:italic;border-left:2px solid rgba(239,68,68,.38);padding-left:11px;
-  word-break:break-all;overflow-wrap:break-word;}
-.d-from{font-size:11px;color:rgba(255,255,255,.36);margin-top:5px;}
+/* stat card */
+.stat-cards { display:flex; flex-direction:column; gap:9px; margin-bottom:16px; }
+.stat-card { border-radius:var(--radius-sm); padding:12px 14px; display:flex; align-items:flex-start; gap:11px; border:1px solid rgba(255,255,255,.07); min-width:0; overflow:hidden; }
+.stat-card.red  { background:linear-gradient(135deg,rgba(127,29,29,.22),rgba(69,10,10,.28)); border-color:rgba(239,68,68,.2); }
+.stat-card.blue { background:rgba(21,101,216,.1); border-color:rgba(61,142,240,.16); }
+.stat-card.green{ background:rgba(34,197,94,.08); border-color:rgba(34,197,94,.16); }
+.stat-card.dark { background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.07); }
+.sc-icon { font-size:22px; flex-shrink:0; line-height:1.2; }
+.sc-body { flex:1; min-width:0; overflow:hidden; }
+.sc-label { font-size:9px; font-weight:700; letter-spacing:.8px; color:rgba(255,255,255,.38); margin-bottom:2px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.sc-text { font-size:13px; line-height:1.6; color:rgba(255,255,255,.85); word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.hi  { color:#fca5a5; font-weight:900; }
+.hig { color:#4ade80;  font-weight:900; }
+.hiy { color:var(--gold); font-weight:900; }
+.hib { color:var(--blue-light); font-weight:900; }
 
-.vitals-card{background:rgba(8,16,36,.6);border:1px solid rgba(255,255,255,.08);
-  border-radius:var(--radius);padding:13px;margin-bottom:11px;}
-.v-head{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--blue-light);
-  margin-bottom:9px;display:flex;align-items:center;gap:5px;}
-.v-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.2s ease-in-out infinite;}
-.vg{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.vi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-sm);padding:9px 10px;}
-.vi-l{font-size:9px;font-weight:700;letter-spacing:.6px;color:rgba(255,255,255,.38);margin-bottom:2px;}
-.vi-v{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;line-height:1.1;}
-.vi-v.w{color:var(--gold);}.vi-v.ok{color:var(--white);}
-.vi-u{font-size:9px;color:rgba(255,255,255,.32);margin-top:1px;}
+/* key point */
+.keypoint {
+  border-radius:var(--radius); padding:14px; display:flex; gap:11px; align-items:flex-start;
+  animation:alarm 2.8s ease-in-out infinite; min-width:0; overflow:hidden;
+  background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(127,29,29,.18));
+  border:1px solid rgba(239,68,68,.36); margin-bottom:14px;
+}
+.kp-icon { font-size:24px; flex-shrink:0; }
+.kp-body { flex:1; min-width:0; overflow:hidden; }
+.kp-text { font-size:13px; line-height:1.7; color:rgba(255,255,255,.9); word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.kp-text strong { color:#fca5a5; font-size:14px; }
 
-.fl{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-  border-radius:var(--radius-sm);padding:12px;margin-bottom:11px;}
-.fl-lbl{font-size:9px;font-weight:700;letter-spacing:.8px;color:rgba(255,255,255,.4);margin-bottom:6px;}
-.fi{display:flex;align-items:flex-start;gap:6px;font-size:13px;color:rgba(255,255,255,.8);
-  line-height:1.6;margin-bottom:3px;word-break:break-all;overflow-wrap:break-word;}
-.fi::before{content:'▸';color:var(--blue-bright);flex-shrink:0;margin-top:1px;}
+/* dispatch */
+.dispatch {
+  background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(10,26,60,.35));
+  border:1px solid rgba(239,68,68,.26); border-radius:var(--radius);
+  padding:14px; margin-bottom:14px;
+  box-shadow:0 0 20px rgba(239,68,68,.1),inset 0 1px 0 rgba(255,255,255,.04);
+  animation:alarm 3s ease-in-out infinite;
+}
+.dispatch-top { display:flex; align-items:center; gap:8px; margin-bottom:9px; flex-wrap:wrap; min-width:0; overflow:hidden; }
+.dispatch-badge { font-size:10px; font-weight:900; letter-spacing:1px; background:var(--red); color:white; padding:3px 8px; border-radius:4px; animation:pulse 1.5s ease-in-out infinite; flex-shrink:0; }
+.dispatch-time { font-size:11px; color:rgba(255,255,255,.36); word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.dispatch-text { font-size:13px; line-height:1.72; color:rgba(255,255,255,.88); font-style:italic; border-left:2px solid rgba(239,68,68,.4); padding-left:11px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.dispatch-from { font-size:11px; color:rgba(255,255,255,.36); margin-top:5px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
-.deceptive{background:linear-gradient(135deg,rgba(245,200,66,.09),rgba(120,90,0,.13));
-  border:1px solid rgba(245,200,66,.26);border-radius:var(--radius-sm);
-  padding:12px 14px;display:flex;gap:9px;min-width:0;overflow:hidden;}
-.dec-icon{font-size:20px;flex-shrink:0;}
-.dec-txt{font-size:13px;line-height:1.68;color:rgba(255,255,255,.88);flex:1;min-width:0;
-  word-break:break-all;overflow-wrap:break-word;}
+/* vitals */
+.vitals-card {
+  background:rgba(8,16,36,.6); border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius); padding:13px; margin-bottom:11px;
+}
+.vitals-head { font-size:10px; font-weight:700; letter-spacing:1px; color:var(--blue-light); margin-bottom:9px; display:flex; align-items:center; gap:5px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.v-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 1.2s ease-in-out infinite; flex-shrink:0; }
+.vitals-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.vi { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius-sm); padding:9px 10px; }
+.vi-label { font-size:9px; font-weight:700; letter-spacing:.6px; color:rgba(255,255,255,.38); margin-bottom:2px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.vi-val { font-family:'Orbitron',sans-serif; font-size:16px; font-weight:700; line-height:1.1; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.vi-val.warn { color:var(--gold); }
+.vi-val.ok   { color:var(--white); }
+.vi-unit { font-size:9px; color:rgba(255,255,255,.32); margin-top:1px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
-.va{background:linear-gradient(135deg,rgba(127,29,29,.24),rgba(69,10,10,.3));
-  border:1px solid rgba(239,68,68,.32);border-radius:var(--radius);padding:13px;margin-bottom:11px;}
-.va-title{font-size:11px;font-weight:900;color:#fca5a5;letter-spacing:.8px;margin-bottom:9px;}
-.va-g{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.va-i{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.18);
-  border-radius:var(--radius-sm);padding:9px 10px;text-align:center;}
-.va-l{font-size:9px;font-weight:700;color:rgba(255,255,255,.38);margin-bottom:2px;}
-.va-v{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;
-  color:#fca5a5;animation:pulse 1.5s ease-in-out infinite;}
-.va-u{font-size:9px;color:rgba(255,255,255,.32);}
+/* external findings */
+.findings { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius-sm); padding:12px; margin-bottom:11px; }
+.findings-label { font-size:9px; font-weight:700; letter-spacing:.8px; color:rgba(255,255,255,.4); margin-bottom:6px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.finding-item { display:flex; align-items:flex-start; gap:6px; font-size:13px; color:rgba(255,255,255,.8); line-height:1.6; margin-bottom:3px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.finding-item::before { content:'▸'; color:var(--blue-bright); flex-shrink:0; margin-top:1px; }
 
-.bc{border-radius:var(--radius);padding:13px;margin-bottom:11px;}
-.bc.no{background:linear-gradient(135deg,rgba(127,29,29,.2),rgba(69,10,10,.26));border:1px solid rgba(239,68,68,.26);}
-.bc.yes{background:linear-gradient(135deg,rgba(21,128,61,.13),rgba(20,83,45,.18));border:1px solid rgba(34,197,94,.26);}
-.bc-h{display:flex;align-items:center;gap:7px;margin-bottom:9px;flex-wrap:wrap;}
-.bc-badge{font-size:10px;font-weight:900;padding:3px 9px;border-radius:4px;letter-spacing:.8px;}
-.bno{background:rgba(239,68,68,.28);color:#fca5a5;border:1px solid rgba(239,68,68,.38);}
-.byes{background:rgba(34,197,94,.18);color:#4ade80;border:1px solid rgba(34,197,94,.36);}
-.bc-sub{font-size:11px;color:rgba(255,255,255,.38);}
-.bc-items{display:flex;flex-direction:column;gap:5px;margin-bottom:9px;}
-.bc-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:rgba(255,255,255,.8);
-  line-height:1.6;word-break:break-all;overflow-wrap:break-word;}
-.bc-item-icon{flex-shrink:0;font-size:13px;}
-.oc{padding:9px 11px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;font-weight:700;
-  word-break:break-all;overflow-wrap:break-word;}
-.oc.bad{background:rgba(239,68,68,.09);color:#fca5a5;border:1px solid rgba(239,68,68,.18);}
-.oc.good{background:rgba(34,197,94,.09);color:#4ade80;border:1px solid rgba(34,197,94,.18);}
+/* deceptive */
+.deceptive {
+  background:linear-gradient(135deg,rgba(245,200,66,.09),rgba(120,90,0,.13));
+  border:1px solid rgba(245,200,66,.26); border-radius:var(--radius-sm);
+  padding:12px 14px; display:flex; gap:9px; min-width:0; overflow:hidden; margin-bottom:11px;
+}
+.dec-icon { font-size:20px; flex-shrink:0; }
+.dec-text { font-size:13px; line-height:1.68; color:rgba(255,255,255,.88); flex:1; min-width:0; word-break:break-all; overflow-wrap:break-word; }
 
-.fb{background:rgba(61,142,240,.09);border:1px solid rgba(61,142,240,.24);
-  border-radius:var(--radius-sm);padding:11px;margin-bottom:9px;}
-.fb-title{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--blue-light);margin-bottom:6px;}
-.fb-fi{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:rgba(255,255,255,.85);
-  line-height:1.6;margin-bottom:3px;word-break:break-all;overflow-wrap:break-word;}
-.fb-dot{width:5px;height:5px;border-radius:50%;background:var(--blue-bright);flex-shrink:0;margin-top:5px;}
+/* deterioration vitals */
+.det-card { background:linear-gradient(135deg,rgba(127,29,29,.24),rgba(69,10,10,.3)); border:1px solid rgba(239,68,68,.32); border-radius:var(--radius); padding:13px; margin-bottom:11px; }
+.det-title { font-size:11px; font-weight:900; color:#fca5a5; letter-spacing:.8px; margin-bottom:9px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.det-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.det-item { background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.18); border-radius:var(--radius-sm); padding:9px 10px; text-align:center; }
+.det-label { font-size:9px; font-weight:700; color:rgba(255,255,255,.38); margin-bottom:2px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.det-val { font-family:'Orbitron',sans-serif; font-size:18px; font-weight:700; color:#fca5a5; animation:pulse 1.5s ease-in-out infinite; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.det-unit { font-size:9px; color:rgba(255,255,255,.32); word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
-.res{background:linear-gradient(135deg,rgba(21,128,61,.16),rgba(20,83,45,.22));
-  border:1px solid rgba(34,197,94,.3);border-radius:var(--radius);
-  padding:14px;display:flex;align-items:flex-start;gap:11px;margin-bottom:13px;
-  min-width:0;overflow:hidden;}
-.res-sb{width:66px;height:66px;flex-shrink:0;}
-.res-sb img{width:100%;height:100%;object-fit:contain;animation:float 2.5s ease-in-out infinite;}
-.res-body{flex:1;min-width:0;overflow:hidden;}
-.res-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:#4ade80;margin-bottom:4px;}
-.res-txt{font-size:12px;line-height:1.68;color:rgba(255,255,255,.8);
-  word-break:break-all;overflow-wrap:break-word;}
+/* choice / branch */
+.choice-list { display:flex; flex-direction:column; gap:9px; margin-bottom:14px; }
+.choice-btn { width:100%; border-radius:var(--radius-sm); padding:13px 14px; display:flex; align-items:center; gap:10px; border:none; cursor:pointer; text-align:left; font-family:'Noto Sans JP',sans-serif; font-size:13px; transition:transform .15s; min-width:0; overflow:hidden; }
+.choice-btn:active { transform:scale(.98); }
+.choice-bad  { background:rgba(239,68,68,.07); border:1px solid rgba(239,68,68,.2); color:rgba(255,255,255,.8); }
+.choice-good { background:rgba(34,197,94,.07); border:1px solid rgba(34,197,94,.2); color:rgba(255,255,255,.8); }
+.choice-icon { font-size:22px; flex-shrink:0; }
+.choice-text { flex:1; min-width:0; word-break:break-all; overflow-wrap:break-word; }
 
-.ql{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:7px;}
-.qq{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;line-height:1.5;
-  margin-bottom:13px;word-break:break-all;overflow-wrap:break-word;}
-.qopts{display:flex;flex-direction:column;gap:8px;}
-.qopt{padding:11px 14px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.11);
-  background:rgba(255,255,255,.04);font-size:13px;cursor:pointer;transition:all .18s;
-  text-align:left;color:rgba(255,255,255,.85);font-family:'Noto Sans JP',sans-serif;
-  word-break:break-all;overflow-wrap:break-word;width:100%;}
-.qopt:active{transform:scale(.98);}
-.qopt.correct{background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.35);color:#4ade80;}
-.qopt.wrong{background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.28);color:#fca5a5;}
-.qopt.disabled{pointer-events:none;}
-.qfb{margin-top:11px;padding:11px 13px;border-radius:var(--radius-sm);font-size:13px;line-height:1.65;display:none;
-  word-break:break-all;overflow-wrap:break-word;}
-.qfb.show{display:block;}
-.qfb.ok{background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.22);color:#86efac;}
-.qfb.ng{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.18);color:#fca5a5;}
+/* branch outcome */
+.branch { border-radius:var(--radius); padding:13px; margin-bottom:11px; }
+.branch.bad  { background:linear-gradient(135deg,rgba(127,29,29,.2),rgba(69,10,10,.26)); border:1px solid rgba(239,68,68,.26); }
+.branch.good { background:linear-gradient(135deg,rgba(21,128,61,.13),rgba(20,83,45,.18)); border:1px solid rgba(34,197,94,.26); }
+.branch-head { display:flex; align-items:center; gap:7px; margin-bottom:9px; flex-wrap:wrap; min-width:0; overflow:hidden; }
+.branch-badge { font-size:10px; font-weight:900; padding:3px 9px; border-radius:4px; letter-spacing:.8px; }
+.badge-bad  { background:rgba(239,68,68,.28); color:#fca5a5; border:1px solid rgba(239,68,68,.38); }
+.badge-good { background:rgba(34,197,94,.18); color:#4ade80; border:1px solid rgba(34,197,94,.36); }
+.branch-sub { font-size:11px; color:rgba(255,255,255,.38); word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.branch-items { display:flex; flex-direction:column; gap:5px; margin-bottom:9px; }
+.branch-item { display:flex; align-items:flex-start; gap:7px; font-size:12px; color:rgba(255,255,255,.8); line-height:1.6; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.branch-item-icon { flex-shrink:0; font-size:13px; }
+.outcome { padding:9px 11px; border-radius:var(--radius-sm); font-size:12px; line-height:1.6; font-weight:700; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.outcome.bad  { background:rgba(239,68,68,.09); color:#fca5a5; border:1px solid rgba(239,68,68,.18); }
+.outcome.good { background:rgba(34,197,94,.09); color:#4ade80; border:1px solid rgba(34,197,94,.18); }
 
-.sum-box{background:rgba(21,101,216,.09);border:1px solid rgba(61,142,240,.18);
-  border-radius:var(--radius-sm);padding:13px;margin-top:14px;}
-.sum-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--blue-light);margin-bottom:7px;}
-.sp{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;}
-.sp:last-child{margin-bottom:0;}
-.sp-n{width:20px;height:20px;border-radius:50%;background:var(--blue-vivid);
-  font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.sp-t{font-size:12px;line-height:1.65;color:rgba(255,255,255,.85);flex:1;min-width:0;
-  word-break:break-all;overflow-wrap:break-word;}
-.sp-t strong{color:var(--blue-light);}
+/* fast findings */
+.fast-findings { background:rgba(61,142,240,.09); border:1px solid rgba(61,142,240,.24); border-radius:var(--radius-sm); padding:11px; margin-bottom:9px; }
+.ff-title { font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--blue-light); margin-bottom:6px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.ff-item { display:flex; align-items:flex-start; gap:6px; font-size:12px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:3px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.ff-dot { width:5px; height:5px; border-radius:50%; background:var(--blue-bright); flex-shrink:0; margin-top:5px; }
 
-/* ===== COMPLETE SCREEN (最終スライド専用) ===== */
-.complete-screen{padding:20px 16px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;}
-.complete-badge{
-  width:82px;height:82px;border-radius:50%;margin:0 auto 16px;
-  background:linear-gradient(135deg,#166534,#15803d);
-  border:3px solid rgba(34,197,94,.4);
-  display:flex;align-items:center;justify-content:center;font-size:36px;
-  box-shadow:0 0 32px rgba(34,197,94,.35);
-  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;}
-.complete-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:22px;font-weight:900;
-  color:#4ade80;margin-bottom:6px;
-  animation:fadeSlide .5s .1s ease both;}
-.complete-sub{font-size:13px;color:rgba(255,255,255,.58);line-height:1.7;margin-bottom:22px;
-  animation:fadeSlide .5s .18s ease both;}
+/* result card */
+.result-card { background:linear-gradient(135deg,rgba(21,128,61,.16),rgba(20,83,45,.22)); border:1px solid rgba(34,197,94,.3); border-radius:var(--radius); padding:14px; display:flex; align-items:flex-start; gap:11px; margin-bottom:13px; min-width:0; overflow:hidden; }
+.result-sb { width:66px; height:66px; flex-shrink:0; }
+.result-sb img { width:100%; height:100%; object-fit:contain; animation:float 2.5s ease-in-out infinite; }
+.result-body { flex:1; min-width:0; overflow:hidden; }
+.result-title { font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; font-weight:900; color:#4ade80; margin-bottom:4px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.result-text  { font-size:12px; line-height:1.68; color:rgba(255,255,255,.8); word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
-.complete-sonobo{width:96px;height:96px;margin:0 auto 18px;
-  animation:float 2.8s ease-in-out infinite;}
-.complete-sonobo img{width:100%;height:100%;object-fit:contain;
-  filter:drop-shadow(0 6px 20px rgba(34,197,94,.4));}
+/* quiz */
+.quiz-label { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--gold); margin-bottom:7px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.quiz-q { font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; font-weight:900; line-height:1.5; margin-bottom:13px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.quiz-opts { display:flex; flex-direction:column; gap:8px; }
+.quiz-opt { padding:11px 14px; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,.11); background:rgba(255,255,255,.04); font-size:13px; cursor:pointer; transition:all .18s; text-align:left; color:rgba(255,255,255,.85); font-family:'Noto Sans JP',sans-serif; word-break:break-all; overflow-wrap:break-word; width:100%; min-width:0; }
+.quiz-opt:active { transform:scale(.98); }
+.quiz-opt.correct { background:rgba(34,197,94,.13); border-color:rgba(34,197,94,.35); color:#4ade80; }
+.quiz-opt.wrong   { background:rgba(239,68,68,.09); border-color:rgba(239,68,68,.28); color:#fca5a5; }
+.quiz-opt.disabled { pointer-events:none; }
+.quiz-fb { margin-top:11px; padding:11px 13px; border-radius:var(--radius-sm); font-size:13px; line-height:1.65; display:none; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.quiz-fb.show { display:block; }
+.quiz-fb.ok { background:rgba(34,197,94,.09); border:1px solid rgba(34,197,94,.22); color:#86efac; }
+.quiz-fb.ng { background:rgba(239,68,68,.07); border:1px solid rgba(239,68,68,.18); color:#fca5a5; }
 
-.complete-sum{width:100%;background:rgba(21,101,216,.09);border:1px solid rgba(61,142,240,.18);
-  border-radius:var(--radius-sm);padding:14px;margin-bottom:18px;text-align:left;
-  animation:fadeSlide .5s .26s ease both;}
-.complete-sum .sum-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--blue-light);margin-bottom:9px;}
+/* summary */
+.summary-box { background:rgba(21,101,216,.09); border:1px solid rgba(61,142,240,.18); border-radius:var(--radius-sm); padding:13px; margin-top:14px; }
+.sum-label { font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--blue-light); margin-bottom:7px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.sum-point { display:flex; align-items:flex-start; gap:9px; margin-bottom:8px; min-width:0; overflow:hidden; }
+.sum-point:last-child { margin-bottom:0; }
+.sum-num { width:20px; height:20px; border-radius:50%; background:var(--blue-vivid); font-size:10px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+.sum-text { font-size:12px; line-height:1.65; color:rgba(255,255,255,.85); flex:1; min-width:0; word-break:break-all; overflow-wrap:break-word; }
+.sum-text strong { color:var(--blue-light); }
 
-.btn-group{width:100%;display:flex;flex-direction:column;gap:10px;
-  animation:fadeSlide .5s .34s ease both;}
-.btn-step2{width:100%;padding:15px 20px;border:none;border-radius:var(--radius-sm);cursor:pointer;
-  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;
+/* ===== PLANET LANDING (S0 special) ===== */
+.planet-landing {
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  padding:8px 0 20px; min-width:0; overflow:hidden;
+}
+.planet-wrap { position:relative; width:120px; height:120px; margin:0 auto 12px; }
+.planet-body {
+  width:120px; height:120px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#d97706,#b45309 50%,#7c2d12 100%);
+  box-shadow:0 0 40px rgba(245,158,11,.4),0 0 80px rgba(245,158,11,.1),inset -20px -10px 40px rgba(0,0,0,.4);
+  position:relative; overflow:hidden;
+}
+.planet-body::before {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(15deg,transparent,transparent 8px,rgba(0,0,0,.1) 8px,rgba(0,0,0,.1) 10px);
+}
+.planet-ring {
+  position:absolute; top:50%; left:50%;
+  width:160px; height:40px; margin-left:-80px; margin-top:-20px;
+  border:3px solid rgba(245,158,11,.3);
+  border-radius:50%; transform:rotateX(75deg);
+  pointer-events:none;
+}
+.planet-name-tag {
+  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:700;
+  letter-spacing:3px; color:var(--gold); opacity:.7; margin-bottom:4px;
+  word-break:break-all; overflow-wrap:break-word; min-width:0;
+}
+.planet-title {
+  font-family:'Zen Kaku Gothic New',sans-serif; font-size:20px; font-weight:900;
+  margin-bottom:6px; word-break:break-all; overflow-wrap:break-word; min-width:0;
+}
+.planet-subtitle { font-size:12px; color:rgba(255,255,255,.5); margin-bottom:16px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.reward-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 14px; border-radius:var(--radius-sm);
+  background:rgba(245,200,66,.1); border:1px solid rgba(245,200,66,.3);
+  font-size:11px; color:var(--gold); font-weight:700;
+  word-break:break-all; overflow-wrap:break-word; min-width:0;
+}
+
+/* ABCDE flow */
+.abcde-flow {
+  border-radius:var(--radius); padding:14px;
+  background:rgba(21,101,216,.1); border:1px solid rgba(61,142,240,.2);
+  margin-bottom:14px;
+}
+.abcde-label { font-size:9px; font-weight:700; letter-spacing:1px; color:var(--blue-light); margin-bottom:10px; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.abcde-steps { display:flex; flex-direction:column; gap:4px; }
+.abcde-step { display:flex; align-items:center; gap:8px; padding:5px 8px; border-radius:8px; min-width:0; overflow:hidden; }
+.abcde-step.highlight { background:rgba(61,142,240,.15); border:1px solid rgba(61,142,240,.25); }
+.abcde-letter { font-family:'Orbitron',sans-serif; font-size:14px; font-weight:900; width:20px; text-align:center; flex-shrink:0; }
+.abcde-step.highlight .abcde-letter { color:var(--blue-bright); }
+.abcde-letter-dim { color:rgba(255,255,255,.35); }
+.abcde-name { font-size:12px; color:rgba(255,255,255,.6); flex:1; min-width:0; word-break:break-all; overflow-wrap:break-word; }
+.abcde-step.highlight .abcde-name { color:rgba(255,255,255,.9); }
+.abcde-tag { font-size:9px; font-weight:700; padding:2px 7px; border-radius:4px; background:rgba(61,142,240,.25); color:var(--blue-light); flex-shrink:0; }
+
+/* ===== COMPLETE SCREEN ===== */
+.complete-screen { padding:20px 16px 28px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.fuel-reward { margin-bottom:18px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.fuel-orb {
+  width:88px; height:88px; border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,#fde68a,#f59e0b 50%,#b45309);
+  box-shadow:0 0 40px rgba(245,158,11,.5),0 0 80px rgba(245,158,11,.2);
+  display:flex; align-items:center; justify-content:center; font-size:40px;
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+  position:relative;
+}
+.fuel-orb::after {
+  content:''; position:absolute; inset:-6px; border-radius:50%;
+  border:2px solid rgba(245,200,66,.4);
+  animation:orbitRing 3s linear infinite;
+}
+.complete-badge-text { font-family:'Orbitron',sans-serif; font-size:10px; font-weight:700; letter-spacing:3px; color:var(--gold); word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.complete-title { font-family:'Zen Kaku Gothic New',sans-serif; font-size:22px; font-weight:900; color:#4ade80; margin-bottom:6px; animation:fadeIn .5s .1s ease both; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.complete-sub { font-size:13px; color:rgba(255,255,255,.58); line-height:1.7; margin-bottom:18px; animation:fadeIn .5s .18s ease both; word-break:break-all; overflow-wrap:break-word; min-width:0; }
+.complete-sonobo { width:96px; height:96px; margin:0 auto 16px; animation:float 2.8s ease-in-out infinite; }
+.complete-sonobo img { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 6px 20px rgba(34,197,94,.4)); }
+.complete-sum { width:100%; background:rgba(21,101,216,.09); border:1px solid rgba(61,142,240,.18); border-radius:var(--radius-sm); padding:14px; margin-bottom:18px; text-align:left; animation:fadeIn .5s .26s ease both; }
+.btn-group { width:100%; display:flex; flex-direction:column; gap:10px; animation:fadeIn .5s .34s ease both; }
+.btn-next-planet {
+  width:100%; padding:15px 20px; border:none; border-radius:var(--radius-sm); cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; font-weight:900; color:white;
   background:linear-gradient(135deg,#166534,#15803d);
   box-shadow:0 5px 20px rgba(22,101,52,.4);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:transform .15s;}
-.btn-step2:active{transform:scale(.97);}
-.btn-home{width:100%;padding:13px 20px;border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-sm);
-  cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,.7);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform .15s; min-width:0; overflow:hidden; word-break:break-all; overflow-wrap:break-word;
+}
+.btn-next-planet:active { transform:scale(.97); }
+.btn-home-link {
+  width:100%; padding:13px 20px; border:1px solid rgba(255,255,255,.15); border-radius:var(--radius-sm);
+  cursor:pointer; font-family:'Zen Kaku Gothic New',sans-serif; font-size:14px; font-weight:700; color:rgba(255,255,255,.7);
   background:rgba(255,255,255,.06);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:transform .15s;}
-.btn-home:active{transform:scale(.97);}
-.btn-home:hover{background:rgba(255,255,255,.1);color:white;}
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform .15s; min-width:0; overflow:hidden; word-break:break-all; overflow-wrap:break-word;
+}
+.btn-home-link:active { transform:scale(.97); }
 
-/* choice buttons on s5 */
-.choice-btn{width:100%;border-radius:var(--radius-sm);padding:13px 14px;
-  display:flex;align-items:center;gap:10px;border:none;cursor:pointer;text-align:left;
-  font-family:'Noto Sans JP',sans-serif;font-size:13px;transition:transform .15s;}
-.choice-btn:active{transform:scale(.98);}
-.choice-bad{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:rgba(255,255,255,.8);}
-.choice-good{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);color:rgba(255,255,255,.8);}
-.choice-icon{font-size:22px;flex-shrink:0;}
-.choice-txt{flex:1;min-width:0;word-break:break-all;overflow-wrap:break-word;}
-
-.gap{height:16px;}.gap-sm{height:8px;}
+/* ===== MISC ===== */
+.gap { height:16px; }
+.gap-sm { height:8px; }
+p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-width:0; }
 </style>
 </head>
 <body>
 <div class="bg-canvas" id="bgCanvas"></div>
 <div class="app-wrapper">
 
+  <!-- HEADER -->
   <div class="page-header">
-    <a class="back-btn" href="home.html">←</a>
+    <a class="back-btn" href="home.html" onclick="playSound('tap')">←</a>
     <div class="header-info">
-      <div class="page-step-label">STEP 1 — FASTの重要性</div>
-      <div class="page-title" id="hTitle">なぜFASTが必要なのか？</div>
+      <div class="header-planet">🪐 PLANET ORIGIN — MISSION 01</div>
+      <div class="header-title" id="hTitle">着陸！惑星オリジン</div>
+    </div>
+    <div class="fuel-display">
+      <span class="fuel-icon">⛽</span>
+      <div class="fuel-bar-wrap"><div class="fuel-bar" id="fuelBar"></div></div>
     </div>
   </div>
 
-  <div class="progress-bar-wrap">
-    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
-    <div class="progress-meta">
-      <div class="prog-step" id="pStep">1 / 11</div>
-      <div class="prog-sub" id="pSub"></div>
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="prog-track"><div class="prog-fill" id="pFill" style="width:8%"></div></div>
+    <div class="prog-meta">
+      <div class="prog-count" id="pCount">1 / 12</div>
+      <div class="prog-title" id="pTitle">惑星オリジンへ着陸</div>
     </div>
   </div>
 
+  <!-- SLIDES -->
   <div class="slide-viewport">
     <div class="slides-track" id="sTrack">
 
-      <!-- S0: ソノボ導入 + 重要性4カード -->
+      <!-- ===== S0: 惑星着陸 ===== -->
       <div class="slide" id="s0">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">STEP 1 スタートだ！外傷患者にはまず<strong>ABCDE評価</strong>を行う。FASTはその<strong>Circulation評価</strong>の一部として重要なツールだよ！</div></div>
-        </div>
-        <div class="sec-ttl an d1"><div class="bar bar-r"></div>FASTが重要な理由</div>
-        <div class="stat-list">
-          <div class="sc i an d1" style="background:rgba(61,142,240,.12);border-color:rgba(61,142,240,.28);margin-bottom:2px;">
-            <span class="sc-icon">🏥</span>
-            <div class="sc-body"><div class="sc-lbl">外傷初期診療の流れ（JATEC準拠）</div>
-            <div class="sc-txt" style="font-size:12px;line-height:1.7;">
-              <span style="color:rgba(255,255,255,.5);">一次評価：</span><br>
-              <strong style="color:var(--blue-light);">A</strong><span style="color:rgba(255,255,255,.5);">irway（気道）</span> →
-              <strong style="color:var(--blue-light);">B</strong><span style="color:rgba(255,255,255,.5);">reathing（呼吸）</span> →
-              <strong style="color:var(--blue-light);">C</strong><span style="color:rgba(255,255,255,.5);">irculation（循環）</span> →
-              <strong style="color:var(--blue-light);">D</strong><span style="color:rgba(255,255,255,.5);">isability（意識）</span> →
-              <strong style="color:var(--blue-light);">E</strong><span style="color:rgba(255,255,255,.5);">xposure（脱衣・体温）</span><br>
-              <span style="color:var(--gold);font-size:11px;margin-top:3px;display:block;">FASTはC（循環）評価の核心 → 内出血の有無を即確認</span>
-            </div></div>
+        <div class="planet-landing an">
+          <div class="planet-name-tag">PLANET ORIGIN</div>
+          <div class="planet-wrap">
+            <div class="planet-body"></div>
+            <div class="planet-ring"></div>
           </div>
-          <div class="sc d an d2"><span class="sc-icon">💀</span><div class="sc-body"><div class="sc-lbl">外傷死の主原因</div><div class="sc-txt">外傷による死亡の主原因は<br><span class="hi">「出血性ショック」</span>だ。</div></div></div>
-          <div class="sc d an d3"><span class="sc-icon">🫀</span><div class="sc-body"><div class="sc-lbl">最大の危険</div><div class="sc-txt">腹腔内出血は<span class="hi">外見からわかりにくい</span>。<br>= 見逃しが命取りになる。</div></div></div>
-          <div class="sc i an d4"><span class="sc-icon">🔊</span><div class="sc-body"><div class="sc-lbl">FASTの強み</div><div class="sc-txt">被曝なし・リアルタイム・<span class="hiy">繰り返し実施できる</span></div></div></div>
-          <div class="sc s an d5"><span class="sc-icon">⏱</span><div class="sc-body"><div class="sc-lbl">スピード</div><div class="sc-txt">熟練者なら<span class="hig">2分以内に完了</span>＠ベッドサイド</div></div></div>
+          <div class="planet-title">🪐 惑星オリジンへ<br>ようこそ！</div>
+          <div class="planet-subtitle">ここはFASTの原点を学ぶ星</div>
+          <div class="reward-badge">⛽ クリアボーナス：燃料補給</div>
+        </div>
+
+        <div class="sonobo-row an d1">
+          <div class="sonobo-img"><img src="assets/sonobo_2.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">キャプテン、惑星オリジンへの着陸成功です！⭐<br>ここでFASTの<strong>存在意義</strong>を学べば、燃料補給完了。次の惑星への航路が開きます！</div>
+          </div>
+        </div>
+
+        <div class="stat-cards">
+          <div class="stat-card blue an d2">
+            <span class="sc-icon">🎯</span>
+            <div class="sc-body">
+              <div class="sc-label">MISSION OBJECTIVE</div>
+              <div class="sc-text">「<hib>なぜFASTが必要か</hib>」を理解する。これがわかれば、全ての技術学習が意味を持つ</div>
+            </div>
+          </div>
+          <div class="stat-card red an d3">
+            <span class="sc-icon">💀</span>
+            <div class="sc-body">
+              <div class="sc-label">外傷死の主原因</div>
+              <div class="sc-text">外傷による死亡の主原因は<br><span class="hi">「出血性ショック」</span>だ</div>
+            </div>
+          </div>
+          <div class="stat-card red an d4">
+            <span class="sc-icon">👁️</span>
+            <div class="sc-body">
+              <div class="sc-label">最大の危険</div>
+              <div class="sc-text">腹腔内出血は<span class="hi">外見からわからない</span><br>= 見逃しが命取りになる</div>
+            </div>
+          </div>
+          <div class="stat-card green an d5">
+            <span class="sc-icon">⏱️</span>
+            <div class="sc-body">
+              <div class="sc-label">FASTの強み</div>
+              <div class="sc-text">被曝なし・ベッドサイド・<span class="hig">2分以内</span>で出血の有無を判断</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- S1: キーポイント -->
+      <!-- ===== S1: 一番大事なポイント ===== -->
       <div class="slide" id="s1">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">ここが一番大事なポイント！<br>頭に焼き付けておいてね🔥</div></div>
-        </div>
-        <div class="kp an d1">
-          <span class="kp-icon">⚠️</span>
-          <div class="kp-txt"><strong>「出血があるか」を早く判断するほど、救命率は上がる！</strong><br>
-          <span style="font-size:12px;color:rgba(255,255,255,.6);">FASTはベッドサイドで数分以内に出血の有無を判断できる、唯一の検査だ。</span></div>
-        </div>
-        <div class="gap"></div>
-        <div class="sonobo-card warn an d2">
-          <div class="sb-img"><img src="assets/sonobo_1.png" alt="ソノボくん"></div>
-          <div class="sb-body"><div class="sb-name w">💡 ポイント</div>
-          <div class="sb-text">CTは詳しいけど<strong style="color:rgba(255,255,255,.9);">移動・準備・被曝</strong>が必要。FASTは<strong style="color:var(--gold);">その場で即スキャン</strong>できるのが強みだよ！</div></div>
-        </div>
-      </div>
-
-      <!-- S2: 症例開始 -->
-      <div class="slide" id="s2">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_5.png" alt="ソノボくん"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">じゃあ実際の救急現場を体験しよう！<br>あなたは<strong>研修医</strong>としてこの患者さんを担当するよ。<br><span style="font-size:11px;color:rgba(255,255,255,.55);">搬入後はABCDE評価を系統的に行い、C評価でFASTを組み込む。</span></div></div>
-        </div>
-        <div class="sec-ttl an d1"><div class="bar bar-r"></div>🏥 緊迫の救急現場</div>
-        <div class="dispatch an d2">
-          <div class="d-top"><span class="d-badge">🚨 ホットライン入電</span><span class="d-time">深夜 — 救急外来</span></div>
-          <div class="d-text">「30代男性、交通事故。意識清明だったが<strong>徐々にぐったり</strong>してきています。血圧低下あり。あと<strong>5分で到着</strong>します。」</div>
-          <div class="d-from">救急隊員より</div>
-        </div>
-        <div class="sonobo-card red an d3">
-          <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん驚き"></div>
-          <div class="sb-body"><div class="sb-name r">🚨 ソノボくん</div>
-          <div class="sb-text">「徐々にぐったり」「血圧低下」…<strong style="color:#fca5a5;">赤信号</strong>だ！受け入れ準備をしながら診察計画を立てよう。</div></div>
-        </div>
-      </div>
-
-      <!-- S3: 搬入時バイタル -->
-      <div class="slide" id="s3">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_7.png" alt="ソノボくん"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">患者さんが搬入された！バイタルと外表をチェックしよう。</div></div>
-        </div>
-        <div class="vitals-card an d1">
-          <div class="v-head"><span class="v-dot"></span>搬入時バイタル（Primary survey）</div>
-          <div class="vg">
-            <div class="vi"><div class="vi-l">意識 GCS</div><div class="vi-v w">E3V4M5</div><div class="vi-u">傾眠・従命可</div></div>
-            <div class="vi"><div class="vi-l">血圧</div><div class="vi-v w">88/60</div><div class="vi-u">mmHg</div></div>
-            <div class="vi"><div class="vi-l">脈拍</div><div class="vi-v w">118</div><div class="vi-u">/min 微弱</div></div>
-            <div class="vi"><div class="vi-l">呼吸数</div><div class="vi-v w">26</div><div class="vi-u">/min</div></div>
-            <div class="vi"><div class="vi-l">SpO₂</div><div class="vi-v ok">96%</div><div class="vi-u">O₂ 10L/mask</div></div>
-            <div class="vi"><div class="vi-l">体温</div><div class="vi-v w">35.8</div><div class="vi-u">℃（低体温傾向）</div></div>
+        <div class="sonobo-row an">
+          <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">キャプテン、ここが<strong>最重要ポイント</strong>！銀河の法則みたいなものだよ。頭に焼き付けておこう🔥</div>
           </div>
         </div>
-        <div class="fl an d2">
-          <div class="fl-lbl">外表所見</div>
-          <div class="fi">右胸部に打撲痕あり</div>
-          <div class="fi">腹部に明らかな外傷なし</div>
-          <div class="fi">大量出血は見えない</div>
+
+        <div class="keypoint an d1">
+          <span class="kp-icon">⚠️</span>
+          <div class="kp-body">
+            <div class="kp-text">
+              <strong>「出血があるか」を早く判断するほど、<br>救命率は上がる！</strong><br>
+              <span style="font-size:12px;color:rgba(255,255,255,.6);">FASTはベッドサイドで数分以内に出血の有無を判断できる、唯一の検査だ</span>
+            </div>
+          </div>
         </div>
+
+        <div class="abcde-flow an d2">
+          <div class="abcde-label">🚀 外傷初期診療の流れ（JATEC準拠・ABCDE評価）</div>
+          <div class="abcde-steps">
+            <div class="abcde-step"><span class="abcde-letter abcde-letter-dim">A</span><span class="abcde-name">Airway（気道）</span></div>
+            <div class="abcde-step"><span class="abcde-letter abcde-letter-dim">B</span><span class="abcde-name">Breathing（呼吸）</span></div>
+            <div class="abcde-step highlight">
+              <span class="abcde-letter">C</span>
+              <span class="abcde-name"><strong>Circulation（循環）← FASTはここ！</strong></span>
+              <span class="abcde-tag">FAST</span>
+            </div>
+            <div class="abcde-step"><span class="abcde-letter abcde-letter-dim">D</span><span class="abcde-name">Disability（意識）</span></div>
+            <div class="abcde-step"><span class="abcde-letter abcde-letter-dim">E</span><span class="abcde-name">Exposure（脱衣・体温）</span></div>
+          </div>
+        </div>
+
+        <div class="sonobo-row warn an d3">
+          <div class="sonobo-img"><img src="assets/sonobo_1.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label warn">💡 ソノボくんのヒント</div>
+            <div class="sonobo-text">CTは詳しいけど<strong>移動・準備・被曝</strong>が必要。FASTは<span style="color:var(--gold);font-weight:900;">その場で即スキャン</span>が最大の武器だよ！</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== S2: 緊迫の救急現場 ===== -->
+      <div class="slide" id="s2">
+        <div class="sonobo-row an">
+          <div class="sonobo-img"><img src="assets/sonobo_5.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">キャプテン、実際の救急現場をシミュレーションしましょう！<br>あなたは<strong>研修医</strong>としてこの患者を担当します。<br><span style="font-size:11px;color:rgba(255,255,255,.5);">搬入後はABCDE評価を系統的に行い、C評価でFASTを組み込む</span></div>
+          </div>
+        </div>
+
+        <div class="sec-title an d1"><div class="sec-bar bar-red"></div><span>🏥 緊迫の救急現場</span></div>
+
+        <div class="dispatch an d2">
+          <div class="dispatch-top">
+            <span class="dispatch-badge">🚨 ホットライン入電</span>
+            <span class="dispatch-time">深夜 — 救急外来</span>
+          </div>
+          <div class="dispatch-text">「30代男性、交通事故。意識清明だったが<strong>徐々にぐったり</strong>してきています。血圧低下あり。あと<strong>5分で到着</strong>します。」</div>
+          <div class="dispatch-from">救急隊員より</div>
+        </div>
+
+        <div class="sonobo-row danger an d3">
+          <div class="sonobo-img"><img src="assets/sonobo_8.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label danger">🚨 ソノボくん</div>
+            <div class="sonobo-text">「徐々にぐったり」「血圧低下」…<strong style="color:#fca5a5;">レッドアラート</strong>です！受け入れ準備をしながら診察計画を立てましょう</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== S3: 搬入時バイタル ===== -->
+      <div class="slide" id="s3">
+        <div class="sonobo-row an">
+          <div class="sonobo-img"><img src="assets/sonobo_7.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">患者が搬入されました！バイタルと外表をチェックしましょう</div>
+          </div>
+        </div>
+
+        <div class="vitals-card an d1">
+          <div class="vitals-head"><span class="v-dot"></span>搬入時バイタル（Primary survey）</div>
+          <div class="vitals-grid">
+            <div class="vi"><div class="vi-label">意識 GCS</div><div class="vi-val warn">E3V4M5</div><div class="vi-unit">傾眠・従命可</div></div>
+            <div class="vi"><div class="vi-label">血圧</div><div class="vi-val warn">88/60</div><div class="vi-unit">mmHg</div></div>
+            <div class="vi"><div class="vi-label">脈拍</div><div class="vi-val warn">118</div><div class="vi-unit">/min 微弱</div></div>
+            <div class="vi"><div class="vi-label">呼吸数</div><div class="vi-val warn">26</div><div class="vi-unit">/min</div></div>
+            <div class="vi"><div class="vi-label">SpO₂</div><div class="vi-val ok">96%</div><div class="vi-unit">O₂ 10L/mask</div></div>
+            <div class="vi"><div class="vi-label">体温</div><div class="vi-val warn">35.8</div><div class="vi-unit">℃（低体温傾向）</div></div>
+          </div>
+        </div>
+
+        <div class="findings an d2">
+          <div class="findings-label">外表所見</div>
+          <div class="finding-item">右胸部に打撲痕あり</div>
+          <div class="finding-item">腹部に明らかな外傷なし</div>
+          <div class="finding-item">大量出血は見えない</div>
+        </div>
+
         <div class="deceptive an d3">
           <span class="dec-icon">🎭</span>
-          <div class="dec-txt">「腹部外傷なし・大量出血なし」<br>→ <strong style="color:var(--gold);">一見、そこまでひどくなさそう…？</strong><br><span style="font-size:12px;color:rgba(255,255,255,.55);">でもこれが最大のワナだ。</span></div>
+          <div class="dec-text">「腹部外傷なし・大量出血なし」<br>→ <strong style="color:var(--gold);">一見、そこまでひどくなさそう…？</strong><br><span style="font-size:12px;color:rgba(255,255,255,.5);">でもこれが最大のトラップです</span></div>
         </div>
       </div>
 
-      <!-- S4: 2分後の急変 -->
+      <!-- ===== S4: 急変 ===== -->
       <div class="slide" id="s4">
-        <div class="sonobo-card red an">
-          <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん驚き"></div>
-          <div class="sb-body"><div class="sb-name r">🚨 ソノボくん</div>
-          <div class="sb-text">搬入から<strong style="color:#fca5a5;">わずか2分</strong>で状況が一変した！</div></div>
-        </div>
-        <div class="va an d1">
-          <div class="va-title">⬇️ バイタル急激に悪化（数分後）</div>
-          <div class="va-g">
-            <div class="va-i"><div class="va-l">血圧</div><div class="va-v">72/50</div><div class="va-u">mmHg</div></div>
-            <div class="va-i"><div class="va-l">脈拍</div><div class="va-v">136</div><div class="va-u">/min</div></div>
-            <div class="va-i"><div class="va-l">GCS</div><div class="va-v">E2V3M4</div><div class="va-u">意識低下</div></div>
-            <div class="va-i"><div class="va-l">呼吸数</div><div class="va-v">30</div><div class="va-u">/min 浅速</div></div>
+        <div class="sonobo-row danger an">
+          <div class="sonobo-img"><img src="assets/sonobo_8.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label danger">🚨 ソノボくん</div>
+            <div class="sonobo-text">キャプテン！搬入から<strong style="color:#fca5a5;">わずか2分</strong>で状況が一変しました！</div>
           </div>
         </div>
-        <div class="sc d an d2" style="margin-bottom:14px;">
-          <span class="sc-icon">🥶</span>
-          <div class="sc-body"><div class="sc-lbl">身体所見</div><div class="sc-txt">末梢冷感・発汗あり。<br><span class="hi">出血性ショックが進行している。</span></div></div>
+
+        <div class="det-card an d1">
+          <div class="det-title">⬇️ バイタル急激に悪化</div>
+          <div class="det-grid">
+            <div class="det-item"><div class="det-label">血圧</div><div class="det-val">72/50</div><div class="det-unit">mmHg</div></div>
+            <div class="det-item"><div class="det-label">脈拍</div><div class="det-val">136</div><div class="det-unit">/min</div></div>
+            <div class="det-item"><div class="det-label">GCS</div><div class="det-val">E2V3M4</div><div class="det-unit">意識低下</div></div>
+            <div class="det-item"><div class="det-label">呼吸数</div><div class="det-val">30</div><div class="det-unit">/min 浅速</div></div>
+          </div>
         </div>
-        <div class="sonobo-card red an d3">
-          <div class="sb-img"><img src="assets/sonobo_9.png" alt="ソノボくん困り顔"></div>
-          <div class="sb-body"><div class="sb-name r">🤖 ソノボくん</div>
-          <div class="sb-text">これが<strong style="color:#fca5a5;">「見えない出血」の怖さ</strong>。外見は普通でも体の中で大量出血している。次の一手が命を左右する！</div></div>
+
+        <div class="stat-card red an d2" style="margin-bottom:14px;">
+          <span class="sc-icon">🥶</span>
+          <div class="sc-body">
+            <div class="sc-label">身体所見</div>
+            <div class="sc-text">末梢冷感・発汗あり。<br><span class="hi">出血性ショックが進行している。</span></div>
+          </div>
+        </div>
+
+        <div class="sonobo-row danger an d3">
+          <div class="sonobo-img"><img src="assets/sonobo_9.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label danger">🤖 ソノボくん</div>
+            <div class="sonobo-text">これが<strong style="color:#fca5a5;">「見えない出血」の恐ろしさ</strong>です。外見は普通でも体の中で大量出血している。次の一手がこの命を左右します！</div>
+          </div>
         </div>
       </div>
 
-      <!-- S5: 分岐の問いかけ -->
+      <!-- ===== S5: 分岐点 ===== -->
       <div class="slide" id="s5">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">ここが<strong>分岐点</strong>！次の行動で患者さんの運命が変わる。<br>あなたならどう動く？</div></div>
-        </div>
-        <div class="kp an d1" style="animation:none;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);">
-          <span class="kp-icon">🤔</span>
-          <div class="kp-txt" style="color:rgba(255,255,255,.88);">
-            <strong style="color:white;font-size:15px;">バイタル不安定な外傷患者。<br>最初に何をする？</strong><br>
-            <span style="font-size:12px;color:rgba(255,255,255,.55);">次のスライドで2つの選択肢を見てみよう。</span>
+        <div class="sonobo-row an">
+          <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">キャプテン、ここが<strong>分岐点</strong>です！<br>次の行動でこの患者の運命が変わる。<br>あなたならどう動きますか？</div>
           </div>
         </div>
-        <div class="gap"></div>
-        <div style="display:flex;flex-direction:column;gap:9px;" class="an d2">
+
+        <div class="keypoint an d1" style="animation:none;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);">
+          <span class="kp-icon">🤔</span>
+          <div class="kp-body">
+            <div class="kp-text" style="color:rgba(255,255,255,.88);">
+              <strong style="color:white;font-size:15px;">バイタル不安定な外傷患者。<br>最初に何をする？</strong><br>
+              <span style="font-size:12px;color:rgba(255,255,255,.5);">次のスライドで2つの選択肢を確認しましょう</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="choice-list an d2">
           <div class="choice-btn choice-bad">
             <span class="choice-icon">❌</span>
-            <span class="choice-txt">採血・ライン確保を優先し、FAST後回し</span>
+            <span class="choice-text">採血・ライン確保を優先し、FAST後回し</span>
           </div>
           <div class="choice-btn choice-good">
             <span class="choice-icon">✅</span>
-            <span class="choice-txt">ABCDE評価のCでFASTを即実施</span>
+            <span class="choice-text">ABCDE評価のCでFASTを即実施</span>
           </div>
         </div>
       </div>
 
-      <!-- S6: FASTなし → bad -->
+      <!-- ===== S6: FASTなし → bad path ===== -->
       <div class="slide" id="s6">
-        <div class="sonobo-card red an">
-          <div class="sb-img"><img src="assets/sonobo_9.png" alt="ソノボくん注意"></div>
-          <div class="sb-body"><div class="sb-name r">🤖 ソノボくん</div>
-          <div class="sb-text">もし<strong style="color:#fca5a5;">FASTをやらずに</strong>検査を進めたら…どうなる？</div></div>
-        </div>
-        <div class="bc no an d1">
-          <div class="bc-h"><span class="bc-badge bno">❌ BAD PATH</span><span class="bc-sub">FASTを後回しにした場合</span></div>
-          <div class="bc-items">
-            <div class="bc-item"><span class="bc-item-icon">🩸</span>採血・ライン確保に時間を取られる</div>
-            <div class="bc-item"><span class="bc-item-icon">⏳</span>「腹部外傷なし」という外表所見を信じ、出血源を見落とす</div>
-            <div class="bc-item"><span class="bc-item-icon">🖥️</span>バイタル不安定なままCTへ搬送 ＝ <strong style="color:#fca5a5;">「死のトンネル」</strong><span style="font-size:11px;color:rgba(255,255,255,.45);">（監視・介入できない空白時間）</span></div>
-            <div class="bc-item"><span class="bc-item-icon">📉</span>その間も体腔内出血は進行し続ける</div>
+        <div class="sonobo-row danger an">
+          <div class="sonobo-img"><img src="assets/sonobo_9.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label danger">🤖 ソノボくん</div>
+            <div class="sonobo-text">もし<strong style="color:#fca5a5;">FASTをやらずに</strong>検査を進めたら…どうなる？シミュレーションしてみましょう</div>
           </div>
-          <div class="oc bad">💀 循環破綻 → 心停止リスク。介入の機会を逃す</div>
         </div>
-        <div class="sonobo-card red an d2">
-          <div class="sb-img"><img src="assets/sonobo_8.png" alt="ソノボくん驚き"></div>
-          <div class="sb-body"><div class="sb-name r">😱 ソノボくん</div>
-          <div class="sb-text">バイタル不安定な外傷患者では、<strong style="color:#fca5a5;">出血源の同定を最優先</strong>する。FASTはそのための最速ツールだよ。</div></div>
+
+        <div class="branch bad an d1">
+          <div class="branch-head">
+            <span class="branch-badge badge-bad">❌ BAD PATH</span>
+            <span class="branch-sub">FASTを後回しにした場合</span>
+          </div>
+          <div class="branch-items">
+            <div class="branch-item"><span class="branch-item-icon">🩸</span>採血・ライン確保に時間を取られる</div>
+            <div class="branch-item"><span class="branch-item-icon">⏳</span>「腹部外傷なし」という外表所見を信じ、出血源を見落とす</div>
+            <div class="branch-item"><span class="branch-item-icon">🖥️</span>バイタル不安定なままCTへ搬送 = <strong style="color:#fca5a5;">「死のトンネル」</strong><span style="font-size:11px;color:rgba(255,255,255,.4);">（監視できない空白時間）</span></div>
+            <div class="branch-item"><span class="branch-item-icon">📉</span>その間も体腔内出血は進行し続ける</div>
+          </div>
+          <div class="outcome bad">💀 循環破綻 → 心停止リスク。介入の機会を逃す</div>
+        </div>
+
+        <div class="sonobo-row danger an d2">
+          <div class="sonobo-img"><img src="assets/sonobo_8.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label danger">😱 ソノボくん</div>
+            <div class="sonobo-text">バイタル不安定な外傷患者では、<strong style="color:#fca5a5;">出血源の同定を最優先</strong>する。FASTはそのための最速ツールです</div>
+          </div>
         </div>
       </div>
 
-      <!-- S7: FASTあり → good -->
+      <!-- ===== S7: FASTあり → good path ===== -->
       <div class="slide" id="s7">
-        <div class="sonobo-card grn an">
-          <div class="sb-img"><img src="assets/sonobo_3.png" alt="ソノボくんサムズアップ"></div>
-          <div class="sb-body"><div class="sb-name g">🤖 ソノボくん</div>
-          <div class="sb-text"><strong style="color:#4ade80;">FASTを即実施</strong>したら？実際の所見を見てみよう！</div></div>
+        <div class="sonobo-row good an">
+          <div class="sonobo-img"><img src="assets/sonobo_3.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label good">🤖 ソノボくん</div>
+            <div class="sonobo-text"><strong style="color:#4ade80;">FASTを即実施</strong>したら？実際の所見を見てみましょう！</div>
+          </div>
         </div>
-        <div class="bc yes an d1">
-          <div class="bc-h"><span class="bc-badge byes">✅ FAST PATH</span><span class="bc-sub">ABCDE評価のCとして実施</span></div>
-          <div class="fb">
-            <div class="fb-title">🔬 FAST所見（ベッドサイド・数分以内）</div>
-            <div class="fb-fi"><span class="fb-dot"></span>Morrison窩：<strong style="color:var(--blue-light);">明らかな液体貯留あり</strong></div>
-            <div class="fb-fi"><span class="fb-dot"></span>Douglas窩：<strong style="color:var(--blue-light);">液体貯留あり</strong></div>
+
+        <div class="branch good an d1">
+          <div class="branch-head">
+            <span class="branch-badge badge-good">✅ FAST PATH</span>
+            <span class="branch-sub">ABCDE評価のCとして実施</span>
           </div>
-          <div class="bc-items">
-            <div class="bc-item"><span class="bc-item-icon">🔴</span>腹腔内出血と判断 → 外科・上級医へ即コール</div>
-            <div class="bc-item"><span class="bc-item-icon">💉</span>大量輸血プロトコール（MTP）起動・輸血開始</div>
-            <div class="bc-item"><span class="bc-item-icon">🔪</span>血行動態を考慮しながら手術室へ（止血を優先）</div>
+          <div class="fast-findings">
+            <div class="ff-title">🔬 FAST所見（ベッドサイド・数分以内）</div>
+            <div class="ff-item"><span class="ff-dot"></span>Morrison窩：<strong style="color:var(--blue-light);">明らかな液体貯留あり</strong></div>
+            <div class="ff-item"><span class="ff-dot"></span>Douglas窩：<strong style="color:var(--blue-light);">液体貯留あり</strong></div>
           </div>
-          <div class="oc good">🏆 活動性腹腔内出血確認 → <strong>止血処置へ早期移行！</strong></div>
+          <div class="branch-items">
+            <div class="branch-item"><span class="branch-item-icon">🔴</span>腹腔内出血と判断 → 外科・上級医へ即コール</div>
+            <div class="branch-item"><span class="branch-item-icon">💉</span>大量輸血プロトコール（MTP）起動・輸血開始</div>
+            <div class="branch-item"><span class="branch-item-icon">🔪</span>血行動態を考慮しながら手術室へ（止血を優先）</div>
+          </div>
+          <div class="outcome good">🏆 活動性腹腔内出血確認 → <strong>止血処置へ早期移行！</strong></div>
         </div>
       </div>
 
-      <!-- S8: 結末 -->
+      <!-- ===== S8: 結末 ===== -->
       <div class="slide" id="s8">
-        <div class="res an">
-          <div class="res-sb"><img src="assets/sonobo_6.png" alt="ソノボくんジャンプ"></div>
-          <div class="res-body">
-            <div class="res-title">🎉 FASTが命を救った！</div>
-            <div class="res-txt">ABCDE評価のCでFASTを組み込んだことで、腹腔内出血を早期に同定。迅速な止血介入につながった。<br><strong style="color:#4ade80;">これがFASTの力。</strong></div>
+        <div class="result-card an">
+          <div class="result-sb"><img src="assets/sonobo_6.png" alt="ソノボくんジャンプ"></div>
+          <div class="result-body">
+            <div class="result-title">🎉 FASTが命を救った！</div>
+            <div class="result-text">ABCDE評価のCでFASTを組み込んだことで、腹腔内出血を早期に同定。迅速な止血介入につながった。<br><strong style="color:#4ade80;">これがFASTの力。</strong></div>
           </div>
         </div>
-        <div class="sonobo-card grn an d1">
-          <div class="sb-img"><img src="assets/sonobo_3.png" alt="ソノボくんサムズアップ"></div>
-          <div class="sb-body"><div class="sb-name g">🤖 ソノボくん</div>
-          <div class="sb-text">FASTを<strong style="color:#4ade80;">「知っていた」から</strong>救えた命。これがこのアプリで学ぶ意味だよ。<br>次はクイズで確認しよう！</div></div>
+
+        <div class="sonobo-row good an d1">
+          <div class="sonobo-img"><img src="assets/sonobo_3.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label good">🤖 ソノボくん</div>
+            <div class="sonobo-text">FASTを<strong style="color:#4ade80;">「知っていた」から</strong>救えた命。これがこのアプリで学ぶ意味です。<br>では、クイズで確認しましょう！</div>
+          </div>
+        </div>
+
+        <div class="stat-card blue an d2">
+          <span class="sc-icon">💡</span>
+          <div class="sc-body">
+            <div class="sc-label">KEY INSIGHT</div>
+            <div class="sc-text">「見えない出血」を「見える化」するのがFASTの本質。<span class="hiy">速度が命を救う</span></div>
+          </div>
         </div>
       </div>
 
-      <!-- S9: クイズ1 -->
+      <!-- ===== S9: クイズ1 ===== -->
       <div class="slide" id="s9">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん電球"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">理解チェック！クイズに答えてみよう 🧠</div></div>
-        </div>
-        <div class="an d1">
-          <div class="ql">🧠 QUIZ 1</div>
-          <div class="qq">腹腔内出血が外傷死で危険な理由は？</div>
-          <div class="qopts" id="q1opts">
-            <button class="qopt" onclick="ansQ('q1',0,false)">① 痛みが激しく患者が暴れるから</button>
-            <button class="qopt" onclick="ansQ('q1',1,true)">② 外見からわかりにくく見逃されやすいから</button>
-            <button class="qopt" onclick="ansQ('q1',2,false)">③ CT撮影に費用がかかるから</button>
+        <div class="sonobo-row an">
+          <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">キャプテン、理解度チェックです！クイズに答えてみよう 🧠</div>
           </div>
-          <div class="qfb" id="q1fb"></div>
+        </div>
+
+        <div class="an d1">
+          <div class="quiz-label">🧠 QUIZ 1 OF 2</div>
+          <div class="quiz-q">腹腔内出血が外傷死で特に危険な理由は？</div>
+          <div class="quiz-opts" id="q1opts">
+            <button class="quiz-opt" onclick="ansQ('q1',0,false)">① 痛みが激しく患者が暴れるから</button>
+            <button class="quiz-opt" onclick="ansQ('q1',1,true)">② 外見からわかりにくく見逃されやすいから</button>
+            <button class="quiz-opt" onclick="ansQ('q1',2,false)">③ CT撮影に費用がかかるから</button>
+          </div>
+          <div class="quiz-fb" id="q1fb"></div>
         </div>
       </div>
 
-      <!-- S10: クイズ2 + まとめ -->
+      <!-- ===== S10: クイズ2 + まとめ ===== -->
       <div class="slide" id="s10">
-        <div class="sonobo-card an">
-          <div class="sb-img"><img src="assets/sonobo_4.png" alt="ソノボくん電球"></div>
-          <div class="sb-body"><div class="sb-name">🤖 ソノボくん</div>
-          <div class="sb-text">もう1問！これができればSTEP 1 クリアだ✨</div></div>
-        </div>
-        <div class="an d1">
-          <div class="ql">🧠 QUIZ 2</div>
-          <div class="qq">FASTを使う最大のメリットは？</div>
-          <div class="qopts" id="q2opts">
-            <button class="qopt" onclick="ansQ('q2',0,false)">① 骨折の有無を正確に診断できる</button>
-            <button class="qopt" onclick="ansQ('q2',1,false)">② MRIよりも画質が優れている</button>
-            <button class="qopt" onclick="ansQ('q2',2,true)">③ ベッドサイドで「出血あり/なし」を素早く判断できる</button>
+        <div class="sonobo-row an">
+          <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+          <div class="sonobo-body">
+            <div class="sonobo-label">🤖 ソノボくん</div>
+            <div class="sonobo-text">ラスト1問！これができれば燃料補給のミッションクリアです✨</div>
           </div>
-          <div class="qfb" id="q2fb"></div>
         </div>
-        <div class="sum-box an d2">
-          <div class="sum-lbl">📌 STEP 1 まとめ</div>
-          <div class="sp"><div class="sp-n">1</div><div class="sp-t">外傷死の主因は<strong>出血性ショック</strong>。腹腔内出血は外見でわからない。</div></div>
-          <div class="sp"><div class="sp-n">2</div><div class="sp-t">FASTは<strong>ABCDE評価のC（循環）</strong>として系統的に組み込まれる。</div></div>
-          <div class="sp"><div class="sp-n">3</div><div class="sp-t"><strong>被曝なし・ベッドサイド・繰り返し可能</strong>。早期発見が止血介入の機会を開く。</div></div>
+
+        <div class="an d1">
+          <div class="quiz-label">🧠 QUIZ 2 OF 2 — FINAL</div>
+          <div class="quiz-q">FASTを使う最大のメリットは？</div>
+          <div class="quiz-opts" id="q2opts">
+            <button class="quiz-opt" onclick="ansQ('q2',0,false)">① 骨折の有無を正確に診断できる</button>
+            <button class="quiz-opt" onclick="ansQ('q2',1,false)">② MRIよりも画質が優れている</button>
+            <button class="quiz-opt" onclick="ansQ('q2',2,true)">③ ベッドサイドで「出血あり/なし」を素早く判断できる</button>
+          </div>
+          <div class="quiz-fb" id="q2fb"></div>
+        </div>
+
+        <div class="summary-box an d2">
+          <div class="sum-label">📡 STEP 1 まとめ</div>
+          <div class="sum-point"><div class="sum-num">1</div><div class="sum-text">外傷死の主因は<strong>出血性ショック</strong>。腹腔内出血は外見でわからない</div></div>
+          <div class="sum-point"><div class="sum-num">2</div><div class="sum-text">FASTは<strong>ABCDE評価のC（循環）</strong>として系統的に組み込まれる</div></div>
+          <div class="sum-point"><div class="sum-num">3</div><div class="sum-text"><strong>被曝なし・ベッドサイド・繰り返し可能</strong>。早期発見が止血介入の機会を開く</div></div>
         </div>
         <div class="gap"></div>
       </div>
 
-      <!-- S11: 完了画面 ★NEW -->
+      <!-- ===== S11: 惑星オリジン クリア！ ===== -->
       <div class="slide" id="s11">
         <div class="complete-screen">
-          <div class="complete-badge">🏅</div>
-          <div class="complete-title">STEP 1 クリア！</div>
-          <div class="complete-sub">FASTの重要性をマスターした！<br>なぜFASTが命を救うのか、しっかり理解できたね。</div>
+          <div class="fuel-reward">
+            <div class="fuel-orb">⛽</div>
+            <div class="complete-badge-text">FUEL ACQUIRED</div>
+          </div>
+
+          <div class="complete-title">惑星オリジン クリア！</div>
+          <div class="complete-sub">燃料補給完了。次の惑星へのルートが解放された！<br>FASTの存在意義をマスターしたね⭐</div>
 
           <div class="complete-sonobo">
             <img src="assets/sonobo_6.png" alt="ソノボくんジャンプ">
           </div>
 
           <div class="complete-sum">
-            <div class="sum-lbl">✅ 今日の学び</div>
-            <div class="sp"><div class="sp-n">1</div><div class="sp-t">出血性ショックは外見ではわからない</div></div>
-            <div class="sp"><div class="sp-n">2</div><div class="sp-t">FASTは2分でベッドサイドで判断できる</div></div>
-            <div class="sp"><div class="sp-n">3</div><div class="sp-t">早期FASTが救命率を上げる</div></div>
+            <div class="sum-label">✅ ミッションログ</div>
+            <div class="sum-point"><div class="sum-num">1</div><div class="sum-text">出血性ショックは外見ではわからない</div></div>
+            <div class="sum-point"><div class="sum-num">2</div><div class="sum-text">FASTはABCDE評価のC（循環）に組み込む</div></div>
+            <div class="sum-point"><div class="sum-num">3</div><div class="sum-text">早期FASTが止血介入の機会を作る</div></div>
           </div>
 
           <div class="btn-group">
-            <button class="btn-step2" onclick="window.location.href='step2.html'">
-              <span>📚 STEP 2へ進む</span><span style="font-size:18px;">→</span>
+            <button class="btn-next-planet" onclick="warpTo('step2.html')">
+              <span>🚀 惑星アナトミアへ出発</span><span style="font-size:18px;">→</span>
             </button>
-            <button class="btn-home" onclick="window.location.href='home.html'">
-              <span>🏠</span><span>ホームに戻る</span>
+            <button class="btn-home-link" onclick="warpTo('home.html')">
+              <span>🏠</span><span>ブリッジ（HOME）に戻る</span>
             </button>
           </div>
         </div>
@@ -613,154 +872,245 @@ html,body{width:100%;height:100%;font-family:'Noto Sans JP',sans-serif;
     </div><!-- /slides-track -->
   </div><!-- /slide-viewport -->
 
-  <div class="bottom-nav" id="bottomNav">
+  <!-- BOTTOM NAV -->
+  <div class="bottom-bar" id="bottomBar">
     <button class="btn-prev" id="bPrev" onclick="go(-1)" disabled>←</button>
     <button class="btn-next" id="bNext" onclick="go(1)">次へ →</button>
   </div>
 
-</div>
+</div><!-- /app-wrapper -->
 
 <script>
-// ===== SOUND EFFECTS (Web Audio API) =====
-let _ac=null;
-function getAC(){if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();return _ac;}
-
-function playSfx(type){
-  try{
-    const ac=getAC();
-    if(ac.state==='suspended')ac.resume();
-    const now=ac.currentTime;
-
-    if(type==='hotline'){
-      // 入電：短いビープ×2（無線っぽい）
-      [0, 0.22].forEach(t=>{
-        const o=ac.createOscillator();const g=ac.createGain();
-        o.connect(g);g.connect(ac.destination);
-        o.type='square';o.frequency.value=880;
-        g.gain.setValueAtTime(0,now+t);g.gain.linearRampToValueAtTime(0.12,now+t+0.01);
-        g.gain.setValueAtTime(0.12,now+t+0.09);g.gain.linearRampToValueAtTime(0,now+t+0.12);
-        o.start(now+t);o.stop(now+t+0.14);
-      });
-    }else if(type==='vitals'){
-      // バイタル表示：心拍モニター風ビープ×2
-      [0, 0.6].forEach(t=>{
-        const o=ac.createOscillator();const g=ac.createGain();
-        o.connect(g);g.connect(ac.destination);
-        o.type='sine';o.frequency.value=1040;
-        g.gain.setValueAtTime(0,now+t);g.gain.linearRampToValueAtTime(0.15,now+t+0.01);
-        g.gain.linearRampToValueAtTime(0,now+t+0.08);
-        o.start(now+t);o.stop(now+t+0.1);
-      });
-    }else if(type==='alarm'){
-      // 急変アラーム：下降する警告音
-      const o=ac.createOscillator();const g=ac.createGain();
-      o.connect(g);g.connect(ac.destination);
-      o.type='sawtooth';
-      o.frequency.setValueAtTime(660,now);o.frequency.linearRampToValueAtTime(440,now+0.18);
-      o.frequency.setValueAtTime(660,now+0.22);o.frequency.linearRampToValueAtTime(440,now+0.40);
-      g.gain.setValueAtTime(0.13,now);g.gain.setValueAtTime(0.13,now+0.38);g.gain.linearRampToValueAtTime(0,now+0.44);
-      o.start(now);o.stop(now+0.46);
-    }else if(type==='correct'){
-      // 正解：明るい2音（緊迫感の中の安堵）
-      [0,0.14].forEach((t,i)=>{
-        const o=ac.createOscillator();const g=ac.createGain();
-        o.connect(g);g.connect(ac.destination);
-        o.type='triangle';o.frequency.value=[523,784][i];
-        g.gain.setValueAtTime(0.22,now+t);g.gain.linearRampToValueAtTime(0,now+t+0.18);
-        o.start(now+t);o.stop(now+t+0.2);
-      });
-    }else if(type==='wrong'){
-      // 不正解：重い低音ブザー（緊迫感）
-      const o=ac.createOscillator();const g=ac.createGain();
-      o.connect(g);g.connect(ac.destination);
-      o.type='sawtooth';o.frequency.setValueAtTime(180,now);o.frequency.linearRampToValueAtTime(110,now+0.22);
-      g.gain.setValueAtTime(0.16,now);g.gain.linearRampToValueAtTime(0,now+0.25);
-      o.start(now);o.stop(now+0.25);
-    }else if(type==='complete'){
-      // クリア：上昇ファンファーレ（達成感）
-      const freqs=[523,659,784,1047];
-      freqs.forEach((f,i)=>{
-        const o=ac.createOscillator();const g=ac.createGain();
-        o.connect(g);g.connect(ac.destination);
-        o.type='triangle';o.frequency.value=f;
-        const t=now+i*0.14;
-        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.24,t+0.04);
-        g.gain.linearRampToValueAtTime(0,t+0.24);
-        o.start(t);o.stop(t+0.28);
-      });
-    }
-  }catch(e){}
+// ===== AUDIO =====
+let audioCtx = null;
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
 }
-// stars
-const bg=document.getElementById('bgCanvas');
-for(let i=0;i<50;i++){const s=document.createElement('div');s.className='star';const z=Math.random()*2+.4;s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.5+.12};`;bg.appendChild(s);}
 
-// TOTAL = 12 slides (s0〜s11)
-const TOTAL=12;
-const TITLES=['なぜFASTが必要か','一番大事なポイント','緊迫の救急現場','搬入時バイタル','2分後の急変','ここが分岐点！','FASTなし → 最悪の展開','FASTあり → 救命へ','結末','クイズ 1','クイズ 2 + まとめ','✅ STEP 1 クリア！'];
-let cur=0;
+const SOUNDS = {
+  correct: () => {
+    const ctx = getCtx();
+    [523,659,784,1047].forEach((freq,i) => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value=freq; o.type='sine';
+      const t=ctx.currentTime+i*0.1;
+      g.gain.setValueAtTime(0.3,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.4);
+      o.start(t); o.stop(t+0.4);
+    });
+  },
+  wrong: () => {
+    const ctx = getCtx();
+    [220,196].forEach((freq,i) => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value=freq; o.type='sawtooth';
+      const t=ctx.currentTime+i*0.15;
+      g.gain.setValueAtTime(0.2,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3);
+      o.start(t); o.stop(t+0.3);
+    });
+  },
+  warp: () => {
+    const ctx = getCtx();
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(100,ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(2000,ctx.currentTime+0.6);
+    g.gain.setValueAtTime(0.3,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.8);
+    o.start(ctx.currentTime); o.stop(ctx.currentTime+0.8);
+  },
+  tap: () => {
+    const ctx = getCtx();
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value=800; o.type='sine';
+    g.gain.setValueAtTime(0.1,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.08);
+    o.start(ctx.currentTime); o.stop(ctx.currentTime+0.08);
+  },
+  reward: () => {
+    const ctx = getCtx();
+    [523,659,784,1047,1319].forEach((freq,i) => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value=freq; o.type='triangle';
+      const t=ctx.currentTime+i*0.12;
+      g.gain.setValueAtTime(0.25,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.5);
+      o.start(t); o.stop(t+0.5);
+    });
+  },
+  alarm: () => {
+    const ctx = getCtx();
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(660,ctx.currentTime);
+    o.frequency.linearRampToValueAtTime(440,ctx.currentTime+0.18);
+    g.gain.setValueAtTime(0.12,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);
+    o.start(ctx.currentTime); o.stop(ctx.currentTime+0.42);
+  },
+  vitals: () => {
+    const ctx = getCtx();
+    [0,0.6].forEach(t => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type='sine'; o.frequency.value=1040;
+      g.gain.setValueAtTime(0,ctx.currentTime+t);
+      g.gain.linearRampToValueAtTime(0.15,ctx.currentTime+t+0.01);
+      g.gain.linearRampToValueAtTime(0,ctx.currentTime+t+0.08);
+      o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.1);
+    });
+  },
+  hotline: () => {
+    const ctx = getCtx();
+    [0,0.22].forEach(t => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type='square'; o.frequency.value=880;
+      g.gain.setValueAtTime(0,ctx.currentTime+t);
+      g.gain.linearRampToValueAtTime(0.12,ctx.currentTime+t+0.01);
+      g.gain.setValueAtTime(0.12,ctx.currentTime+t+0.09);
+      g.gain.linearRampToValueAtTime(0,ctx.currentTime+t+0.12);
+      o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.14);
+    });
+  }
+};
 
-const track=document.getElementById('sTrack');
-const pFill=document.getElementById('pFill');
-const pStep=document.getElementById('pStep');
-const pSub=document.getElementById('pSub');
-const bPrev=document.getElementById('bPrev');
-const bNext=document.getElementById('bNext');
-const hTitle=document.getElementById('hTitle');
-const bottomNav=document.getElementById('bottomNav');
+function playSound(name) { try { SOUNDS[name] && SOUNDS[name](); } catch(e){} }
 
-function updateUI(){
-  track.style.transform=`translateX(-${cur*100}%)`;
-  const pct=Math.round((cur+1)/TOTAL*100);
-  pFill.style.width=pct+'%';
-  pStep.textContent=`${cur+1} / ${TOTAL}`;
-  pSub.textContent=TITLES[cur];
-  hTitle.textContent=TITLES[cur];
-  bPrev.disabled=cur===0;
+// ===== WARP TRANSITION =====
+function warpTo(url) {
+  playSound('warp');
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:black;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;';
+  for (let i=0;i<30;i++) {
+    const streak = document.createElement('div');
+    const angle = Math.random()*360, len = Math.random()*200+50;
+    streak.style.cssText = `position:absolute;left:50%;top:50%;width:${len}px;height:2px;background:linear-gradient(90deg,white,transparent);transform-origin:left center;transform:rotate(${angle}deg) scaleX(0);animation:streakOut .4s .1s ease forwards;`;
+    overlay.appendChild(streak);
+  }
+  const txt = document.createElement('p');
+  txt.textContent = 'WARP DRIVE ENGAGED';
+  txt.style.cssText = "font-family:'Orbitron',sans-serif;font-size:14px;color:white;letter-spacing:4px;opacity:0;animation:fadeInOut .8s .2s ease forwards;z-index:1;word-break:break-all;overflow-wrap:break-word;";
+  overlay.appendChild(txt);
+  document.body.appendChild(overlay);
+  const style = document.createElement('style');
+  style.textContent = `@keyframes streakOut{0%{transform:rotate(var(--a,0deg)) scaleX(0)}50%{transform:rotate(var(--a,0deg)) scaleX(1);opacity:1}100%{transform:rotate(var(--a,0deg)) scaleX(0) translateX(300px);opacity:0}}@keyframes fadeInOut{0%,100%{opacity:0}30%,70%{opacity:1}}`;
+  document.head.appendChild(style);
+  overlay.animate([{opacity:0},{opacity:1}],{duration:200,fill:'forwards'}).finished.then(()=>{
+    setTimeout(()=>{
+      overlay.animate([{opacity:1},{opacity:0}],{duration:300,fill:'forwards'}).finished.then(()=>{ location.href=url; });
+    },700);
+  });
+}
 
-  const isComplete = cur===TOTAL-1;
-  bottomNav.style.display = isComplete ? 'none' : 'flex';
+// ===== STARS =====
+function initBg() {
+  const bg = document.getElementById('bgCanvas');
+  for (let i=0;i<70;i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random()*2.5+0.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.6+.2};`;
+    bg.appendChild(s);
+  }
+}
+initBg();
 
-  if(!isComplete){
-    bNext.textContent='次へ →';
-    bNext.className='btn-next';
+// ===== SLIDES ENGINE =====
+const TOTAL  = 12;
+const TITLES = [
+  '惑星オリジンへ着陸',
+  '最重要ポイント',
+  '緊迫の救急現場',
+  '搬入時バイタル',
+  '2分後の急変',
+  '分岐点！',
+  'FASTなし → 最悪の展開',
+  'FASTあり → 救命へ',
+  '結末',
+  'クイズ 1',
+  'クイズ 2 ＋ まとめ',
+  '⛽ 惑星オリジン クリア！'
+];
+
+let cur = 0;
+const track    = document.getElementById('sTrack');
+const pFill    = document.getElementById('pFill');
+const pCount   = document.getElementById('pCount');
+const pTitle   = document.getElementById('pTitle');
+const bPrev    = document.getElementById('bPrev');
+const bNext    = document.getElementById('bNext');
+const hTitle   = document.getElementById('hTitle');
+const fuelBar  = document.getElementById('fuelBar');
+const bottomBar= document.getElementById('bottomBar');
+
+function updateUI() {
+  track.style.transform = `translateX(-${cur*100}%)`;
+  const pct = Math.round((cur+1)/TOTAL*100);
+  pFill.style.width  = pct + '%';
+  fuelBar.style.width = pct + '%';
+  pCount.textContent = `${cur+1} / ${TOTAL}`;
+  pTitle.textContent = TITLES[cur];
+  hTitle.textContent = TITLES[cur];
+  bPrev.disabled = cur === 0;
+
+  const isComplete = cur === TOTAL-1;
+  bottomBar.style.display = isComplete ? 'none' : 'flex';
+
+  if (!isComplete) {
+    bNext.textContent = cur === TOTAL-2 ? 'クリア画面へ →' : '次へ →';
+    bNext.className = 'btn-next';
   }
 
-  // 緊迫感演出：入電（S2）・バイタル（S3・S4）で緊迫音
-  if(cur===2) setTimeout(()=>playSfx('hotline'),200);
-  if(cur===3) setTimeout(()=>playSfx('vitals'),300);
-  if(cur===4) setTimeout(()=>playSfx('alarm'),200);
+  // サウンド演出
+  if (cur === 2) setTimeout(() => playSound('hotline'), 200);
+  if (cur === 3) setTimeout(() => playSound('vitals'), 300);
+  if (cur === 4) setTimeout(() => playSound('alarm'), 200);
+  if (cur === TOTAL-1) setTimeout(() => playSound('reward'), 300);
 
-  // re-trigger animations
-  const sl=document.getElementById('s'+cur);
-  sl.querySelectorAll('.an').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
+  // アニメーション再トリガー
+  const sl = document.getElementById('s'+cur);
+  sl.querySelectorAll('.an').forEach(el => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  });
 }
 
-function go(dir){
-  const next=cur+dir;
-  if(next<0||next>=TOTAL)return;
-  cur=next;
-  if(cur===TOTAL-1)setTimeout(()=>playSfx('complete'),300);
+function go(dir) {
+  const next = cur + dir;
+  if (next < 0 || next >= TOTAL) return;
+  playSound('tap');
+  cur = next;
   updateUI();
 }
 
-// quiz
-const FB={
-  q1:{ok:'✅ 正解！腹腔内出血は「外見からわからない」のが怖い。傷も血も見えないまま体の中で出血が続く。だからFASTで素早く確認が必要！',
-      ng:'❌ 残念…正解は②。腹腔内出血は外表から判断できない。見逃されやすいから致命的になる。'},
-  q2:{ok:'✅ 正解！CTと違い、移動・準備・被曝なしでベッドサイドで即スキャンできる。「出血あり/なし」を数分で判断できるのが最大の武器！',
-      ng:'❌ 残念…正解は③。FASTは骨折診断には向かないし、画質もCT・MRIに劣る。でも「出血の有無を即座に判断する」能力は唯一無二！'}
+// ===== QUIZ =====
+const FB = {
+  q1: {
+    ok: '✅ 正解！腹腔内出血は「外見からわからない」のが恐ろしい。傷も血も見えないまま体の中で出血が続く。だからFASTで素早く確認が必要！',
+    ng: '❌ 残念…正解は②。腹腔内出血は外表から判断できない。見逃されやすいから致命的になる。'
+  },
+  q2: {
+    ok: '✅ 正解！CTと違い、移動・準備・被曝なしでベッドサイドで即スキャンできる。「出血あり/なし」を数分で判断できるのが最大の武器！',
+    ng: '❌ 残念…正解は③。FASTは骨折診断には向かないし、画質もCT・MRIに劣る。でも「出血の有無を即座に判断する」能力は唯一無二！'
+  }
 };
 
-function ansQ(id,idx,ok){
-  document.querySelectorAll(`#${id}opts .qopt`).forEach((o,i)=>{
+function ansQ(id, idx, ok) {
+  document.querySelectorAll(`#${id}opts .quiz-opt`).forEach((o,i) => {
     o.classList.add('disabled');
-    if(i===idx)o.classList.add(ok?'correct':'wrong');
+    if (i === idx) o.classList.add(ok ? 'correct' : 'wrong');
   });
-  const fb=document.getElementById(`${id}fb`);
-  fb.textContent=ok?FB[id].ok:FB[id].ng;
-  fb.className='qfb show '+(ok?'ok':'ng');
-  playSfx(ok?'correct':'wrong');
+  const fb = document.getElementById(`${id}fb`);
+  fb.textContent = ok ? FB[id].ok : FB[id].ng;
+  fb.className = 'quiz-fb show ' + (ok ? 'ok' : 'ng');
+  playSound(ok ? 'correct' : 'wrong');
 }
 
 updateUI();
