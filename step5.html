@@ -375,33 +375,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <svg class="ecg-svg" id="ecgSvg" viewBox="0 0 800 26" preserveAspectRatio="none"></svg>
         </div>
       </div>
-
-      <!-- FAST MAP -->
-      <div class="fast-map" id="fastMap">
-        <div class="fm-title">FAST — 4窓マップ</div>
-        <div class="fm-grid">
-          <div class="fm-item" id="fm-sub">
-            <span class="fm-icon">🫀</span>
-            <div class="fm-name">心窩部</div>
-            <div class="fm-res" id="fr-sub"></div>
-          </div>
-          <div class="fm-item" id="fm-rub">
-            <span class="fm-icon">🫁</span>
-            <div class="fm-name">モリソン窩</div>
-            <div class="fm-res" id="fr-rub"></div>
-          </div>
-          <div class="fm-item" id="fm-lub">
-            <span class="fm-icon">🩸</span>
-            <div class="fm-name">脾周囲</div>
-            <div class="fm-res" id="fr-lub"></div>
-          </div>
-          <div class="fm-item" id="fm-pel">
-            <span class="fm-icon">🦴</span>
-            <div class="fm-name">骨盤</div>
-            <div class="fm-res" id="fr-pel"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- STREAM -->
@@ -500,7 +473,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
         <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
         <button class="btn-home" onclick="warpTo('home.html')">
-          <span>🏠</span><span>ホームへ戻る</span>
+          <span>🗺</span><span>マップへ戻る</span>
         </button>
         <button class="btn-qcheck" onclick="warpTo('quickcheck.html')">
           <span>⚡</span><span>クイックチェックへ</span>
@@ -944,7 +917,7 @@ const STEPS=[
          心臓の周囲（心膜腔）に黒いエコーフリースペースを認めない。<br>
          ➜ <span class="neg-txt">心タンポナーデは否定的。</span>`);
       setMap('sub','neg');
-      nxt('次：右上腹部を確認する',()=>run(2));
+      nxt('次：右側腹部を確認する',()=>run(2));
     },
     '心窩部が映らないときは',
     `・みぞおちの「くぼみ」にプローブを深く押し込む<br>
@@ -1003,8 +976,8 @@ const STEPS=[
          脾周囲に<strong>エコーフリーの暗い領域</strong>を認める。<br>
          ➜ <span class="pos-txt">脾損傷による腹腔内出血を強く疑う。<br>この時点でFAST陽性！</span>`);
       setMap('lub','pos');
-      alrt('danger','🚨','FAST陽性確認！ — 引き続き骨盤を確認する');
-      nxt('次：骨盤を確認する',()=>run(4));
+      alrt('danger','🚨','FAST陽性確認！ — 引き続き膀胱直腸窩を確認する');
+      nxt('次：膀胱直腸窩を確認する',()=>run(4));
     },
     '脾周囲が映らないときは',
     `・モリソン窩より難しい。プローブを<strong>左の背中側へ回す</strong>イメージ<br>
@@ -1016,22 +989,21 @@ const STEPS=[
   );
 },
 
-/* 4: 骨盤 */
+/* 4: 膀胱直腸窩 */
 ()=>{
   setProgress(73);
   clearNow();setMap('pel','now');
-  div('FAST ④ ─ 骨盤（膀胱直腸窩）');
+  div('FAST ④ ─ 膀胱直腸窩');
   sb('sonobo_7.png',
-    `最後は<strong>骨盤（膀胱直腸窩）</strong>だ。<br>
-     恥骨の上にプローブを当て、膀胱の後方〜直腸の周囲を確認する。<br>
+    `最後は<strong>膀胱直腸窩</strong>だ。<br>
      ※このステップでは所見を自動で確認します。`);
-  nxt('🔵 骨盤を確認する',()=>{
+  nxt('🔵 膀胱直腸窩を確認する',()=>{
     sndPing();
     setTimeout(()=>sndAlert(),300);
-    fnd('pos','🔴','骨盤（膀胱直腸窩）─ 所見',
+    fnd('pos','🔴','膀胱直腸窩─ 所見',
       `<strong>膀胱直腸窩：少量の液体貯留あり</strong><br>
        膀胱の後方〜直腸の周囲に、少量のエコーフリーな液体を認める。<br>
-       ➜ <span class="pos-txt">骨盤腔にも出血が流れ込んでいる。</span><br>
+       ➜ <span class="pos-txt">膀胱直腸窩にも出血が流れ込んでいる。</span><br>
        脾周囲と合わせて<strong>FAST陽性（2箇所）が確定</strong>した。`);
     setMap('pel','pos');
     alrt('danger','🚨','FAST完了 ─ 2箇所陽性：腹腔内出血の診断');
@@ -1048,8 +1020,8 @@ const STEPS=[
     `キャプテン、<strong>FASTの結果を整理する。</strong><br><br>
      ・心窩部　　：<span class="neg-txt">陰性（液体なし）</span><br>
      ・モリソン窩：<span class="neg-txt">陰性（液体なし）</span><br>
-     ・脾周囲　：<span class="pos-txt">陽性 ← 脾周囲に液体貯留あり</span><br>
-     ・膀胱直腸窩　　　：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
+     ・脾周囲　　：<span class="pos-txt">陽性 ← 脾周囲に液体貯留あり</span><br>
+     ・膀胱直腸窩：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
      バイタルは依然として<span class="red">BP 92/60、HR 118</span>。<br>
      <strong>今すぐ何をする？</strong>`);
 
@@ -1108,9 +1080,9 @@ const STEPS=[
     document.getElementById('resSonobo').src='assets/sonobo_6.png';
     document.getElementById('resTitle').textContent='完璧な判断でした！🏆';
     document.getElementById('resTitle').style.animation='nameGlow 2s ease-in-out infinite';
-    document.getElementById('resSub').textContent='キャプテン、FASTの手順・臨床判断ともに的確だ。本番でもこの判断で動ける。最高の称号を授与する！';
-    titleEn='Galactic FAST Navigator';
-    titleJp='銀河の救命道標医';
+    document.getElementById('resSub').textContent='キャプテン、FAST・臨床判断ともに的確だ。銀河内で栄誉ある称号を授与する！';
+    titleEn='Galactic Rescue Cadet';
+    titleJp='銀河の見習い救命医';
     medals='🏆⭐🚀🌟';
     scoreClass='gold';
     document.getElementById('titleCard').style.display='block';
