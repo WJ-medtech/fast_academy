@@ -657,29 +657,34 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="slide-title">心膜腔に<br><span class="accent">液体が溜まると？</span></div>
   </div>
   <!-- SVG解説図 -->
-  <div class="svg-wrap">
-    <svg viewBox="0 0 260 180" width="240" xmlns="http://www.w3.org/2000/svg">
-      <!-- 黒い帯（液体） -->
-      <ellipse cx="130" cy="90" rx="85" ry="72" fill="rgba(0,0,0,.7)" stroke="rgba(20,184,166,.5)" stroke-width="1.5"/>
-      <!-- 心臓圧迫 -->
-      <ellipse cx="130" cy="90" rx="55" ry="47" fill="rgba(239,68,68,.18)" stroke="rgba(239,100,100,.7)" stroke-width="2.5" stroke-dasharray="4,2"/>
-      <text x="130" y="87" text-anchor="middle" fill="rgba(255,180,180,.9)" font-size="11" font-family="Noto Sans JP" font-weight="700">心 臓</text>
-      <text x="130" y="101" text-anchor="middle" fill="rgba(255,150,150,.7)" font-size="9">圧迫される！</text>
-      <!-- 液体ラベル -->
-      <text x="130" y="148" text-anchor="middle" fill="rgba(20,184,166,.9)" font-size="10" font-family="Noto Sans JP" font-weight="700">黒い帯 = 液体（血液など）</text>
-      <!-- 矢印（圧迫） -->
-      <line x1="75" y1="90" x2="88" y2="90" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowR)"/>
-      <line x1="185" y1="90" x2="172" y2="90" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowL)"/>
-      <defs>
-        <marker id="arrowR" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-          <path d="M0,0 L6,3 L0,6 Z" fill="#ef4444"/>
-        </marker>
-        <marker id="arrowL" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
-          <path d="M6,0 L0,3 L6,6 Z" fill="#ef4444"/>
-        </marker>
-      </defs>
-    </svg>
-  </div>
+  <div align="center">
+　  <svg viewBox="0 0 260 180" width="300" xmlns="http://www.w3.org/2000/svg" style="background-color: #0d1117; border-radius: 8px;">
+    　<!-- マーカー定義（矢印の頭） -->
+   　 <defs>
+      　<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+       　 <path d="M0,0 L10,5 L0,10 Z" fill="#ef4444"/>
+     　 </marker>
+   　 </defs>
+
+  　  <!-- 液体（心嚢液）の貯留エリア -->
+   　 <ellipse cx="130" cy="90" rx="85" ry="72" fill="rgba(0,0,0,0.6)" stroke="#14b8a6" stroke-width="2"/>
+    
+   　 <!-- 心臓本体 -->
+   　 <ellipse cx="130" cy="90" rx="55" ry="47" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3"/>
+   　 <text x="130" y="88" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="bold" font-family="sans-serif">心 臓</text>
+   　 <text x="130" y="102" text-anchor="middle" fill="#ff9696" font-size="9" font-family="sans-serif">圧迫される！</text>
+    
+   　 <!-- 液体ラベル -->
+   　 <text x="130" y="152" text-anchor="middle" fill="#14b8a6" font-size="10" font-weight="bold" font-family="sans-serif">黒い帯 = 液体（血液など）</text>
+    
+    　<!-- 圧迫の矢印 -->
+    　<!-- 左側：外(x:70)から内(x:82)へ向かう → ▶ -->
+   　 <line x1="65" y1="90" x2="82" y2="90" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrow)"/>
+    
+   　 <!-- 右側：外(x:195)から内(x:178)へ向かう → ◀ -->
+    　<line x1="195" y1="90" x2="178" y2="90" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrow)"/>
+  　</svg>
+　</div>
   <div class="info-card">
     <h3>💧 正常</h3>
     <p>心膜腔には生理的に <strong>20〜50 mL</strong> の心膜液が貯留している</p>
