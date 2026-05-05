@@ -152,7 +152,7 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
 .step-row{
   display:flex;align-items:center;
   min-width:0;overflow:visible;
-  height:130px;}
+  height:148px;}
 .step-row.to-right{justify-content:flex-start;padding-left:16px;}
 .step-row.to-left {justify-content:flex-end; padding-right:16px;}
 .step-row.to-center{justify-content:center;}
@@ -316,8 +316,72 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
   background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);
   border:none;border-radius:var(--radius-sm);cursor:pointer;
   font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;}
-.modal-close-btn:active{transform:scale(.98);}
-</style>
+/* ===== CONTACT US セクション ===== */
+.contact-section{
+  margin:20px 16px 24px;
+  background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(80,20,160,.18));
+  border:1.5px solid rgba(168,85,247,.35);border-radius:var(--radius);
+  padding:20px 18px;text-align:center;
+  box-shadow:0 0 32px rgba(140,50,230,.1),inset 0 1px 0 rgba(255,255,255,.06);
+  min-width:0;overflow:hidden;}
+.contact-icon{font-size:28px;margin-bottom:8px;}
+.contact-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;
+  color:rgba(168,85,247,.7);letter-spacing:2px;margin-bottom:6px;}
+.contact-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;
+  color:white;margin-bottom:8px;}
+.contact-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:16px;
+  word-break:break-all;overflow-wrap:break-word;}
+.contact-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+  border:none;border-radius:var(--radius-sm);
+  padding:13px 28px;cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:900;color:white;
+  box-shadow:0 4px 20px rgba(131,58,180,.4);
+  transition:transform .18s ease;text-decoration:none;}
+.contact-btn:active{transform:scale(.96);}
+
+/* ===== インスタモーダル ===== */
+.insta-modal-overlay{display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(2,6,18,.92);backdrop-filter:blur(12px);
+  align-items:flex-end;justify-content:center;}
+.insta-modal-overlay.open{display:flex;animation:fadeIn .25s ease;}
+.insta-modal-sheet{width:100%;max-width:430px;
+  background:linear-gradient(180deg,#1a0a30 0%,#0d0520 100%);
+  border-top:1px solid rgba(168,85,247,.4);
+  border-radius:24px 24px 0 0;
+  padding:22px 20px 48px;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);
+  max-height:88vh;overflow-y:auto;min-width:0;overflow-x:hidden;text-align:center;}
+.insta-modal-handle{width:38px;height:4px;background:rgba(255,255,255,.14);border-radius:2px;margin:0 auto 18px;}
+.insta-modal-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;
+  color:white;margin-bottom:6px;}
+.insta-modal-sub{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:22px;line-height:1.6;
+  word-break:break-all;overflow-wrap:break-word;}
+.insta-qr-wrap{
+  width:180px;height:180px;margin:0 auto 18px;
+  background:white;border-radius:16px;padding:12px;
+  box-shadow:0 0 30px rgba(168,85,247,.35);
+  display:flex;align-items:center;justify-content:center;}
+.insta-qr-wrap img{width:100%;height:100%;object-fit:contain;}
+.insta-qr-wrap canvas{width:100% !important;height:100% !important;}
+.insta-account-name{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;
+  color:white;margin-bottom:4px;}
+.insta-account-sub{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:18px;}
+.insta-link-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+  border:none;border-radius:var(--radius-sm);
+  padding:14px 24px;cursor:pointer;width:100%;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:white;
+  box-shadow:0 4px 20px rgba(131,58,180,.45);
+  transition:transform .18s ease;text-decoration:none;margin-bottom:12px;}
+.insta-link-btn:active{transform:scale(.97);}
+.insta-close-btn{width:100%;padding:13px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:900;color:rgba(255,255,255,.65);}
+.insta-close-btn:active{transform:scale(.98);}
+
 </head>
 <body>
 <div class="bg-canvas" id="bgCanvas"></div>
@@ -390,7 +454,7 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
   <div class="galaxy-map-wrap">
 
     <!-- 航路SVG（惑星間ライン） -->
-    <svg class="route-svg" id="routeSvg" viewBox="0 0 390 650"
+    <svg class="route-svg" id="routeSvg" viewBox="0 0 390 720"
          preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -418,31 +482,31 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <!-- S1(右,65) → S2(左,195) -->
-      <path d="M 290 65 C 260 120, 130 140, 100 195"
+      <!-- S1(右,74) → S2(左,222) -->
+      <path d="M 290 74 C 260 140, 130 158, 100 222"
             stroke="url(#lg1)" stroke-width="2" fill="none"
             filter="url(#glow2)" stroke-dasharray="7 5"
             style="animation:pathPulse 3s ease-in-out infinite;"/>
-      <!-- S2(左,195) → S3(右,325) -->
-      <path d="M 100 195 C 130 250, 260 270, 290 325"
+      <!-- S2(左,222) → S3(右,370) -->
+      <path d="M 100 222 C 130 288, 260 306, 290 370"
             stroke="url(#lg2)" stroke-width="2" fill="none"
             filter="url(#glow2)" stroke-dasharray="7 5"
             style="animation:pathPulse 3s .8s ease-in-out infinite;"/>
-      <!-- S3(右,325) → S4(左,455) -->
-      <path d="M 290 325 C 260 380, 130 400, 100 455"
+      <!-- S3(右,370) → S4(左,518) -->
+      <path d="M 290 370 C 260 436, 130 454, 100 518"
             stroke="url(#lg3)" stroke-width="2" fill="none"
             filter="url(#glow2)" stroke-dasharray="7 5"
             style="animation:pathPulse 3s 1.6s ease-in-out infinite;"/>
-      <!-- S4(左,455) → S5(中,600) -->
-      <path d="M 100 455 C 150 510, 240 540, 195 600"
+      <!-- S4(左,518) → S5(中,680) -->
+      <path d="M 100 518 C 150 576, 240 610, 195 680"
             stroke="url(#lg4)" stroke-width="2" fill="none"
             filter="url(#glow2)" stroke-dasharray="7 5"
             style="animation:pathPulse 3s 2.4s ease-in-out infinite;"/>
       <!-- 航路上の装飾ドット -->
-      <circle cx="196" cy="130" r="3" fill="#3d8ef0" opacity=".45"/>
-      <circle cx="196" cy="260" r="2.5" fill="#7bb8f8" opacity=".4"/>
-      <circle cx="196" cy="390" r="3" fill="#6ee7b7" opacity=".4"/>
-      <circle cx="162" cy="527" r="2.5" fill="#fcd34d" opacity=".4"/>
+      <circle cx="196" cy="148" r="3" fill="#3d8ef0" opacity=".45"/>
+      <circle cx="196" cy="296" r="2.5" fill="#7bb8f8" opacity=".4"/>
+      <circle cx="196" cy="444" r="3" fill="#6ee7b7" opacity=".4"/>
+      <circle cx="162" cy="598" r="2.5" fill="#fcd34d" opacity=".4"/>
     </svg>
 
     <div class="zigzag-track">
@@ -575,6 +639,22 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
     </div><!-- /zigzag-track -->
   </div><!-- /galaxy-map-wrap -->
 
+  <!-- ===== CONTACT US ===== -->
+  <div class="section-label">📡 CONTACT</div>
+  <div class="contact-section">
+    <div class="contact-icon">📸</div>
+    <div class="contact-label">FOLLOW US</div>
+    <div class="contact-title">Instagramで繋がろう</div>
+    <p class="contact-desc">
+      ご意見・ご感想・誤りのご指摘など、<br>
+      DMでお気軽にお送りください！<br>
+      学習に役立つ情報も発信中です。
+    </p>
+    <button class="contact-btn" onclick="openInstaModal();playSound('tap')">
+      📷 Instagramを見る
+    </button>
+  </div>
+
 </div><!-- /scroll-content -->
 
 <!-- ====== BOTTOM NAV ====== -->
@@ -612,6 +692,28 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
     <div class="d-item"><p>■ 本アプリに掲載されているイラストはイメージです。</p></div>
     <div class="d-item warn"><p>■ 本アプリの無断での共有はご遠慮ください。</p></div>
     <button class="modal-close-btn" onclick="closeDisclaimer()">閉じる</button>
+  </div>
+</div>
+
+<!-- ====== インスタモーダル ====== -->
+<div class="insta-modal-overlay" id="instaModal" onclick="if(event.target===this)closeInstaModal()">
+  <div class="insta-modal-sheet">
+    <div class="insta-modal-handle"></div>
+    <div class="insta-modal-title">📸 Instagram</div>
+    <p class="insta-modal-sub">
+      ご意見・ご感想・誤りのご指摘など<br>DMでお待ちしています！<br>
+      フォローでお気軽に繋がってください🙌
+    </p>
+    <!-- QRコード -->
+    <div class="insta-qr-wrap">
+      <canvas id="instaQrCanvas"></canvas>
+    </div>
+    <div class="insta-account-name">@sono.forge</div>
+    <div class="insta-account-sub">インスタグラム</div>
+    <a class="insta-link-btn" href="https://www.instagram.com/sono.forge?igsh=MXB5MnEweGs4dTA2NQ%3D%3D&utm_source=qr" target="_blank" id="instaLinkBtn" onclick="playSound('tap')">
+      📷 Instagramを開く
+    </a>
+    <button class="insta-close-btn" onclick="closeInstaModal()">閉じる</button>
   </div>
 </div>
 
@@ -664,6 +766,38 @@ function warpTo(url){
 // ===== モーダル =====
 function openDisclaimer(){document.getElementById('disclaimerModal').classList.add('open');}
 function closeDisclaimer(){document.getElementById('disclaimerModal').classList.remove('open');}
+
+// ===== インスタモーダル =====
+const INSTA_URL = 'https://www.instagram.com/sono.forge?igsh=MXB5MnEweGs4dTA2NQ%3D%3D&utm_source=qr';
+let qrGenerated = false;
+function openInstaModal(){
+  document.getElementById('instaModal').classList.add('open');
+  if(!qrGenerated){
+    generateQR();
+    qrGenerated = true;
+  }
+}
+function closeInstaModal(){document.getElementById('instaModal').classList.remove('open');}
+function generateQR(){
+  const canvas = document.getElementById('instaQrCanvas');
+  // QRコードをSVGベースで手動生成（ライブラリ不要・シンプル版）
+  // qrcode.jsをCDNから動的ロード
+  const s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+  s.onload = function(){
+    const wrap = document.getElementById('instaQrCanvas').parentElement;
+    wrap.innerHTML = '';
+    new QRCode(wrap, {
+      text: INSTA_URL,
+      width: 156,
+      height: 156,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  };
+  document.head.appendChild(s);
+}
 
 // ===== Tips =====
 const tips=[
