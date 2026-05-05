@@ -673,8 +673,8 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / 04</div>
-    <div class="view-title-big">モリソン窩</div>
-    <div class="view-desc">腹腔内出血が貯まりやすい「最重要ポイント」。<br>ここを見落とすと重篤な出血を見逃す危険がある！</div>
+    <div class="view-title-big">モリソン窩・右側胸部</div>
+    <div class="view-desc">腹腔内出血が貯まりやすい「最重要ポイント」。<br>モリソン窩に加え、プローブを1肋間上げてカーテンサインも確認しよう！</div>
   </div>
 
   <!-- ソノボ -->
@@ -753,6 +753,10 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         <div class="info-item">
           <span class="info-icon">🌊</span>
           <div class="info-text">忘れずに<strong>扇動走査</strong>で全体を広く確認</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🪟</span>
+          <div class="info-text">プローブを<strong>1肋間頭側へ上げて</strong>カーテンサインを確認（右胸水評価）</div>
         </div>
       </div>
       <div class="warn-box">
@@ -847,7 +851,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 04</div>
     <div class="view-title-big">脾周囲ビュー</div>
-    <div class="view-desc">脾臓まわりの出血と、胸水を同時にチェックするゾーン。<br>カーテンサインが重要な合言葉だ！</div>
+    <div class="view-desc">脾臓まわりの出血と、左胸水を同時にチェックするゾーン。<br>右側同様、カーテンサインも忘れずに確認しよう！</div>
   </div>
 
   <!-- ソノボ -->
@@ -855,7 +859,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <img class="sonobo-img-sm" src="assets/sonobo_5.png" alt="">
     <div class="sonobo-bubble">
       <div class="bubble-name">🤖 SONOBO — 航路案内</div>
-      <div class="bubble-text">脾周囲はモリソン窩より<strong style="color:var(--blue-light)">ずっと背中側</strong>です！プローブがベッドにつくくらいまで後ろへ持っていく。<br>そして<strong style="color:var(--gold)">カーテンサイン</strong>も絶対に忘れないで！</div>
+      <div class="bubble-text">脾周囲はモリソン窩より<strong style="color:var(--blue-light)">ずっと背中側</strong>です！プローブがベッドにつくくらいまで後ろへ持っていく。<br>そして右側と同じく<strong style="color:var(--gold)">カーテンサイン</strong>も忘れずに確認しよう！</div>
     </div>
   </div>
 
@@ -917,7 +921,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         </div>
         <div class="info-item">
           <span class="info-icon">🪟</span>
-          <div class="info-text"><strong>カーテンサイン</strong>を確認する（次で説明！）</div>
+          <div class="info-text"><strong>カーテンサイン</strong>を確認する（左胸水の評価）</div>
         </div>
       </div>
     </div>
@@ -928,7 +932,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="step-icon">🪟</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
         <div class="step-num-label">POINT 03</div>
-        <div class="step-title">カーテンサインとは？</div>
+        <div class="step-title">カーテンサイン確認（左側胸部）</div>
       </div>
     </div>
     <div class="step-body">
@@ -1008,7 +1012,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 4: ZONE 04 骨盤腔 + まとめ
+     SCREEN 4: ZONE 04 骨盤腔
      ============================================================ -->
 <div class="screen" id="screen-4">
 
@@ -1017,6 +1021,15 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-title-big">膀胱直腸窩/ダグラス窩ビュー</div>
     <div class="view-desc">準備中です</div>
   </div>
+
+  <button class="next-btn" onclick="nextScreen()">✅ ZONE 04 クリア → まとめへ</button>
+  <div style="height:30px"></div>
+</div>
+
+<!-- ============================================================
+     SCREEN 5: 4ビュー最終確認チェック
+     ============================================================ -->
+<div class="screen" id="screen-5">
 
   <!-- まとめチェックリスト -->
   <div class="section-divider"><span>🛰 4ビュー 最終確認チェック</span></div>
@@ -1250,13 +1263,13 @@ function warpTo(url) {
    スクリーン管理
 ===================================================== */
 let currentScreen = 0;
-const totalScreens = 5;
+const totalScreens = 6;
 const screens = document.querySelectorAll('.screen');
 
 function updateProgress() {
   const pct = (currentScreen / (totalScreens - 1)) * 100;
   document.getElementById('headerBar').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = currentScreen + '/4';
+  document.getElementById('progressLabel').textContent = currentScreen + '/5';
 }
 
 function nextScreen() {
@@ -1265,10 +1278,13 @@ function nextScreen() {
     screens[currentScreen].classList.remove('active');
     currentScreen++;
     screens[currentScreen].classList.add('active');
-    document.querySelector('.scroll-content').scrollTo(0, 0);
+    const sc = document.querySelector('.scroll-content');
+    sc.scrollTop = 0;
+    sc.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     updateProgress();
     // ゾーン到達演出
-    if (currentScreen >= 1 && currentScreen <= 3) {
+    if (currentScreen >= 1 && currentScreen <= 4) {
       showZoneLanding(currentScreen);
     }
   }
@@ -1281,7 +1297,10 @@ function goToView(id) {
     screens[currentScreen].classList.remove('active');
     currentScreen = map[id];
     screens[currentScreen].classList.add('active');
-    document.querySelector('.scroll-content').scrollTo(0, 0);
+    const sc = document.querySelector('.scroll-content');
+    sc.scrollTop = 0;
+    sc.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     updateProgress();
   }
 }
