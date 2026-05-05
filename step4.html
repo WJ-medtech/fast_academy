@@ -3,21 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>STEP 4 — 実際に当ててみよう | FAST Academy</title>
+<title>STEP 4 — 惑星プロービア | FAST Journey</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --blue-deep:#0a1628;--blue-mid:#1a3a6e;--blue-vivid:#1565d8;
   --blue-bright:#3d8ef0;--blue-light:#7bb8f8;
-  --white:#fff;--gold:#f5c842;--green:#22c55e;
-  --radius:20px;--radius-sm:12px;
+  --white:#fff;--gold:#f5c842;--green:#22c55e;--red:#ef4444;--purple:#a855f7;
+  --radius:20px;--radius-sm:12px;--radius-lg:28px;
+  --nav-h:72px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   background:var(--blue-deep);color:var(--white);overflow-x:hidden;}
-/* ===== GLOBAL OVERFLOW PREVENTION ===== */
-*{max-width:100%;word-break:break-word;overflow-wrap:break-word;}
 
+/* ===== OVERFLOW PREVENTION ===== */
+[style*="display:flex"],.flex-container{min-width:0;overflow:hidden;}
+p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== BACKGROUND ===== */
 .bg-canvas{position:fixed;inset:0;z-index:0;overflow:hidden;
   background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);}
 .bg-canvas::before{content:'';position:absolute;inset:0;
@@ -28,282 +32,495 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out;}
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--op,.7);transform:scale(1)}}
 
-.app-wrapper{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
+.app-wrapper{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;
+  display:flex;flex-direction:column;min-width:0;overflow:hidden;}
 
 /* ===== ANIMATIONS ===== */
-@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn   {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.05)}30%{transform:scale(1)}}
-@keyframes popIn{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes popIn    {from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes float    {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glowPulse{0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1)}50%{opacity:.9;transform:translateX(-50%) scaleX(1.2)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.06)}30%{transform:scale(1)}}
+@keyframes shimmer  {0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes pulse    {0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes scanline {0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+@keyframes blink    {0%,100%{opacity:1}50%{opacity:0}}
+@keyframes rotateGlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes landingShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes passportReveal{0%{opacity:0;transform:scale(0.5) rotateY(-30deg)}60%{transform:scale(1.08) rotateY(5deg)}100%{opacity:1;transform:scale(1) rotateY(0deg)}}
+@keyframes goldRain {0%{transform:translateY(-20px);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+@keyframes streakOut{0%{transform:rotate(var(--a,0deg)) scaleX(0)}50%{transform:rotate(var(--a,0deg)) scaleX(1);opacity:1}100%{transform:rotate(var(--a,0deg)) scaleX(0) translateX(300px);opacity:0}}
+@keyframes fadeInOut{0%,100%{opacity:0}30%,70%{opacity:1}}
+@keyframes scanIn   {from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes missionBadge{0%{opacity:0;transform:scale(0) rotate(-15deg)}70%{transform:scale(1.1) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
 
 /* ===== HEADER ===== */
-.page-header{display:flex;align-items:center;gap:12px;
+.page-header{display:flex;align-items:center;gap:12px;min-width:0;overflow:hidden;
   padding:16px 16px 12px;background:rgba(8,16,36,.97);backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:50;}
 .back-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:17px;flex-shrink:0;text-decoration:none;color:white;}
-.page-step-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;}
-.page-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:19px;font-weight:900;}
-
-/* Progress bar in header */
+  cursor:pointer;font-size:17px;flex-shrink:0;text-decoration:none;color:white;
+  transition:background .2s;}
+.back-btn:active{background:rgba(255,255,255,.15);}
+.page-step-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1.5px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;font-family:'Orbitron',sans-serif;}
+.page-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .header-progress{height:3px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-top:8px;}
 .header-progress-fill{height:100%;border-radius:10px;
-  background:linear-gradient(90deg,var(--blue-bright),var(--blue-light));
-  transition:width .8s ease;}
+  background:linear-gradient(90deg,var(--blue-bright),var(--gold));transition:width .8s ease;}
 
-/* ===== SCROLL CONTENT ===== */
+/* ===== SCROLL ===== */
 .scroll-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.scroll-inner{padding:20px 16px 80px;}
+.scroll-inner{padding:20px 16px calc(var(--nav-h) + 40px);}
+
+/* ===== SCREENS ===== */
+.screen{display:none;flex-direction:column;animation:fadeIn .4s ease;}
+.screen.active{display:flex;}
 
 /* ===== SONOBO ===== */
-.sonobo-wrap{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;}
-.sonobo-img-sm{width:64px;height:64px;flex-shrink:0;object-fit:contain;
-  filter:drop-shadow(0 4px 12px rgba(21,101,216,.5));
-  animation:heartbeat 2.5s ease-in-out infinite;}
+.sonobo-wrap{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;min-width:0;overflow:hidden;}
+.sonobo-img-sm{width:68px;height:68px;flex-shrink:0;object-fit:contain;
+  filter:drop-shadow(0 4px 16px rgba(21,101,216,.6));animation:heartbeat 2.5s ease-in-out infinite;}
 .sonobo-bubble{background:rgba(255,255,255,.07);backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.13);border-radius:16px 16px 16px 4px;
-  padding:12px 14px;flex:1;}
-.bubble-name{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;margin-bottom:4px;}
-.bubble-text{font-size:13px;line-height:1.7;color:rgba(255,255,255,.88);}
+  border:1px solid rgba(255,255,255,.14);border-radius:16px 16px 16px 4px;
+  padding:13px 15px;flex:1;min-width:0;overflow:hidden;position:relative;}
+.bubble-name{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1.5px;
+  margin-bottom:5px;word-break:break-all;overflow-wrap:break-word;min-width:0;
+  font-family:'Orbitron',sans-serif;}
+.bubble-text{font-size:13px;line-height:1.75;color:rgba(255,255,255,.9);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== MISSION BANNER ===== */
+.mission-banner{background:linear-gradient(135deg,rgba(21,101,216,.2),rgba(61,142,240,.1));
+  border:1px solid rgba(61,142,240,.35);border-radius:var(--radius-sm);
+  padding:14px 16px;margin-bottom:16px;position:relative;overflow:hidden;}
+.mission-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent);}
+.mission-tag{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--blue-bright);
+  letter-spacing:2px;margin-bottom:6px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.mission-text{font-size:13px;line-height:1.7;color:rgba(255,255,255,.85);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== PLANET LANDING ===== */
+.planet-landing{text-align:center;padding:28px 16px 22px;position:relative;}
+.planet-orb{width:120px;height:120px;margin:0 auto 16px;border-radius:50%;position:relative;
+  background:radial-gradient(circle at 35% 35%,#1e5bb5,#0a1e5a 60%,#040d2a);
+  box-shadow:0 0 40px rgba(21,101,216,.5),0 0 80px rgba(21,101,216,.2),inset -10px -10px 30px rgba(0,0,0,.5);
+  animation:float 4s ease-in-out infinite;}
+.planet-orb::after{content:'';position:absolute;inset:0;border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 50%);
+  pointer-events:none;}
+.planet-ring{position:absolute;top:50%;left:50%;
+  width:180px;height:36px;margin-left:-90px;margin-top:-18px;
+  border:2px solid rgba(61,142,240,.3);border-radius:50%;
+  transform:rotateX(72deg);pointer-events:none;}
+.planet-name{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;
+  color:var(--white);letter-spacing:2px;margin-bottom:4px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.planet-subtitle{font-size:12px;color:var(--blue-light);letter-spacing:1px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider{display:flex;align-items:center;gap:8px;margin:20px 0 14px;min-width:0;overflow:hidden;}
+.section-divider span{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--blue-light);
+  text-transform:uppercase;white-space:nowrap;font-family:'Orbitron',sans-serif;}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(61,142,240,.4),transparent);}
+
+/* ===== VIEW BANNER ===== */
+.view-banner{border-radius:var(--radius);overflow:hidden;margin-bottom:16px;position:relative;
+  background:linear-gradient(135deg,rgba(21,101,216,.25),rgba(10,40,120,.3));
+  border:1px solid rgba(61,142,240,.3);padding:16px;}
+.view-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent);}
+.view-number{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--blue-bright);
+  letter-spacing:2px;margin-bottom:6px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.view-title-big{font-family:'Zen Kaku Gothic New',sans-serif;font-size:22px;font-weight:900;
+  margin-bottom:6px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.view-desc{font-size:12px;color:rgba(255,255,255,.65);line-height:1.65;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 /* ===== STEP CARDS ===== */
 .step-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
   border-radius:var(--radius);overflow:hidden;margin-bottom:14px;}
 .step-card-header{padding:14px 16px;display:flex;align-items:center;gap:10px;
-  border-bottom:1px solid rgba(255,255,255,.06);}
+  min-width:0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06);}
 .step-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
   font-size:20px;background:rgba(21,101,216,.2);border:1px solid rgba(61,142,240,.3);flex-shrink:0;}
-.step-num-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1px;margin-bottom:2px;}
-.step-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;}
+.step-num-label{font-size:9px;color:var(--blue-light);font-weight:700;letter-spacing:2px;margin-bottom:3px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;font-family:'Orbitron',sans-serif;}
+.step-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .step-body{padding:14px 16px;}
-
-/* ===== VIEW SELECTOR TABS ===== */
-.view-tabs{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-  padding-bottom:4px;scrollbar-width:none;}
-.view-tabs::-webkit-scrollbar{display:none;}
-.view-tab{flex-shrink:0;padding:8px 16px;border-radius:20px;cursor:pointer;
-  font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif;
-  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);
-  transition:all .25s ease;}
-.view-tab.active{background:var(--blue-vivid);color:white;border-color:var(--blue-bright);
-  box-shadow:0 4px 16px rgba(21,101,216,.4);}
-
-/* View panels */
-.view-panel{display:none;animation:fadeIn .35s ease;}
-.view-panel.active{display:block;}
 
 /* ===== IMAGE CARD ===== */
 .img-card{border-radius:var(--radius-sm);overflow:hidden;
-  border:1px solid rgba(61,142,240,.2);box-shadow:0 4px 20px rgba(0,0,0,.5);
-  margin-bottom:12px;}
+  border:1px solid rgba(61,142,240,.25);box-shadow:0 4px 24px rgba(0,0,0,.5);margin-bottom:12px;}
 .img-card img{width:100%;height:auto;display:block;object-fit:contain;}
 .img-caption{padding:8px 12px;background:rgba(21,101,216,.15);
-  font-size:11px;color:var(--blue-light);font-weight:700;}
+  font-size:11px;color:var(--blue-light);font-weight:700;letter-spacing:.5px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 /* ===== INFO POINTS ===== */
 .info-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
-.info-item{display:flex;align-items:flex-start;gap:10px;
+.info-item{display:flex;align-items:flex-start;gap:10px;min-width:0;overflow:hidden;
   background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 13px;
   border:1px solid rgba(255,255,255,.07);}
 .info-icon{font-size:18px;flex-shrink:0;line-height:1.4;}
 .info-text{font-size:13px;line-height:1.7;color:rgba(255,255,255,.85);
-  word-break:break-word;overflow-wrap:break-word;}
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .info-text strong{color:var(--blue-light);}
 
-/* ===== HIGHLIGHT BOX ===== */
-.highlight-box{background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(245,200,66,.05));
+/* ===== HIGHLIGHT BOXES ===== */
+.highlight-box{background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(245,200,66,.04));
   border:1px solid rgba(245,200,66,.3);border-radius:var(--radius-sm);
-  padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
+  padding:12px 14px;display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;
+  min-width:0;overflow:hidden;}
 .hi-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
 .highlight-box p{font-size:13px;color:rgba(255,255,255,.88);line-height:1.7;
-  word-break:break-word;overflow-wrap:break-word;}
-
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .warn-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);
   border-radius:var(--radius-sm);padding:12px 14px;
-  display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
-.warn-box p{font-size:13px;color:rgba(255,200,200,.88);line-height:1.7;}
-
+  display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;min-width:0;overflow:hidden;}
+.warn-box p{font-size:13px;color:rgba(255,200,200,.88);line-height:1.7;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .good-box{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);
   border-radius:var(--radius-sm);padding:12px 14px;
-  display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
-.good-box p{font-size:13px;color:rgba(160,255,200,.88);line-height:1.7;}
-
-/* ===== SECTION DIVIDER ===== */
-.section-divider{display:flex;align-items:center;gap:8px;margin:20px 0 14px;}
-.section-divider span{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--blue-light);
-  text-transform:uppercase;white-space:nowrap;}
-.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(61,142,240,.3),transparent);}
+  display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;min-width:0;overflow:hidden;}
+.good-box p{font-size:13px;color:rgba(160,255,200,.88);line-height:1.7;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 /* ===== QUIZ ===== */
 .quiz-box{background:linear-gradient(135deg,rgba(21,101,216,.15),rgba(10,60,150,.2));
   border:1px solid rgba(61,142,240,.25);border-radius:var(--radius);
-  padding:16px;margin-bottom:14px;}
+  padding:16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.quiz-box::before{content:'🛰 SENSOR CHECK';position:absolute;top:10px;right:12px;
+  font-family:'Orbitron',sans-serif;font-size:8px;color:rgba(61,142,240,.5);letter-spacing:1px;}
 .quiz-q{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:700;
-  margin-bottom:12px;line-height:1.5;}
+  margin-bottom:12px;line-height:1.5;word-break:break-all;overflow-wrap:break-word;min-width:0;
+  padding-top:4px;}
 .quiz-opts{display:flex;flex-direction:column;gap:8px;}
 .quiz-opt{padding:11px 14px;border-radius:var(--radius-sm);cursor:pointer;
   font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif;
   border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
-  color:rgba(255,255,255,.85);text-align:left;transition:all .2s ease;}
+  color:rgba(255,255,255,.85);text-align:left;transition:all .2s ease;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;width:100%;}
 .quiz-opt:active{transform:scale(.98);}
 .quiz-opt.correct{background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.5);color:#4ade80;}
 .quiz-opt.wrong{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);color:#fca5a5;}
 .quiz-opt.disabled{pointer-events:none;}
 .quiz-feedback{margin-top:12px;padding:12px;border-radius:var(--radius-sm);
-  font-size:13px;line-height:1.6;display:none;}
+  font-size:13px;line-height:1.6;display:none;word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .quiz-feedback.correct{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#4ade80;}
 .quiz-feedback.wrong{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#fca5a5;}
 .quiz-feedback.show{display:block;animation:fadeIn .3s ease;}
 
 /* ===== CHECKLIST ===== */
 .checklist{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
-.check-item{display:flex;align-items:center;gap:10px;
-  padding:11px 13px;border-radius:var(--radius-sm);cursor:pointer;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-  transition:all .2s ease;}
+.check-item{display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;
+  padding:12px 14px;border-radius:var(--radius-sm);cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:all .25s ease;}
 .check-item.checked{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);}
-.check-box{width:22px;height:22px;border-radius:6px;border:2px solid rgba(255,255,255,.2);
+.check-box{width:24px;height:24px;border-radius:6px;border:2px solid rgba(255,255,255,.25);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;
-  transition:all .2s ease;}
+  transition:all .25s ease;}
 .check-item.checked .check-box{background:var(--green);border-color:var(--green);}
-.check-label{font-size:13px;line-height:1.5;color:rgba(255,255,255,.85);flex:1;
-  word-break:keep-all;overflow-wrap:break-word;}
-.check-item.checked .check-label{color:rgba(160,255,200,.85);}
+.check-label{font-size:13px;line-height:1.55;color:rgba(255,255,255,.85);flex:1;min-width:0;
+  word-break:break-all;overflow-wrap:break-word;}
+.check-item.checked .check-label{color:rgba(160,255,200,.9);}
 
-/* ===== NEXT BTN ===== */
+/* ===== BUTTONS ===== */
 .next-btn{width:100%;padding:17px 24px;margin-top:10px;
   background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
   border:none;border-radius:var(--radius);cursor:pointer;
   font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;color:white;
-  box-shadow:0 6px 28px rgba(21,101,216,.5);transition:transform .2s ease;}
-.next-btn:active{transform:scale(.98);}
-.home-btn{width:100%;padding:14px 24px;margin-top:8px;
+  box-shadow:0 6px 28px rgba(21,101,216,.5);transition:transform .2s ease,box-shadow .2s;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.next-btn:active{transform:scale(.98);box-shadow:0 3px 14px rgba(21,101,216,.4);}
+
+.home-btn{width:100%;padding:14px 24px;margin-top:10px;
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
   border-radius:var(--radius);cursor:pointer;
-  font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,.7);
-  transition:transform .2s ease;text-decoration:none;display:flex;align-items:center;justify-content:center;}
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;
+  color:rgba(255,255,255,.7);transition:all .2s ease;
+  text-decoration:none;display:flex;align-items:center;justify-content:center;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.home-btn:active{background:rgba(255,255,255,.12);}
 
-/* ===== CURTAIN ANIMATION (removed) ===== */
+.fastaris-btn{width:100%;padding:18px 24px;margin-top:12px;
+  background:linear-gradient(135deg,#8B6914 0%,var(--gold) 40%,#f0c030 70%,#c8950a 100%);
+  border:none;border-radius:var(--radius);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;color:#1a0800;
+  box-shadow:0 6px 32px rgba(245,200,66,.5),0 0 60px rgba(245,200,66,.2);
+  transition:transform .2s ease,box-shadow .2s;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;
+  animation:pulse 2.5s ease-in-out infinite;}
+.fastaris-btn:active{transform:scale(.98);}
 
-/* ===== OVERALL PROGRESS ===== */
-.progress-section{background:rgba(21,101,216,.12);border:1px solid rgba(61,142,240,.2);
-  border-radius:var(--radius);padding:16px;margin-bottom:16px;}
-.progress-label{font-size:11px;color:var(--blue-light);font-weight:700;margin-bottom:8px;}
-.progress-steps{display:flex;gap:6px;}
-.prog-dot{flex:1;height:6px;border-radius:10px;background:rgba(255,255,255,.1);}
+/* ===== PROGRESS DOTS ===== */
+.prog-wrap{display:flex;align-items:center;gap:6px;margin-bottom:20px;
+  background:rgba(21,101,216,.1);border:1px solid rgba(61,142,240,.2);
+  border-radius:var(--radius);padding:14px 16px;min-width:0;overflow:hidden;}
+.prog-label{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--blue-light);
+  letter-spacing:1px;margin-right:4px;flex-shrink:0;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.prog-dots{display:flex;gap:5px;flex:1;min-width:0;overflow:hidden;}
+.prog-dot{flex:1;height:5px;border-radius:10px;background:rgba(255,255,255,.1);min-width:0;}
 .prog-dot.done{background:var(--green);}
-.prog-dot.current{background:var(--blue-bright);animation:shimmer 2s infinite linear;
-  background-size:200% 100%;
-  background-image:linear-gradient(90deg,var(--blue-bright) 0%,var(--blue-light) 50%,var(--blue-bright) 100%);}
+.prog-dot.current{background:var(--gold);
+  background-image:linear-gradient(90deg,var(--blue-bright),var(--gold),var(--blue-bright));
+  background-size:200% 100%;animation:shimmer 2s linear infinite;}
 
-/* ===== INTRO SECTION ===== */
-.intro-hero{text-align:center;padding:24px 0 20px;}
-.intro-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:24px;font-weight:900;
-  margin-bottom:8px;line-height:1.2;}
-.intro-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
-
-/* 4views overview */
-.views-overview{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
-.view-overview-card{border-radius:var(--radius-sm);padding:14px 12px;
+/* ===== VIEWS OVERVIEW GRID ===== */
+.views-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.view-card{border-radius:var(--radius-sm);padding:16px 12px;
   border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
-  text-align:center;cursor:pointer;transition:all .2s ease;}
-.view-overview-card:active{transform:scale(.97);}
-.view-overview-card .v-icon{font-size:28px;margin-bottom:6px;}
-.view-overview-card .v-name{font-size:12px;font-weight:700;color:var(--white);margin-bottom:2px;}
-.view-overview-card .v-area{font-size:10px;color:rgba(255,255,255,.45);}
-.view-overview-card.active-card{background:rgba(21,101,216,.25);border-color:var(--blue-bright);}
+  text-align:center;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden;}
+.view-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(21,101,216,.2),transparent);
+  opacity:0;transition:opacity .25s;}
+.view-card:active{transform:scale(.96);}
+.view-card:active::before{opacity:1;}
+.view-card .vc-icon{font-size:30px;margin-bottom:8px;}
+.view-card .vc-num{font-family:'Orbitron',sans-serif;font-size:8px;color:var(--blue-light);
+  letter-spacing:1px;margin-bottom:2px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.view-card .vc-name{font-size:12px;font-weight:700;color:var(--white);margin-bottom:3px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.view-card .vc-sub{font-size:10px;color:rgba(255,255,255,.4);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
-/* ===== SCREENS ===== */
-.screen{display:none;flex-direction:column;min-height:100vh;}
-.screen.active{display:flex;}
+/* ===== TROUBLE BUTTON ===== */
+.trouble-btn{width:100%;padding:13px 16px;margin:8px 0;
+  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);
+  border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;
+  color:rgba(255,170,170,.9);display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s ease;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.trouble-btn:active{background:rgba(239,68,68,.16);}
+.trouble-arrow{transition:transform .3s ease;display:inline-block;}
+.trouble-btn.open .trouble-arrow{transform:rotate(180deg);}
+
+/* ===== TROUBLE PANEL ===== */
+.trouble-panel{display:none;background:rgba(15,3,3,.9);
+  border:1px solid rgba(239,68,68,.25);border-top:none;
+  border-radius:0 0 var(--radius-sm) var(--radius-sm);
+  padding:14px 14px 16px;margin-top:-4px;margin-bottom:12px;}
+.trouble-panel.open{display:block;animation:slideDown .3s ease;}
+.trouble-panel-title{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;
+  color:rgba(255,160,160,.85);margin-bottom:12px;letter-spacing:1px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.t-list{display:flex;flex-direction:column;gap:7px;}
+.t-item{display:flex;align-items:flex-start;gap:9px;min-width:0;overflow:hidden;
+  padding:10px 12px;border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  cursor:pointer;transition:all .2s;}
+.t-item.checked{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);}
+.t-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(239,68,68,.4);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:11px;transition:all .2s;}
+.t-item.checked .t-box{background:var(--green);border-color:var(--green);}
+.t-label{font-size:12px;line-height:1.65;color:rgba(255,255,255,.82);flex:1;min-width:0;
+  word-break:break-all;overflow-wrap:break-word;}
+.t-sub{font-size:11px;color:rgba(255,190,80,.75);margin-top:3px;line-height:1.5;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== AI GUIDE PANEL ===== */
+.ai-guide-panel{background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(21,101,216,.08));
+  border:1px solid rgba(168,85,247,.3);border-radius:var(--radius);
+  padding:16px;margin:10px 0 14px;position:relative;overflow:hidden;}
+.ai-guide-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+.ai-guide-title{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;
+  color:rgba(210,160,255,.95);margin-bottom:8px;letter-spacing:1px;
+  display:flex;align-items:center;gap:6px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.ai-guide-desc{font-size:12px;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:14px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.ai-btns{display:flex;flex-direction:column;gap:8px;}
+.ai-link-btn{width:100%;padding:12px 16px;border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;
+  transition:all .2s ease;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.ai-link-btn.primary{background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.45);color:#e0c0ff;}
+.ai-link-btn.secondary{background:rgba(61,142,240,.12);border:1px solid rgba(61,142,240,.35);color:#a8d4ff;}
+.ai-link-btn:active{transform:scale(.98);}
+
+/* ===== GLASS CARD ===== */
+.glass-card{background:rgba(255,255,255,.06);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);
+  box-shadow:0 4px 30px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);}
+
+/* ===== PASSPORT CARD ===== */
+.passport-card{background:linear-gradient(135deg,rgba(245,200,66,.18),rgba(220,140,20,.1));
+  border:2px solid rgba(245,200,66,.5);border-radius:var(--radius-lg);
+  padding:28px 20px;text-align:center;margin-bottom:16px;
+  box-shadow:0 8px 40px rgba(245,200,66,.25),inset 0 1px 0 rgba(255,255,255,.15);
+  position:relative;overflow:hidden;animation:passportReveal .8s cubic-bezier(.34,1.56,.64,1) both;}
+.passport-card::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(245,200,66,.12) 0%,transparent 70%);
+  pointer-events:none;}
+.passport-stamp{font-family:'Orbitron',sans-serif;font-size:9px;color:rgba(245,200,66,.7);
+  letter-spacing:3px;margin-bottom:12px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.passport-icon{font-size:64px;margin-bottom:12px;display:block;animation:float 3s ease-in-out infinite;}
+.passport-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;
+  color:var(--gold);margin-bottom:8px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.passport-body{font-size:13px;color:rgba(255,240,180,.85);line-height:1.75;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== COMPLETE BOX ===== */
+.complete-box{text-align:center;padding:22px 16px;
+  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(16,185,129,.08));
+  border:1px solid rgba(34,197,94,.3);border-radius:var(--radius);margin-bottom:16px;
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1);}
+
+/* ===== LOADING SCREEN ===== */
+#loadingScreen{position:fixed;inset:0;z-index:200;
+  background:linear-gradient(160deg,#040d1f,#0a1e4a);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  transition:opacity .5s;}
+.loading-text{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--blue-bright);
+  letter-spacing:3px;animation:blink 1.2s ease-in-out infinite;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.loading-bar-wrap{width:200px;height:4px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;}
+.loading-bar{height:100%;background:linear-gradient(90deg,var(--blue-vivid),var(--gold));
+  border-radius:10px;animation:loadBar 1.2s ease forwards;}
+@keyframes loadBar{from{width:0}to{width:100%}}
+
+/* ===== SCANLINE EFFECT ===== */
+.scanline-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);}
 </style>
 </head>
 <body>
+
+<!-- Loading Screen -->
+<div id="loadingScreen">
+  <div style="font-size:48px;animation:float 2s ease-in-out infinite;">🌍</div>
+  <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;color:var(--white);letter-spacing:2px;word-break:break-all;overflow-wrap:break-word;min-width:0;">PLANET PROBIA</div>
+  <div class="loading-text">ENTERING ORBIT...</div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+</div>
+
 <div class="bg-canvas" id="bgCanvas"></div>
+<div class="scanline-overlay"></div>
 <div class="app-wrapper">
 
 <!-- ===== HEADER ===== -->
 <div class="page-header">
   <a class="back-btn" href="home.html">←</a>
-  <div style="flex:1;min-width:0;">
-    <div class="page-step-label">STEP 4 </div>
+  <div style="flex:1;min-width:0;overflow:hidden;">
+    <div class="page-step-label">PLANET PROBIA — STEP 4</div>
     <div class="page-title">実際に当ててみよう 📡</div>
     <div class="header-progress">
       <div class="header-progress-fill" id="headerBar" style="width:0%"></div>
     </div>
   </div>
-  <div style="font-size:13px;font-weight:700;color:var(--blue-light);" id="progressLabel">0/4</div>
+  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/4</div>
 </div>
 
 <!-- ===== SCROLL CONTENT ===== -->
 <div class="scroll-content">
 <div class="scroll-inner">
 
-<!-- ===== SCREEN 0: INTRO ===== -->
+<!-- ============================================================
+     SCREEN 0: 惑星プロービアへの着陸
+     ============================================================ -->
 <div class="screen active" id="screen-0">
-  <div class="intro-hero">
-    <img src="assets/sonobo_5.png" alt="ソノボくん" style="width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 6px 20px rgba(21,101,216,.5));animation:float 3s ease-in-out infinite;margin-bottom:14px;">
-    <div class="intro-title">いよいよ本番！<br>4箇所を当てよう🔬</div>
-    <div class="intro-sub" style="margin-top:8px;">FASTは決まった4箇所を順番に当てるだけ。<br>一緒にやってみよう！</div>
+
+  <!-- 惑星着陸シーン -->
+  <div class="planet-landing">
+    <div style="position:relative;display:inline-block;">
+      <div class="planet-orb" id="planetOrb">
+        <div style="position:absolute;top:22%;left:20%;width:45%;height:8px;border-radius:10px;
+          background:rgba(255,255,255,.08);transform:rotate(-15deg);"></div>
+        <div style="position:absolute;top:42%;left:30%;width:30%;height:5px;border-radius:10px;
+          background:rgba(255,255,255,.05);transform:rotate(-10deg);"></div>
+      </div>
+      <div class="planet-ring"></div>
+    </div>
+    <div class="planet-name" style="margin-top:8px;">PLANET PROBIA</div>
+    <div class="planet-subtitle">惑星プロービア — 探査ゾーン4</div>
   </div>
 
+  <!-- ソノボくん — 着陸の喜び -->
   <div class="sonobo-wrap">
-    <img class="sonobo-img-sm" src="assets/sonobo_4.png" alt="">
+    <img class="sonobo-img-sm" src="assets/sonobo_2.png" alt="">
     <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 ソノボくん</div>
-      <div class="bubble-text">4つのビューを順番に学ぼう！<br>タップしてスタート！</div>
+      <div class="bubble-name">🤖 SONOBO — ナビゲーター</div>
+      <div class="bubble-text">キャプテン！ついに<strong style="color:var(--gold)">惑星プロービア</strong>に着陸しました！⚡<br><br>ここは「実際に超音波プローブを当てる」特訓の星。4つの探査ポイントをクリアすれば、<strong style="color:var(--blue-light)">恒星ファスタリスへのパスポート</strong>が手に入ります！</div>
     </div>
   </div>
 
-  <div class="views-overview">
-    <div class="view-overview-card" onclick="goToView('ep')">
-      <div class="v-icon">🫀</div>
-      <div class="v-name">① 心窩部</div>
-      <div class="v-area">心膜液貯留チェック</div>
-    </div>
-    <div class="view-overview-card" onclick="goToView('rub')">
-      <div class="v-icon">💧</div>
-      <div class="v-name">② モリソン窩</div>
-      <div class="v-area">右側腹部・肝腎境界</div>
-    </div>
-    <div class="view-overview-card" onclick="goToView('lup')">
-      <div class="v-icon">🩸</div>
-      <div class="v-name">③ 脾周囲</div>
-      <div class="v-area">左側腹部・脾周囲</div>
-    </div>
-    <div class="view-overview-card" onclick="goToView('pelvis')">
-      <div class="v-icon">📍</div>
-      <div class="v-name">④ 骨盤腔</div>
-      <div class="v-area">膀胱周囲の液体</div>
+  <!-- ミッションブリーフィング -->
+  <div class="mission-banner">
+    <div class="mission-tag">🚀 MISSION BRIEFING — PLANET PROBIA</div>
+    <div class="mission-text">
+      FASTの4つの探査ポイントを<strong style="color:var(--blue-light)">実際にプローブで当てて</strong>確認せよ。<br>
+      各ポイントで「見るべき異常所見」を検出できればミッション完了だ。<br>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;margin-top:6px;display:block;">※ うまく描出できないときは【ヒント】を活用してよい</span>
     </div>
   </div>
 
-  <button class="next-btn" onclick="nextScreen()">① 心窩部から始める →</button>
+  <!-- 4ビュー全体マップ -->
+  <div class="section-divider"><span>🗺 EXPLORATION MAP</span></div>
+  <div class="views-grid">
+    <div class="view-card" onclick="goToView('ep')">
+      <div class="vc-num">ZONE 01</div>
+      <div class="vc-icon">🫀</div>
+      <div class="vc-name">心窩部</div>
+      <div class="vc-sub">心膜液チェック</div>
+    </div>
+    <div class="view-card" onclick="goToView('rub')">
+      <div class="vc-num">ZONE 02</div>
+      <div class="vc-icon">💧</div>
+      <div class="vc-name">モリソン窩</div>
+      <div class="vc-sub">肝腎境界・出血</div>
+    </div>
+    <div class="view-card" onclick="goToView('lup')">
+      <div class="vc-num">ZONE 03</div>
+      <div class="vc-icon">🩸</div>
+      <div class="vc-name">脾周囲</div>
+      <div class="vc-sub">脾臓周辺・胸水</div>
+    </div>
+    <div class="view-card" onclick="goToView('pelvis')">
+      <div class="vc-num">ZONE 04</div>
+      <div class="vc-icon">📍</div>
+      <div class="vc-name">骨盤腔</div>
+      <div class="vc-sub">膀胱周囲の液体</div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()" style="margin-top:4px;">
+    🚀 ZONE 01 — 心窩部から出発！
+  </button>
 </div>
 
-<!-- ===== SCREEN 1: 心窩部 ===== -->
+<!-- ============================================================
+     SCREEN 1: ZONE 01 心窩部
+     ============================================================ -->
 <div class="screen" id="screen-1">
 
-  <div class="section-divider"><span>🫀 ① 心窩部ビュー</span></div>
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 04</div>
+    <div class="view-title-big">心窩部ビュー</div>
+    <div class="view-desc">心膜の外側に液体（血液）が貯まっていないかを確認するゾーン。<br>心タンポナーデの早期発見が目標だ！</div>
+  </div>
 
+  <!-- ソノボ -->
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
     <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 ソノボくん</div>
-      <div class="bubble-text">まずは「剣状突起のすぐ下」にプローブを当てるよ！プローブの持ち方が大事！</div>
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">キャプテン、まず<strong style="color:var(--gold)">プローブの持ち方</strong>が攻略の鍵です！上から握って、しっかり「寝かせる」ことでビームが心臓に届きます。</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">🖐</div>
-      <div>
-        <div class="step-num-label">POINT 1</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">プローブの持ち方</div>
       </div>
     </div>
@@ -315,16 +532,16 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">✅</span>
-          <div class="info-text"><strong>上から</strong>プローブを持つ→寝かせやすい</div>
+          <div class="info-text"><strong>上から</strong>プローブを持つ → 十分に寝かせられる</div>
         </div>
         <div class="info-item">
-          <span class="info-icon">⚠️</span>
-          <div class="info-text">下から持つと指が邪魔でプローブを<strong>十分に寝かせられない</strong></div>
+          <span class="info-icon">❌</span>
+          <div class="info-text">下から持つと指が邪魔で<strong>十分に寝かせられない</strong></div>
         </div>
       </div>
       <div class="highlight-box">
         <span class="hi-icon">💡</span>
-        <p>プローブを<strong style="color:#f5c842">寝かせること</strong>でビームが心臓に届く！最初はしっかり寝かせよう。</p>
+        <p>プローブを<strong style="color:var(--gold)">寝かせること</strong>でビームが肋骨弓をくぐり心臓へ届く！最初はしっかり寝かせよう。</p>
       </div>
     </div>
   </div>
@@ -332,8 +549,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📍</div>
-      <div>
-        <div class="step-num-label">POINT 2</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 02</div>
         <div class="step-title">どこに当てる？</div>
       </div>
     </div>
@@ -349,7 +566,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="info-item">
           <span class="info-icon">🔊</span>
-          <div class="info-text">プローブを寝かせると、ビームが上方の<strong>心臓へ届く</strong></div>
+          <div class="info-text">プローブを寝かせると、ビームが斜め上方の<strong>心臓へ届く</strong></div>
         </div>
       </div>
     </div>
@@ -358,8 +575,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📺</div>
-      <div>
-        <div class="step-num-label">POINT 3</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 03</div>
         <div class="step-title">心窩部VIEW・評価</div>
       </div>
     </div>
@@ -371,7 +588,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">👁</span>
-          <div class="info-text">画面の下側に<strong>バクバク（拍動）</strong>しているものが映る→これが心臓！</div>
+          <div class="info-text">画面の下側に<strong>バクバク（拍動）</strong>しているものが映る → これが心臓！</div>
         </div>
         <div class="info-item">
           <span class="info-icon">😮‍💨</span>
@@ -379,23 +596,23 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="info-item">
           <span class="info-icon">⚠️</span>
-          <div class="info-text">腹が膨らんでプローブが滑りやすい→<strong>少し強めに当てておく</strong></div>
+          <div class="info-text">腹が膨らんでプローブが滑りやすい → <strong>少し強めに当てておく</strong></div>
         </div>
       </div>
       <div class="highlight-box">
         <span class="hi-icon">🔍</span>
-        <p>見るべきポイント：<strong style="color:#f5c842">心膜の外側に黒い帯（液体）がないか</strong>を確認！扇動走査で広く観察しよう。</p>
+        <p>見るべきポイント：<strong style="color:var(--gold)">心膜の外側に黒い帯（液体）がないか</strong>を確認！扇動走査で広く観察しよう。</p>
       </div>
       <div class="highlight-box" style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);">
         <span class="hi-icon">🗣</span>
-        <p>評価が終わったら忘れずに患者さんへ<strong style="color:#4ade80">「楽にしてください」</strong>と声かけ！</p>
+        <p>評価が終わったら忘れずに<strong style="color:#4ade80">「楽にしてください」</strong>と声かけ！</p>
       </div>
     </div>
   </div>
 
   <!-- QUIZ 1 -->
   <div class="quiz-box">
-    <div class="quiz-q">🧠 クイズ：心窩部でプローブを当てる場所は？</div>
+    <div class="quiz-q">🧠 センサーチェック：心窩部でプローブを当てる場所は？</div>
     <div class="quiz-opts" id="q1-opts">
       <button class="quiz-opt" onclick="answerQuiz('q1',this,false)">A. へその周り</button>
       <button class="quiz-opt" onclick="answerQuiz('q1',this,true)">B. 剣状突起直下・肋骨弓にはめ込む</button>
@@ -404,27 +621,77 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="quiz-feedback" id="q1-fb"></div>
   </div>
 
-  <button class="next-btn" onclick="nextScreen()">② モリソン窩へ進む →</button>
+  <!-- 心窩部トラブルシューティング -->
+  <button class="trouble-btn" id="tbtn-ep" onclick="toggleTrouble('trouble-ep','tbtn-ep')">
+    ⚠️ うまく描出できないとき — 確認項目を開く <span class="trouble-arrow">▼</span>
+  </button>
+  <div class="trouble-panel" id="trouble-ep">
+    <div class="trouble-panel-title">⚠ ZONE 01 / 心窩部 — 描出できないときのチェック</div>
+    <div class="t-list">
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">プローブを上から持っている</div>
+          <div class="t-sub">（最初きちんと寝かしている）</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">プローブを肋骨弓にはめ込むように当てている</div>
+          <div class="t-sub">（少し強めに押し込むイメージ）</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">息を吸って止めてもらった時に評価している</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">その際、プローブの位置がズレていない</div>
+          <div class="t-sub">（よく滑ってしまう — 少し強めに当て直す）</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">適切な扇動操作を行えている</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">✅ ZONE 01 クリア → ZONE 02 へ</button>
 </div>
 
-<!-- ===== SCREEN 2: モリソン窩 ===== -->
+<!-- ============================================================
+     SCREEN 2: ZONE 02 モリソン窩
+     ============================================================ -->
 <div class="screen" id="screen-2">
 
-  <div class="section-divider"><span>🫁 ② モリソン窩（右側腹部）</span></div>
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / 04</div>
+    <div class="view-title-big">モリソン窩</div>
+    <div class="view-desc">腹腔内出血が最初に貯まる「最重要ポイント」。<br>ここを見落とすと重篤な出血を見逃す危険がある！</div>
+  </div>
 
+  <!-- ソノボ -->
   <div class="sonobo-wrap">
-    <img class="sonobo-img-sm" src="assets/sonobo_5.png" alt="">
+    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
     <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 ソノボくん</div>
-      <div class="bubble-text">モリソン窩は腹腔内出血が最初に貯まる場所！絶対に押さえよう！</div>
+      <div class="bubble-name">🤖 SONOBO — 警告発令</div>
+      <div class="bubble-text">キャプテン、モリソン窩は<strong style="color:var(--red)">腹腔内出血が最初に溜まる場所</strong>です。ここで異常を見つけると命が救える…。<br>絶対にマスターしましょう！</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📍</div>
-      <div>
-        <div class="step-num-label">POINT 1</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">当て方・場所の目安</div>
       </div>
     </div>
@@ -444,7 +711,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         </div>
         <div class="info-item">
           <span class="info-icon">🦴</span>
-          <div class="info-text">肋間の走行に注意→肋骨は<strong>黒い影</strong>として映る</div>
+          <div class="info-text">肋間の走行に注意 → 肋骨は<strong>黒い影（音響陰影）</strong>として映る</div>
         </div>
         <div class="info-item">
           <span class="info-icon">🌊</span>
@@ -461,8 +728,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📺</div>
-      <div>
-        <div class="step-num-label">POINT 2</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 02</div>
         <div class="step-title">評価・見るポイント</div>
       </div>
     </div>
@@ -474,7 +741,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">🔍</span>
-          <div class="info-text"><strong>肝腎境界</strong>が明瞭に描出されているか</div>
+          <div class="info-text"><strong>肝腎境界</strong>が明瞭に描出されているか確認</div>
         </div>
         <div class="info-item">
           <span class="info-icon">🩸</span>
@@ -489,16 +756,16 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="info-text">忘れずに<strong>扇動走査</strong>で全体を広く確認</div>
         </div>
       </div>
-      <div class="highlight-box">
+      <div class="warn-box">
         <span class="hi-icon">🚨</span>
-        <p>モリソン窩に<strong style="color:#f5c842">黒い帯（無エコー域）</strong>が見えたら出血の可能性！すぐに上級者へ報告！</p>
+        <p>モリソン窩に<strong style="color:#fca5a5">黒い帯（無エコー域）</strong>が見えたら出血の可能性！すぐに上級者へ報告せよ！</p>
       </div>
     </div>
   </div>
 
   <!-- QUIZ 2 -->
   <div class="quiz-box">
-    <div class="quiz-q">🧠 クイズ：モリソン窩の出血のサインは？</div>
+    <div class="quiz-q">🧠 センサーチェック：モリソン窩の出血のサインは？</div>
     <div class="quiz-opts" id="q2-opts">
       <button class="quiz-opt" onclick="answerQuiz('q2',this,false)">A. 白い点が増える</button>
       <button class="quiz-opt" onclick="answerQuiz('q2',this,true)">B. 黒い帯（無エコー域）が出現</button>
@@ -507,27 +774,97 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="quiz-feedback" id="q2-fb"></div>
   </div>
 
-  <button class="next-btn" onclick="nextScreen()">③ 脾周囲へ進む →</button>
+  <!-- モリソン窩トラブルシューティング -->
+  <button class="trouble-btn" id="tbtn-rub" onclick="toggleTrouble('trouble-rub','tbtn-rub')">
+    ⚠️ うまく描出できないとき — 確認項目を開く <span class="trouble-arrow">▼</span>
+  </button>
+  <div class="trouble-panel" id="trouble-rub">
+    <div class="trouble-panel-title">⚠ ZONE 02 / モリソン窩 — 描出できないときのチェック</div>
+    <div class="t-list">
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">小指や薬指を患者さんの体につけてプローブを安定して持てている</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">肋骨の走行に注意し、肋骨を避けれている</div>
+          <div class="t-sub">難しい場合は → 実際に肋間を触って確認してみる</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">剣状突起の高さくらいの肋間に当てている</div>
+          <div class="t-sub">描出できない場合は、一肋間上げたり下げたりしてみる</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">プローブが腹側に寄り過ぎていない</div>
+          <div class="t-sub">（腎臓は背側にある — もっと後ろへ）</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">適切な扇動操作を行えている</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">カーテンサインを見るときにプローブを一肋間頭側へ上げている</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI TOOL 誘導 -->
+  <div class="ai-guide-panel">
+    <div class="ai-guide-title">🤖 AI TOOL — さらに詳しく確認する</div>
+    <div class="ai-guide-desc">チェックリストを全部試してもうまくいかない？AIナビゲーターに相談すれば、状況に応じたアドバイスが受けられます。遠慮なく使ってよい！</div>
+    <div class="ai-btns">
+      <a class="ai-link-btn primary" href="ai-guide.html">
+        📖 AI TOOL の使い方ガイドを見る
+      </a>
+      <a class="ai-link-btn secondary" href="https://sonoforge.streamlit.app/" target="_blank" rel="noopener noreferrer">
+        🚀 SonoForge（AI TOOL）を起動する ↗
+      </a>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">✅ ZONE 02 クリア → ZONE 03 へ</button>
 </div>
 
-<!-- ===== SCREEN 3: 脾周囲 + カーテンサイン ===== -->
+<!-- ============================================================
+     SCREEN 3: ZONE 03 脾周囲 + カーテンサイン
+     ============================================================ -->
 <div class="screen" id="screen-3">
 
-  <div class="section-divider"><span>🩸 ③ 脾周囲（左側腹部）</span></div>
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
+    <div class="view-number">🩸 ZONE 03 / 04</div>
+    <div class="view-title-big">脾周囲ビュー</div>
+    <div class="view-desc">脾臓まわりの出血と、胸水（血胸）を同時にチェックするゾーン。<br>カーテンサインが重要な合言葉だ！</div>
+  </div>
 
+  <!-- ソノボ -->
   <div class="sonobo-wrap">
-    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
+    <img class="sonobo-img-sm" src="assets/sonobo_5.png" alt="">
     <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 ソノボくん</div>
-      <div class="bubble-text">脾周囲はモリソン窩より背中側！プローブがベッドにつくくらいまで後ろへ。カーテンサインも忘れずに！</div>
+      <div class="bubble-name">🤖 SONOBO — 航路案内</div>
+      <div class="bubble-text">脾周囲はモリソン窩より<strong style="color:var(--blue-light)">ずっと背中側</strong>です！プローブがベッドにつくくらいまで後ろへ持っていく。<br>そして<strong style="color:var(--gold)">カーテンサイン</strong>も絶対に忘れないで！</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📍</div>
-      <div>
-        <div class="step-num-label">POINT 1</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">当て方・移動方法</div>
       </div>
     </div>
@@ -560,8 +897,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📺</div>
-      <div>
-        <div class="step-num-label">POINT 2</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 02</div>
         <div class="step-title">脾周囲VIEW・評価</div>
       </div>
     </div>
@@ -587,43 +924,37 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     </div>
   </div>
 
-  <!-- カーテンサイン 画像 -->
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">🪟</div>
-      <div>
-        <div class="step-num-label">POINT 3</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 03</div>
         <div class="step-title">カーテンサインとは？</div>
       </div>
     </div>
     <div class="step-body">
-
       <div class="highlight-box">
         <span class="hi-icon">📌</span>
-        <p>プローブを<strong>1肋間頭側に上げて</strong>息を吸ってもらう→カーテンサインを確認（胸水評価）</p>
+        <p>プローブを<strong>1肋間頭側に上げて</strong>息を吸ってもらう → カーテンサインを確認（胸水評価）</p>
       </div>
-
       <div class="img-card">
         <img src="images/img_08.jpeg" alt="カーテンサイン">
         <div class="img-caption">▲ カーテンサイン：正常（左）vs 胸水あり（右）</div>
       </div>
-
-      <div class="info-list" style="margin-top:12px;">
-        <div class="good-box">
-          <span class="hi-icon">✅</span>
-          <p><strong style="color:#4ade80">カーテンサインあり</strong>：呼吸に伴い肺が横隔膜を越えて動く → <strong>胸水なし（正常）</strong></p>
-        </div>
-        <div class="warn-box">
-          <span class="hi-icon">🚨</span>
-          <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に血液が貯まると肺が十分に拡張できず危険！</p>
-        </div>
+      <div class="good-box">
+        <span class="hi-icon">✅</span>
+        <p><strong style="color:#4ade80">カーテンサインあり</strong>：呼吸に伴い肺が横隔膜を越えて動く → <strong>胸水なし（正常）</strong></p>
+      </div>
+      <div class="warn-box">
+        <span class="hi-icon">🚨</span>
+        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に血液が貯まると肺が十分に拡張できず危険！</p>
       </div>
     </div>
   </div>
 
   <!-- QUIZ 3 -->
   <div class="quiz-box">
-    <div class="quiz-q">🧠 クイズ：カーテンサインがない場合、何を疑う？</div>
+    <div class="quiz-q">🧠 センサーチェック：カーテンサインがない場合、何を疑う？</div>
     <div class="quiz-opts" id="q3-opts">
       <button class="quiz-opt" onclick="answerQuiz('q3',this,false)">A. 心膜液貯留</button>
       <button class="quiz-opt" onclick="answerQuiz('q3',this,false)">B. 腸閉塞</button>
@@ -632,27 +963,76 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="quiz-feedback" id="q3-fb"></div>
   </div>
 
-  <button class="next-btn" onclick="nextScreen()">④ 骨盤腔へ進む →</button>
+  <!-- 脾周囲トラブルシューティング -->
+  <button class="trouble-btn" id="tbtn-lup" onclick="toggleTrouble('trouble-lup','tbtn-lup')">
+    ⚠️ うまく描出できないとき — 確認項目を開く <span class="trouble-arrow">▼</span>
+  </button>
+  <div class="trouble-panel" id="trouble-lup">
+    <div class="trouble-panel-title">⚠ ZONE 03 / 脾周囲 — 描出できないときのチェック</div>
+    <div class="t-list">
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">小指や薬指を患者さんの体につけてプローブを安定して持てている</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">モリソン窩の時よりも背側の肋間に当てている</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">肋骨の走行に注意し、肋骨を避けれている</div>
+          <div class="t-sub">（背側にいくほど、肋骨カーブは縦に近づく）<br>難しい場合は → 実際に肋間を触って確認してみる</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">剣状突起の高さくらいの肋間に当てている</div>
+          <div class="t-sub">描出できない場合は、一肋間上げたり下げたりしてみる</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">適切な扇動操作を行えている</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">✅ ZONE 03 クリア → ZONE 04 へ</button>
 </div>
 
-<!-- ===== SCREEN 4: 骨盤腔 + まとめ ===== -->
+<!-- ============================================================
+     SCREEN 4: ZONE 04 骨盤腔 + まとめ
+     ============================================================ -->
 <div class="screen" id="screen-4">
 
-  <div class="section-divider"><span>📍 ④ 骨盤腔ビュー</span></div>
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(80,20,140,.25));border-color:rgba(168,85,247,.35);">
+    <div class="view-number">📍 ZONE 04 / 04 — FINAL ZONE</div>
+    <div class="view-title-big">骨盤腔ビュー</div>
+    <div class="view-desc">最終ゾーン！膀胱まわりに液体（腹水・血液）がないかを確認せよ。<br>ここをクリアすればFAST完全制覇だ！</div>
+  </div>
 
+  <!-- ソノボ -->
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
     <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 ソノボくん</div>
-      <div class="bubble-text">最後は骨盤腔！膀胱の周りに液体がないかチェック。これで4ビュー完了だよ！</div>
+      <div class="bubble-name">🤖 SONOBO — 最終確認</div>
+      <div class="bubble-text">キャプテン、最後のゾーンです！🎯<br>膀胱の周りに液体がないかチェックして。これで4ビュー<strong style="color:var(--gold)">完全制覇</strong>です！</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">📍</div>
-      <div>
-        <div class="step-num-label">POINT 1</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">骨盤腔ビュー</div>
       </div>
     </div>
@@ -677,15 +1057,15 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </div>
       <div class="highlight-box">
         <span class="hi-icon">💡</span>
-        <p>膀胱に尿が入っていると見やすい。尿が少ない場合は<strong style="color:#f5c842">描出が難しいことも</strong>ある。</p>
+        <p>膀胱に尿が入っていると見やすい。尿が少ない場合は<strong style="color:var(--gold)">描出が難しいことも</strong>ある。</p>
       </div>
-
-      <!-- 膀胱直腸窩/ダグラス窩 準備中 -->
-      <div style="background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.2);
+      <div style="background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.18);
         border-radius:var(--radius-sm);padding:16px;text-align:center;margin-top:8px;">
         <div style="font-size:24px;margin-bottom:8px;">🚧</div>
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;">膀胱直腸窩 / ダグラス窩</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.65);margin-bottom:4px;
+          word-break:break-all;overflow-wrap:break-word;min-width:0;">膀胱直腸窩 / ダグラス窩</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.38);line-height:1.6;
+          word-break:break-all;overflow-wrap:break-word;min-width:0;">
           実際の手技動画・画像は準備中です<br>近日公開予定！
         </div>
       </div>
@@ -693,13 +1073,13 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   </div>
 
   <!-- まとめチェックリスト -->
-  <div class="section-divider"><span>✅ 4ビュー 確認チェックリスト</span></div>
+  <div class="section-divider"><span>🛰 4ビュー 最終確認チェック</span></div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_3.png" alt="">
     <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 ソノボくん</div>
-      <div class="bubble-text">4ビューをすべて確認できたかチェックしよう！全部チェックできたら君はFASTができる！</div>
+      <div class="bubble-name">🤖 SONOBO — ミッション評価</div>
+      <div class="bubble-text">キャプテン！全ビューを確認できたかチェックリストで確かめよう。<strong style="color:var(--gold)">全部チェックできたらパスポートが発行されます！</strong> ✈️</div>
     </div>
   </div>
 
@@ -730,21 +1110,60 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     </div>
   </div>
 
-  <div id="complete-msg" style="display:none;text-align:center;padding:20px;
-    background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(16,185,129,.1));
-    border:1px solid rgba(34,197,94,.3);border-radius:var(--radius);margin-bottom:16px;
-    animation:popIn .5s cubic-bezier(.34,1.56,.64,1);">
-    <div style="font-size:48px;margin-bottom:8px;">🎉</div>
-    <div style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;margin-bottom:6px;">
-      4ビュー完全マスター！
+  <!-- 完了メッセージ（チェック完了で表示） -->
+  <div id="complete-msg" style="display:none;">
+    <div class="complete-box">
+      <div style="font-size:52px;margin-bottom:10px;">🎉</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--green);
+        letter-spacing:2px;margin-bottom:8px;word-break:break-all;overflow-wrap:break-word;min-width:0;">MISSION COMPLETE</div>
+      <div style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;
+        margin-bottom:6px;word-break:break-all;overflow-wrap:break-word;min-width:0;">4ビュー完全制覇！</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.7;
+        word-break:break-all;overflow-wrap:break-word;min-width:0;">
+        キャプテン、惑星プロービアのミッションをすべてクリアしました！<br>
+        <strong style="color:var(--gold)">恒星ファスタリス</strong>への航路が開いています…！
+      </div>
     </div>
-    <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.6;">
-      これでFASTの基本手技を習得！<br>次はトレーニングモードで腕試しだ！
+
+    <!-- パスポート報酬 -->
+    <div id="passport-reward" style="display:none;">
+      <div class="passport-card">
+        <div class="passport-stamp">✦ PLANET PROBIA CLEAR ✦</div>
+        <span class="passport-icon">🛂</span>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(245,200,66,.75);
+          letter-spacing:2px;margin-bottom:10px;word-break:break-all;overflow-wrap:break-word;min-width:0;">REWARD UNLOCKED</div>
+        <div class="passport-title">恒星ファスタリスへの<br>パスポート発行！</div>
+        <div class="passport-body">
+          惑星プロービアを完全制覇したキャプテンへ。<br>
+          FASTの全4ビューを習得した証として、<br>
+          <strong style="color:var(--gold)">恒星ファスタリスへの扉</strong>が今、開かれた。
+        </div>
+      </div>
+
+      <!-- ナビゲーションボタン -->
+      <div class="sonobo-wrap" style="margin-top:4px;">
+        <img class="sonobo-img-sm" src="assets/sonobo_6.png" alt="">
+        <div class="sonobo-bubble">
+          <div class="bubble-name">🤖 SONOBO — 出発命令</div>
+          <div class="bubble-text">キャプテン、次は最終決戦！<strong style="color:var(--gold)">恒星ファスタリス</strong>で腕試しをしましょう。いよいよ本物の救命医への道が始まります！ 🌟</div>
+        </div>
+      </div>
+
+      <button class="fastaris-btn" onclick="warpTo('step5.html')">
+        🌟 恒星ファスタリスへ出発！ →
+      </button>
+      <a class="home-btn" href="home.html">🏠 銀河マップ（ホーム）に戻る</a>
     </div>
   </div>
 
-  <button class="next-btn" onclick="window.location.href='step5.html'">🏆 STEP5 トレーニングへ →</button>
-  <a class="home-btn" href="index.html">🏠 ホームに戻る</a>
+  <!-- 未完了時のみ表示するボタン -->
+  <div id="pending-nav" style="margin-top:8px;">
+    <button class="next-btn" onclick="warpTo('step5.html')" style="background:linear-gradient(135deg,rgba(61,142,240,.4),rgba(21,101,216,.5));box-shadow:none;border:1px solid rgba(61,142,240,.3);">
+      🌟 恒星ファスタリスへ進む（チェック未完了）
+    </button>
+    <a class="home-btn" href="home.html">🏠 銀河マップ（ホーム）に戻る</a>
+  </div>
+
   <div style="height:30px"></div>
 </div>
 
@@ -753,99 +1172,278 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 </div><!-- /app-wrapper -->
 
 <script>
-// 背景スター
-const bg = document.getElementById('bgCanvas');
-for (let i = 0; i < 50; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  const sz = Math.random() * 2 + 0.5;
-  s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*0.5+0.2};`;
-  bg.appendChild(s);
+/* =====================================================
+   背景スター
+===================================================== */
+function initBg() {
+  const bg = document.getElementById('bgCanvas');
+  for (let i = 0; i < 70; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*3+2}s;--delay:${Math.random()*4}s;--op:${Math.random()*.6+.2};`;
+    bg.appendChild(s);
+  }
+}
+initBg();
+
+/* =====================================================
+   ローディング画面
+===================================================== */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const ls = document.getElementById('loadingScreen');
+    ls.style.opacity = '0';
+    setTimeout(() => { ls.style.display = 'none'; }, 500);
+  }, 1400);
+});
+
+/* =====================================================
+   Audio
+===================================================== */
+let audioCtx = null;
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+const SOUNDS = {
+  correct: () => {
+    const ctx = getCtx();
+    [523,659,784,1047].forEach((f,i) => {
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;o.type='sine';
+      const t=ctx.currentTime+i*.1;
+      g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);
+      o.start(t);o.stop(t+.4);
+    });
+  },
+  wrong: () => {
+    const ctx=getCtx();
+    [220,196].forEach((f,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;o.type='sawtooth';
+      const t=ctx.currentTime+i*.15;
+      g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);
+      o.start(t);o.stop(t+.3);
+    });
+  },
+  tap: () => {
+    const ctx=getCtx();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.value=800;o.type='sine';
+    g.gain.setValueAtTime(.1,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.08);
+    o.start(ctx.currentTime);o.stop(ctx.currentTime+.08);
+  },
+  reward: () => {
+    const ctx=getCtx();
+    [523,659,784,1047,1319].forEach((f,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;o.type='triangle';
+      const t=ctx.currentTime+i*.12;
+      g.gain.setValueAtTime(.25,t);g.gain.exponentialRampToValueAtTime(.001,t+.5);
+      o.start(t);o.stop(t+.5);
+    });
+  },
+  warp: () => {
+    const ctx=getCtx();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(100,ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(2000,ctx.currentTime+.6);
+    g.gain.setValueAtTime(.3,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.8);
+    o.start(ctx.currentTime);o.stop(ctx.currentTime+.8);
+  }
+};
+function playSound(n){try{SOUNDS[n]&&SOUNDS[n]();}catch(e){}}
+
+/* =====================================================
+   Warp 演出
+===================================================== */
+function warpTo(url) {
+  playSound('warp');
+  const overlay = document.createElement('div');
+  overlay.style.cssText=`position:fixed;inset:0;z-index:9999;background:black;opacity:0;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;`;
+  for(let i=0;i<30;i++){
+    const st=document.createElement('div');
+    const ang=Math.random()*360,len=Math.random()*200+50;
+    st.style.cssText=`position:absolute;left:50%;top:50%;width:${len}px;height:2px;
+      background:linear-gradient(90deg,white,transparent);transform-origin:left center;
+      transform:rotate(${ang}deg) scaleX(0);animation:streakOut .4s .1s ease forwards;
+      --a:${ang}deg;`;
+    overlay.appendChild(st);
+  }
+  const txt=document.createElement('p');
+  txt.textContent='WARP DRIVE ENGAGED';
+  txt.style.cssText=`font-family:'Orbitron',sans-serif;font-size:14px;color:white;
+    letter-spacing:4px;opacity:0;animation:fadeInOut .8s .2s ease forwards;z-index:1;
+    word-break:break-all;overflow-wrap:break-word;min-width:0;`;
+  overlay.appendChild(txt);
+  const style=document.createElement('style');
+  style.textContent=`
+    @keyframes streakOut{0%{transform:rotate(var(--a) ,0deg) scaleX(0)}50%{transform:rotate(var(--a),0deg) scaleX(1);opacity:1}100%{transform:rotate(var(--a),0deg) scaleX(0) translateX(300px);opacity:0}}
+    @keyframes fadeInOut{0%,100%{opacity:0}30%,70%{opacity:1}}
+  `;
+  document.head.appendChild(style);
+  document.body.appendChild(overlay);
+  overlay.animate([{opacity:0},{opacity:1}],{duration:200,fill:'forwards'}).finished.then(()=>{
+    setTimeout(()=>{
+      overlay.animate([{opacity:1},{opacity:0}],{duration:300,fill:'forwards'}).finished.then(()=>{location.href=url;});
+    },700);
+  });
 }
 
-// Screen management
+/* =====================================================
+   スクリーン管理
+===================================================== */
 let currentScreen = 0;
-const totalScreens = 5; // 0-4
-
+const totalScreens = 5;
 const screens = document.querySelectorAll('.screen');
 
 function updateProgress() {
   const pct = (currentScreen / (totalScreens - 1)) * 100;
   document.getElementById('headerBar').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = currentScreen + '/4';
-  // dots
-  for (let i = 0; i < 4; i++) {
-    const d = document.getElementById('d' + i);
-    if (!d) continue;
-    d.className = 'prog-dot';
-    if (i < currentScreen - 1) d.classList.add('done');
-    else if (i === currentScreen - 1 || (currentScreen === 0 && i === 0)) d.classList.add('current');
-  }
 }
 
 function nextScreen() {
   if (currentScreen < totalScreens - 1) {
+    playSound('tap');
     screens[currentScreen].classList.remove('active');
     currentScreen++;
     screens[currentScreen].classList.add('active');
-    window.scrollTo(0, 0);
+    document.querySelector('.scroll-content').scrollTo(0, 0);
     updateProgress();
+    // ゾーン到達演出
+    if (currentScreen >= 1 && currentScreen <= 3) {
+      showZoneLanding(currentScreen);
+    }
   }
 }
 
 function goToView(id) {
-  // quick nav from overview
   const map = {ep:1, rub:2, lup:3, pelvis:4};
   if (map[id] !== undefined) {
+    playSound('tap');
     screens[currentScreen].classList.remove('active');
     currentScreen = map[id];
     screens[currentScreen].classList.add('active');
-    window.scrollTo(0, 0);
+    document.querySelector('.scroll-content').scrollTo(0, 0);
     updateProgress();
   }
 }
 
-// Quiz
+/* ゾーン到達時の小演出（ヘッダーを一瞬光らせる） */
+function showZoneLanding(zoneNum) {
+  const header = document.querySelector('.page-header');
+  header.style.transition = 'background .1s';
+  header.style.background = 'rgba(21,101,216,.6)';
+  setTimeout(() => { header.style.background = 'rgba(8,16,36,.97)'; }, 350);
+}
+
+/* =====================================================
+   クイズ
+===================================================== */
 function answerQuiz(id, btn, correct) {
   const opts = document.querySelectorAll(`#${id}-opts .quiz-opt`);
-  opts.forEach(o => { o.classList.add('disabled'); });
+  opts.forEach(o => o.classList.add('disabled'));
   btn.classList.add(correct ? 'correct' : 'wrong');
   const fb = document.getElementById(`${id}-fb`);
   fb.className = 'quiz-feedback ' + (correct ? 'correct' : 'wrong') + ' show';
   const msgs = {
-    q1: {
-      correct: '🎉 正解！剣状突起直下・肋骨弓にはめ込む。プローブを寝かせて心臓にビームを届けよう！',
-      wrong: '❌ 不正解。正解はB。剣状突起のすぐ下、肋骨弓にはめ込むように当てます。'
+    q1:{
+      correct:'🎉 正解！剣状突起直下・肋骨弓にはめ込む。プローブを寝かせてビームを心臓へ届けよう！',
+      wrong:'❌ 不正解。正解はB。剣状突起のすぐ下、肋骨弓にはめ込むように当てます。'
     },
-    q2: {
-      correct: '🎉 正解！黒い帯（無エコー域）が出血のサイン。液体は音波を反射しないので黒く見えます！',
-      wrong: '❌ 不正解。正解はB。液体（血液）は超音波を通すので黒く映ります。'
+    q2:{
+      correct:'🎉 正解！黒い帯（無エコー域）が出血のサイン。液体は音波を反射しないので黒く映ります！',
+      wrong:'❌ 不正解。正解はB。液体（血液）は超音波を通すので黒く映ります。'
     },
-    q3: {
-      correct: '🎉 正解！カーテンサインなし＝肺が動かない＝胸水（血胸）貯留を疑います！',
-      wrong: '❌ 不正解。正解はC。カーテンサインがないのは胸水貯留のサインです。'
+    q3:{
+      correct:'🎉 正解！カーテンサインなし＝肺が動かない＝胸水（血胸）貯留を疑います！',
+      wrong:'❌ 不正解。正解はC。カーテンサインがないのは胸水貯留のサインです。'
     }
   };
   fb.textContent = correct ? msgs[id].correct : msgs[id].wrong;
+  playSound(correct ? 'correct' : 'wrong');
 }
 
-// Checklist
+/* =====================================================
+   チェックリスト
+===================================================== */
 function toggleCheck(el) {
+  playSound('tap');
   el.classList.toggle('checked');
-  if (el.classList.contains('checked')) {
-    el.querySelector('.check-box').textContent = '✓';
-  } else {
-    el.querySelector('.check-box').textContent = '';
-  }
-  // Check if all done
-  const all = document.querySelectorAll('.check-item');
-  const done = document.querySelectorAll('.check-item.checked');
+  el.querySelector('.check-box').textContent = el.classList.contains('checked') ? '✓' : '';
+
+  const all = document.querySelectorAll('#checklist .check-item');
+  const done = document.querySelectorAll('#checklist .check-item.checked');
+
   if (done.length === all.length) {
-    document.getElementById('complete-msg').style.display = 'block';
+    const msg = document.getElementById('complete-msg');
+    const pending = document.getElementById('pending-nav');
+    if (msg.style.display === 'none') {
+      msg.style.display = 'block';
+      pending.style.display = 'none';
+      playSound('reward');
+      spawnGoldParticles();
+      setTimeout(() => {
+        const reward = document.getElementById('passport-reward');
+        reward.style.display = 'block';
+        document.querySelector('.scroll-content').scrollTo({
+          top: document.querySelector('.scroll-content').scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 800);
+    }
   }
 }
 
-// Initialize
+/* 金色パーティクル演出 */
+function spawnGoldParticles() {
+  const emojis = ['⭐','🌟','✨','💫','🎉','🛂'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.cssText = `
+      position:fixed;z-index:500;pointer-events:none;
+      font-size:${Math.random()*16+12}px;
+      left:${Math.random()*100}%;top:-20px;
+      animation:goldRain ${Math.random()*2+1.5}s ${Math.random()*.8}s linear forwards;
+    `;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 3000);
+  }
+}
+
+/* =====================================================
+   トラブルパネル
+===================================================== */
+function toggleTrouble(panelId, btnId) {
+  playSound('tap');
+  const panel = document.getElementById(panelId);
+  const btn = document.getElementById(btnId);
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function toggleTroubleItem(el) {
+  playSound('tap');
+  el.classList.toggle('checked');
+  el.querySelector('.t-box').textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+/* =====================================================
+   初期化
+===================================================== */
 updateProgress();
 </script>
 </body>
