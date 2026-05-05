@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>STEP 5 — 恒星ヴィクトリア | FAST Journey</title>
+<title>MISSION 5 — 恒星ファスタリス | FAST Journey</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -344,7 +344,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <div class="header-row">
       <a class="back-btn" href="home.html">←</a>
       <div class="header-meta">
-        <div class="step-label">STEP 5 — 恒星ヴィクトリア ⭐</div>
+        <div class="step-label">MISSION 5 — 恒星ファスタリス ⭐</div>
         <div class="header-title">症例シミュレーション 🚨</div>
       </div>
     </div>
@@ -375,33 +375,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <svg class="ecg-svg" id="ecgSvg" viewBox="0 0 800 26" preserveAspectRatio="none"></svg>
         </div>
       </div>
-
-      <!-- FAST MAP -->
-      <div class="fast-map" id="fastMap">
-        <div class="fm-title">🗺 FAST マップ</div>
-        <div class="fm-grid">
-          <div class="fm-item" id="fm-sub">
-            <span class="fm-icon">💛</span>
-            <div class="fm-name">心窩部</div>
-            <div class="fm-res" id="fr-sub"></div>
-          </div>
-          <div class="fm-item" id="fm-rub">
-            <span class="fm-icon">🟦</span>
-            <div class="fm-name">モリソン窩</div>
-            <div class="fm-res" id="fr-rub"></div>
-          </div>
-          <div class="fm-item" id="fm-lub">
-            <span class="fm-icon">🟧</span>
-            <div class="fm-name">脾周囲</div>
-            <div class="fm-res" id="fr-lub"></div>
-          </div>
-          <div class="fm-item" id="fm-pel">
-            <span class="fm-icon">🟩</span>
-            <div class="fm-name">骨盤</div>
-            <div class="fm-res" id="fr-pel"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- STREAM -->
@@ -410,7 +383,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
     <!-- RESULT -->
     <div class="result-wrap" id="resultWrap">
       <div class="star-victoria-badge">⭐</div>
-      <div class="star-name-badge">★ STAR VICTORIA ★</div>
+      <div class="star-name-badge">★ STAR FASTALIS ★</div>
       <div class="res-sonobo" style="animation:heartbeat 2.2s ease-in-out infinite">
         <img src="assets/sonobo_6.png" id="resSonobo" alt="">
       </div>
@@ -445,7 +418,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <span class="ns-icon">🔁</span>
           <div class="ns-body">
             <div class="ns-label">繰り返しトレーニングが力になる</div>
-            <div class="ns-desc">自信のない窓（惑星）に戻って、何度でも練習しよう。実際の現場で体が動くまで繰り返すことが大切だ。</div>
+            <div class="ns-desc">自信のないMISSION（惑星）に戻って、何度でも練習しよう。実際の現場で体が動くまで繰り返すことが大切だ。</div>
           </div>
         </div>
         <div class="ns-item">
@@ -882,7 +855,7 @@ const STEPS=[
     `<strong>脾周囲</strong>だ。<br>
      <span class="red">今回の症例は左側腹部打撲。脾損傷の可能性が高い。</span><br>
      液体貯留が無いか<strong>念入りに</strong>探せ。`);
-  askDep('脾腎窩ビュー',
+  askDep('脾周囲ビュー',
     ()=>{
       sndPing();
       setTimeout(()=>sndAlert(),400);
@@ -920,7 +893,7 @@ const STEPS=[
       `<strong>膀胱直腸窩：少量の液体貯留あり</strong><br>
        膀胱の後方〜直腸の周囲に、少量のエコーフリーな液体を認める。<br>
        ➜ <span class="pos-txt">骨盤腔にも出血が流れ込んでいる。</span><br>
-       脾腎窩と合わせて<strong>FAST陽性（2箇所）が確定</strong>した。`);
+       脾周囲と合わせて<strong>FAST陽性（2箇所）が確定</strong>した。`);
     setMap('pel','pos');
     alrt('danger','🚨','FAST完了 ─ 2箇所陽性：腹腔内出血の診断');
     nxt('FASTの結果をまとめる',()=>run(5));
@@ -937,7 +910,7 @@ const STEPS=[
      ・心窩部　　：<span class="neg-txt">陰性（液体なし）</span><br>
      ・モリソン窩：<span class="neg-txt">陰性（液体なし）</span><br>
      ・脾周囲　：<span class="pos-txt">陽性 ← 脾周囲に液体貯留あり</span><br>
-     ・骨盤　　　：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
+     ・膀胱直腸窩　　　：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
      バイタルは依然として<span class="red">BP 92/60、HR 118</span>。<br>
      <strong>今すぐ何をする？</strong>`);
 
