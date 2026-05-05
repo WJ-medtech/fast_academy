@@ -410,7 +410,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 <div class="page-header">
   <a class="back-btn" href="home.html">←</a>
   <div style="flex:1;min-width:0;overflow:hidden;">
-    <div class="page-step-label">PLANET PROBIA — STEP 4</div>
+    <div class="page-step-label">PLANET PROBIA — MISSION 4</div>
     <div class="page-title">実際に当ててみよう 📡</div>
     <div class="header-progress">
       <div class="header-progress-fill" id="headerBar" style="width:0%"></div>
@@ -457,8 +457,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="mission-tag">🚀 MISSION BRIEFING — PLANET PROBIA</div>
     <div class="mission-text">
       FASTの4つの探査ポイントを<strong style="color:var(--blue-light)">実際にプローブで当てて</strong>確認せよ。<br>
-      各ポイントで「見るべき異常所見」を検出できればミッション完了だ。<br>
-      <span style="color:rgba(255,255,255,.45);font-size:11px;margin-top:6px;display:block;">※ うまく描出できないときは【ヒント】を活用してよい</span>
+      実際に描出できるようになればミッション完了だ。
     </div>
   </div>
 
@@ -475,19 +474,19 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="vc-num">ZONE 02</div>
       <div class="vc-icon">💧</div>
       <div class="vc-name">モリソン窩</div>
-      <div class="vc-sub">肝腎境界・出血</div>
+      <div class="vc-sub">肝腎境界・右側胸部</div>
     </div>
     <div class="view-card" onclick="goToView('lup')">
       <div class="vc-num">ZONE 03</div>
       <div class="vc-icon">🩸</div>
       <div class="vc-name">脾周囲</div>
-      <div class="vc-sub">脾臓周辺・胸水</div>
+      <div class="vc-sub">脾周囲・左側胸部</div>
     </div>
     <div class="view-card" onclick="goToView('pelvis')">
       <div class="vc-num">ZONE 04</div>
       <div class="vc-icon">📍</div>
-      <div class="vc-name">骨盤腔</div>
-      <div class="vc-sub">膀胱周囲の液体</div>
+      <div class="vc-name">膀胱直腸窩/ダグラス窩</div>
+      <div class="vc-sub">準備中</div>
     </div>
   </div>
 
@@ -504,7 +503,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 04</div>
     <div class="view-title-big">心窩部ビュー</div>
-    <div class="view-desc">心膜の外側に液体（血液）が貯まっていないかを確認するゾーン。<br>心タンポナーデの早期発見が目標だ！</div>
+    <div class="view-desc">心膜腔に液体が貯まっていないかを確認するゾーン。<br>心タンポナーデの早期発見が目標だ！</div>
   </div>
 
   <!-- ソノボ -->
@@ -652,13 +651,13 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
           <div class="t-label">その際、プローブの位置がズレていない</div>
-          <div class="t-sub">（よく滑ってしまう — 少し強めに当て直す）</div>
+          <div class="t-sub">（よく滑ってしまう — 押し込むイメージ）</div>
         </div>
       </div>
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">適切な扇動操作を行えている</div>
+          <div class="t-label">心臓はやや左寄りだが、「ほぼ真ん中」</div>
         </div>
       </div>
     </div>
@@ -675,7 +674,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / 04</div>
     <div class="view-title-big">モリソン窩</div>
-    <div class="view-desc">腹腔内出血が最初に貯まる「最重要ポイント」。<br>ここを見落とすと重篤な出血を見逃す危険がある！</div>
+    <div class="view-desc">腹腔内出血が貯まりやすい「最重要ポイント」。<br>ここを見落とすと重篤な出血を見逃す危険がある！</div>
   </div>
 
   <!-- ソノボ -->
@@ -683,7 +682,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
     <div class="sonobo-bubble">
       <div class="bubble-name">🤖 SONOBO — 警告発令</div>
-      <div class="bubble-text">キャプテン、モリソン窩は<strong style="color:var(--red)">腹腔内出血が最初に溜まる場所</strong>です。ここで異常を見つけると命が救える…。<br>絶対にマスターしましょう！</div>
+      <div class="bubble-text">キャプテン、モリソン窩は<strong style="color:var(--red)">腹腔内出血が貯まりやすい場所</strong>です。ここで異常を見つけると命が救える…。<br>絶対にマスターしましょう！</div>
     </div>
   </div>
 
@@ -758,7 +757,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
       <div class="warn-box">
         <span class="hi-icon">🚨</span>
-        <p>モリソン窩に<strong style="color:#fca5a5">黒い帯（無エコー域）</strong>が見えたら出血の可能性！すぐに上級者へ報告せよ！</p>
+        <p>モリソン窩に<strong style="color:#fca5a5">黒い帯（無エコー域）</strong>が見えたら出血の可能性！すぐに上級医へ報告せよ！</p>
       </div>
     </div>
   </div>
@@ -811,7 +810,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">適切な扇動操作を行えている</div>
+          <div class="t-label">超音波ビームが背中の方に向くよう、プローブを当てる</div>
         </div>
       </div>
       <div class="t-item" onclick="toggleTroubleItem(this)">
@@ -826,13 +825,13 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   <!-- AI TOOL 誘導 -->
   <div class="ai-guide-panel">
     <div class="ai-guide-title">🤖 AI TOOL — さらに詳しく確認する</div>
-    <div class="ai-guide-desc">チェックリストを全部試してもうまくいかない？AIナビゲーターに相談すれば、状況に応じたアドバイスが受けられます。遠慮なく使ってよい！</div>
+    <div class="ai-guide-desc">チェックリストを全部試してもうまくいかない？AIナビゲーターに相談すれば、状況に応じたアドバイスが受けられます。遠慮なく使ってみよう！</div>
     <div class="ai-btns">
       <a class="ai-link-btn primary" href="ai-guide.html">
         📖 AI TOOL の使い方ガイドを見る
       </a>
       <a class="ai-link-btn secondary" href="https://sonoforge.streamlit.app/" target="_blank" rel="noopener noreferrer">
-        🚀 SonoForge（AI TOOL）を起動する ↗
+        🚀 Sonoforge（AI TOOL）を起動する ↗
       </a>
     </div>
   </div>
@@ -848,7 +847,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 04</div>
     <div class="view-title-big">脾周囲ビュー</div>
-    <div class="view-desc">脾臓まわりの出血と、胸水（血胸）を同時にチェックするゾーン。<br>カーテンサインが重要な合言葉だ！</div>
+    <div class="view-desc">脾臓まわりの出血と、胸水を同時にチェックするゾーン。<br>カーテンサインが重要な合言葉だ！</div>
   </div>
 
   <!-- ソノボ -->
@@ -876,7 +875,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">➡️</span>
-          <div class="info-text">モリソン窩から<strong>そのまま左の脇腹へ移動</strong></div>
+          <div class="info-text">モリソン窩から<strong>そのまま左の脇腹へ移動</strong><br>※正中に鏡を置いたイメージ</div>
         </div>
         <div class="info-item">
           <span class="info-icon">⬅️</span>
@@ -888,7 +887,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         </div>
         <div class="info-item">
           <span class="info-icon">💡</span>
-          <div class="info-text">背側にいくほど肋骨のカーブがきつくなる</div>
+          <div class="info-text">背側にいくほど肋骨のカーブがきつくなる<br>プローブの角度が<strong>縦</strong>に近づく</div>
         </div>
       </div>
     </div>
@@ -904,7 +903,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
     <div class="step-body">
       <div class="img-card">
-        <img src="images/img_07.jpeg" alt="脾周囲扇動走査">
+        <img src="images/img_08.jpeg" alt="脾周囲扇動走査">
         <div class="img-caption">▲ 扇動走査で脾臓・横隔膜・左腎を確認</div>
       </div>
       <div class="info-list">
@@ -938,7 +937,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         <p>プローブを<strong>1肋間頭側に上げて</strong>息を吸ってもらう → カーテンサインを確認（胸水評価）</p>
       </div>
       <div class="img-card">
-        <img src="images/img_08.jpeg" alt="カーテンサイン">
+        <img src="images/img_07.jpeg" alt="カーテンサイン">
         <div class="img-caption">▲ カーテンサイン：正常（左）vs 胸水あり（右）</div>
       </div>
       <div class="good-box">
@@ -947,7 +946,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
       <div class="warn-box">
         <span class="hi-icon">🚨</span>
-        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に血液が貯まると肺が十分に拡張できず危険！</p>
+        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に胸水や液体が貯まると肺が十分に拡張できず危険！</p>
       </div>
     </div>
   </div>
@@ -999,7 +998,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">適切な扇動操作を行えている</div>
+          <div class="t-label">コンベックスは接触面が広いので、浮きが無いか確認する</div>
         </div>
       </div>
     </div>
@@ -1015,61 +1014,8 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(80,20,140,.25));border-color:rgba(168,85,247,.35);">
     <div class="view-number">📍 ZONE 04 / 04 — FINAL ZONE</div>
-    <div class="view-title-big">骨盤腔ビュー</div>
-    <div class="view-desc">最終ゾーン！膀胱まわりに液体（腹水・血液）がないかを確認せよ。<br>ここをクリアすればFAST完全制覇だ！</div>
-  </div>
-
-  <!-- ソノボ -->
-  <div class="sonobo-wrap">
-    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
-    <div class="sonobo-bubble">
-      <div class="bubble-name">🤖 SONOBO — 最終確認</div>
-      <div class="bubble-text">キャプテン、最後のゾーンです！🎯<br>膀胱の周りに液体がないかチェックして。これで4ビュー<strong style="color:var(--gold)">完全制覇</strong>です！</div>
-    </div>
-  </div>
-
-  <div class="step-card">
-    <div class="step-card-header">
-      <div class="step-icon">📍</div>
-      <div style="flex:1;min-width:0;overflow:hidden;">
-        <div class="step-num-label">POINT 01</div>
-        <div class="step-title">骨盤腔ビュー</div>
-      </div>
-    </div>
-    <div class="step-body">
-      <div class="info-list">
-        <div class="info-item">
-          <span class="info-icon">🎯</span>
-          <div class="info-text"><strong>恥骨上部</strong>にプローブを当てる</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🫧</span>
-          <div class="info-text">膀胱は<strong>黒い楕円形</strong>として映る（尿が入っているため）</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🩸</span>
-          <div class="info-text">膀胱周囲に<strong>黒い液体</strong>がないかチェック</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🌊</span>
-          <div class="info-text">縦・横の<strong>2方向で扇動走査</strong>する</div>
-        </div>
-      </div>
-      <div class="highlight-box">
-        <span class="hi-icon">💡</span>
-        <p>膀胱に尿が入っていると見やすい。尿が少ない場合は<strong style="color:var(--gold)">描出が難しいことも</strong>ある。</p>
-      </div>
-      <div style="background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.18);
-        border-radius:var(--radius-sm);padding:16px;text-align:center;margin-top:8px;">
-        <div style="font-size:24px;margin-bottom:8px;">🚧</div>
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.65);margin-bottom:4px;
-          word-break:break-all;overflow-wrap:break-word;min-width:0;">膀胱直腸窩 / ダグラス窩</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.38);line-height:1.6;
-          word-break:break-all;overflow-wrap:break-word;min-width:0;">
-          実際の手技動画・画像は準備中です<br>近日公開予定！
-        </div>
-      </div>
-    </div>
+    <div class="view-title-big">膀胱直腸窩/ダグラス窩ビュー</div>
+    <div class="view-desc">準備中です</div>
   </div>
 
   <!-- まとめチェックリスト -->
@@ -1090,7 +1036,11 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
-      <div class="check-label">🫁 ② モリソン窩：肝腎境界と出血の有無を確認した</div>
+      <div class="check-label">💧 ② モリソン窩：肝腎境界に黒い帯がないか確認した</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-label">🪟 ②+ カーテンサインを確認した</div>
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
@@ -1102,11 +1052,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
-      <div class="check-label">📍 ④ 骨盤腔：膀胱周囲の液体を確認した</div>
-    </div>
-    <div class="check-item" onclick="toggleCheck(this)">
-      <div class="check-box"></div>
-      <div class="check-label">🗣 各ビュー後に患者さんへ声かけした</div>
+      <div class="check-label">🗣 各ビューごとに患者さんへ声かけした</div>
     </div>
   </div>
 
@@ -1145,7 +1091,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         <img class="sonobo-img-sm" src="assets/sonobo_6.png" alt="">
         <div class="sonobo-bubble">
           <div class="bubble-name">🤖 SONOBO — 出発命令</div>
-          <div class="bubble-text">キャプテン、次は最終決戦！<strong style="color:var(--gold)">恒星ファスタリス</strong>で腕試しをしましょう。いよいよ本物の救命医への道が始まります！ 🌟</div>
+          <div class="bubble-text">キャプテン、次は最終決戦！<strong style="color:var(--gold)">恒星ファスタリス</strong>で腕試しをしましょう。いよいよ銀河の見習い救命医への道が始まります！ 🌟</div>
         </div>
       </div>
 
