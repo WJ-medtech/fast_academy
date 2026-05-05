@@ -375,6 +375,33 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <svg class="ecg-svg" id="ecgSvg" viewBox="0 0 800 26" preserveAspectRatio="none"></svg>
         </div>
       </div>
+
+      <!-- FAST MAP -->
+      <div class="fast-map" id="fastMap" style="display:none">
+        <div class="fm-title">🔍 FAST — 検索部位マップ</div>
+        <div class="fm-grid">
+          <div class="fm-item" id="fm-sub">
+            <span class="fm-icon">❤️</span>
+            <div class="fm-name">心窩部</div>
+            <div class="fm-res" id="fr-sub"></div>
+          </div>
+          <div class="fm-item" id="fm-rub">
+            <span class="fm-icon">🟤</span>
+            <div class="fm-name">モリソン窩<br>右胸腔</div>
+            <div class="fm-res" id="fr-rub"></div>
+          </div>
+          <div class="fm-item" id="fm-lub">
+            <span class="fm-icon">🟣</span>
+            <div class="fm-name">脾周囲<br>左胸腔</div>
+            <div class="fm-res" id="fr-lub"></div>
+          </div>
+          <div class="fm-item" id="fm-pel">
+            <span class="fm-icon">🔵</span>
+            <div class="fm-name">膀胱直腸窩</div>
+            <div class="fm-res" id="fr-pel"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- STREAM -->
@@ -576,7 +603,7 @@ const mapSt={sub:'',rub:'',lub:'',pel:''};
 // ══ DOM HELPERS ═══════════════════════════════════════════════
 const stream=document.getElementById('stream');
 const sc=document.getElementById('scrollContent');
-const scrollBot=()=>setTimeout(()=>sc.scrollTop=sc.scrollHeight,80);
+const scrollBot=()=>{if(stream.style.display==='none')return;setTimeout(()=>sc.scrollTop=sc.scrollHeight,80);};
 const setProgress=p=>document.getElementById('progressBar').style.width=p+'%';
 
 function setMap(v,st){
@@ -873,25 +900,25 @@ const STEPS=[
     sb('sonobo_8.png',
       `キャプテン、患者が搬入されました。<br>
        <span class="red">BP 92/60、HR 118</span>……バイタルが不安定だ。<br>
-       外出血はない。<strong>内出血を疑う状況</strong>だ。<br>まず何をする？`);
+       外出血はない。<strong>内出血を疑う状況</strong>だ。<br><br>
+       まずJATECに準拠した<strong>ABCDE評価</strong>を行う。<br>
+       A（気道）・B（呼吸）・C（循環）と評価を進めると、<strong>Cの段階で出血源の検索が必要</strong>になる。<br>
+       ここでFASTが登場する。さあ、最初に何をする？`);
     cho('▶ 最初に何をするか？',[
-      {icon:'🔊',label:'FASTを実施する',sub:'ベッドサイドで出血を超音波検索',res:'ok'},
+      {icon:'🔊',label:'FASTを実施する',sub:'ABCDE評価のC（循環）で出血源を超音波検索',res:'ok'},
       {icon:'🖥',label:'造影CTへ搬送',sub:'詳細な画像評価を先行させる',res:'ng'},
-      {icon:'💉',label:'ルート確保・採血を先に',sub:'輸液ラインをまず確保する',res:'nu'},
-      {icon:'📞',label:'外科を先に呼ぶ',sub:'外科医を呼んでから動く',res:'nu'},
     ],o=>{
       if(o.res==='ok'){
         sndOk();
         fnd('neg','✅','正しい判断！',
-          'バイタル不安定＋外出血なし → 腹腔内出血を疑い<strong>FASTが最優先</strong>。ルート確保は並行作業でOK。');
-      }else if(o.res==='ng'){
+          `JATEC準拠のABCDE評価の流れ：<br>
+           A（気道確保）→ B（呼吸評価）→ <strong>C（循環）</strong>で出血の有無を確認。<br>
+           バイタル不安定＋外出血なし → 腹腔内出血を疑い<strong>FASTが最優先</strong>。<br>
+           ルート確保・採血は並行作業でOK。`);
+      }else{
         sndNg();
         fnd('pos','⚠️','待って',
           'バイタル不安定例のCT搬送は移動中急変のリスクが高い。<strong>まずベッドサイドでFAST</strong>を行うのが鉄則。');
-      }else{
-        sndNu();
-        fnd('info','💡','順序を意識して',
-          'ルート確保も重要だが、FASTは<strong>2分で終わる</strong>。並行しながらまずFASTを始めよう。');
       }
       nxt('FASTを開始する',()=>run(1));
     });
@@ -903,6 +930,7 @@ const STEPS=[
 ()=>{
   setProgress(20);
   clearNow();setMap('sub','now');
+  document.getElementById('fastMap').style.display='';
   div('FAST ① ─ 心窩部ビュー');
   sb('sonobo_5.png',
     `キャプテン、最初は<strong>心窩部</strong>だ。<br>
@@ -936,14 +964,17 @@ const STEPS=[
   sb('sonobo_5.png',
     `次は<strong>モリソン窩（右側腹部）</strong>だ。<br>
      剣状突起の高さ、中腋窩線あたりに肋間に沿ってプローブを当てる。<br>
-     <strong>肝臓と右腎臓の間</strong>に液体がないか探せ。`);
+     <strong>肝臓と右腎臓の間</strong>に液体がないか探せ。<br>
+     さらに、プローブを頭側に向けて<strong>右胸腔（右胸水）</strong>も確認することを忘れるな。`);
   askDep('モリソン窩ビュー',
     ()=>{
       sndPing();
       fnd('neg','📋','モリソン窩・右側腹部 ─ 所見',
         `<strong>モリソン窩：液体貯留なし</strong><br>
-         肝臓と右腎臓の間にエコーフリースペースを認めない。胸水も認めない。<br>
-         ➜ <span class="neg-txt">この部位での出血は否定的。</span>`);
+         肝臓と右腎臓の間にエコーフリースペースを認めない。<br>
+         <strong>右胸腔：胸水なし</strong><br>
+         横隔膜の頭側にエコーフリースペースを認めない。<br>
+         ➜ <span class="neg-txt">この部位での出血・胸水は否定的。</span>`);
       setMap('rub','neg');
       nxt('次：脾周囲を確認する',()=>run(3));
     },
@@ -951,7 +982,8 @@ const STEPS=[
     `・プローブを肋骨弓下に当て、やや内側上方へ傾ける<br>
      ・肋骨の影が邪魔なら1〜2肋間ずつ動かして肋間から狙う<br>
      ・深吸気で肝臓が下がって見えやすくなる<br>
-     ・扇動（ファン操作）で肝腎境界を丁寧に探す`,
+     ・扇動（ファン操作）で肝腎境界を丁寧に探す<br>
+     ・胸水確認はプローブを頭側に傾け、横隔膜の上を見る`,
     CL_MORRISON
   );
 },
@@ -960,20 +992,23 @@ const STEPS=[
 ()=>{
   setProgress(56);
   clearNow();setMap('lub','now');
-  div('FAST ③ ─ 脾周囲');
+  div('FAST ③ ─ 脾周囲・左側腹部');
   sndAlert();
   alrt('warn','⚡','左側腹部打撲の症例！ → 脾損傷を最優先に疑う。念入りに確認する');
   sb('sonobo_8.png',
-    `<strong>脾周囲</strong>だ。<br>
+    `<strong>脾周囲（左側腹部）</strong>だ。<br>
      <span class="red">今回の症例は左側腹部打撲。脾損傷の可能性が高い。</span><br>
-     液体貯留が無いか<strong>念入りに</strong>探せ。`);
+     液体貯留が無いか<strong>念入りに</strong>探せ。<br>
+     さらに、プローブを頭側に向けて<strong>左胸腔（左胸水）</strong>も必ず確認しろ。`);
   askDep('脾周囲ビュー',
     ()=>{
       sndPing();
       setTimeout(()=>sndAlert(),400);
-      fnd('pos','🔴','脾周囲 ─ 所見',
+      fnd('pos','🔴','脾周囲・左側腹部 ─ 所見',
         `<strong>脾周囲：明らかな液体貯留あり</strong><br>
          脾周囲に<strong>エコーフリーの暗い領域</strong>を認める。<br>
+         <strong>左胸腔：胸水なし</strong><br>
+         横隔膜の頭側にエコーフリースペースを認めない。<br>
          ➜ <span class="pos-txt">脾損傷による腹腔内出血を強く疑う。<br>この時点でFAST陽性！</span>`);
       setMap('lub','pos');
       alrt('danger','🚨','FAST陽性確認！ — 引き続き膀胱直腸窩を確認する');
@@ -984,7 +1019,8 @@ const STEPS=[
      ・後腋窩線あたりを狙う<br>
      ・肋骨弓下から肋間を狙うと描出しやすいことがある<br>
      ・呼気で止めてもらうと脾臓が下がりやすい<br>
-     ・「映らない＝ない」ではない。体位変換（右側臥位）も有効`,
+     ・「映らない＝ない」ではない。体位変換（右側臥位）も有効<br>
+     ・左胸水確認はプローブを頭側に傾け、横隔膜の上を見る`,
     CL_SPLENORENAL
   );
 },
@@ -1064,6 +1100,7 @@ const STEPS=[
   stopHb();
   document.getElementById('monitorCard').style.display='none';
   document.getElementById('fastMap').style.display='none';
+  sc.scrollTop=0;
   stream.style.display='none';
   const rw=document.getElementById('resultWrap');
   rw.classList.add('show');
@@ -1071,16 +1108,16 @@ const STEPS=[
 
   // 称号・メッセージ設定
   let titleEn='',titleJp='',medals='',scoreClass='';
-  if(ratio>=0.75){
+  const isPerfect=(total>0 && correct===total);
+  if(isPerfect){
     sndReward();
     setTimeout(sndReward,500);
     setTimeout(sndReward,1000);
-    // ★ 紙吹雪エフェクト
     spawnConfetti();
     document.getElementById('resSonobo').src='assets/sonobo_6.png';
     document.getElementById('resTitle').textContent='完璧な判断でした！🏆';
     document.getElementById('resTitle').style.animation='nameGlow 2s ease-in-out infinite';
-    document.getElementById('resSub').textContent='キャプテン、FAST・臨床判断ともに的確だ。銀河内で栄誉ある称号を授与する！';
+    document.getElementById('resSub').textContent='キャプテン、全問正解だ。銀河内で栄誉ある称号を授与する！';
     titleEn='Galactic Rescue Cadet';
     titleJp='銀河の見習い救命医';
     medals='🏆⭐🚀🌟';
@@ -1092,18 +1129,19 @@ const STEPS=[
     sndOk();
     document.getElementById('resSonobo').src='assets/sonobo_3.png';
     document.getElementById('resTitle').textContent='よくできました ✅';
-    document.getElementById('resSub').textContent='基本の流れは正しい。判断の根拠を意識してもう一度チャレンジしよう。もう少しで最高称号だ！';
+    document.getElementById('resSub').textContent='基本の流れは正しい。全問正解を目指してもう一度チャレンジしよう！';
     titleEn='Rescue Cadet';
     titleJp='見習い救命医';
     medals='🏅⭐';
     scoreClass='silver';
     document.getElementById('titleCard').style.display='block';
-    document.getElementById('badgeEntrySection').style.display='block';
+    document.getElementById('badgeEntrySection').style.display='none';
   }else{
     document.getElementById('resSonobo').src='assets/sonobo_4.png';
     document.getElementById('resTitle').textContent='振り返ろう 💡';
     document.getElementById('resSub').textContent='バイタルとFAST所見を組み合わせて判断する感覚を養おう。何度でも挑戦してくれ、キャプテン！';
     titleEn='';titleJp='';medals='';scoreClass='';
+    document.getElementById('badgeEntrySection').style.display='none';
   }
 
   // 称号カード内容を更新
@@ -1115,7 +1153,11 @@ const STEPS=[
   }
 
   document.getElementById('scScore').textContent=`${correct} / ${total} 正解`;
-  scrollBot();
+  sc.scrollTop=0;
+  requestAnimationFrame(()=>{
+    sc.scrollTop=0;
+    document.getElementById('resultPhase1').scrollIntoView({block:'start'});
+  });
 }
 
 ];
@@ -1126,7 +1168,7 @@ function run(n){stepN=n;STEPS[n]&&STEPS[n]();}
 function generateBadge(){
   const nameInput=document.getElementById('captainNameInput');
   const name=(nameInput.value.trim()||'キャプテン');
-  const t=window._currentTitle||{en:'Rescue Cadet',jp:'見習い救命医',medals:'🏅⭐',scoreClass:'silver'};
+  const t=window._currentTitle||{en:'Galactic Rescue Cadet',jp:'銀河の見習い救命医',medals:'🏆⭐🚀🌟',scoreClass:'gold'};
   const isGold=t.scoreClass==='gold';
   const now=new Date();
   const dateStr=`${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
@@ -1190,9 +1232,6 @@ function generateBadge(){
         ${name}
       </div>
 
-      <!-- メダル -->
-      <div style="font-size:28px;letter-spacing:6px;margin-bottom:12px;">${t.medals}</div>
-
       <!-- フッター -->
       <div style="display:flex;justify-content:space-between;align-items:center;
         border-top:1px solid ${isGold?'rgba(245,200,66,.15)':'rgba(150,160,220,.15)'};
@@ -1253,7 +1292,7 @@ function resetSim(){
   });
   stream.innerHTML='';stream.style.display='';
   document.getElementById('monitorCard').style.display='';
-  document.getElementById('fastMap').style.display='';
+  document.getElementById('fastMap').style.display='none';
   document.getElementById('resultWrap').classList.remove('show');
   document.getElementById('titleCard').style.display='none';
   document.getElementById('badgeEntrySection').style.display='none';
