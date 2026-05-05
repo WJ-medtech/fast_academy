@@ -231,16 +231,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
           </div>
         </div>
       </div>
-      <div class="scanline-box glass-card">
-        <div class="mission-card">
-          <div class="mission-label">🎯 MISSION OVERVIEW</div>
-          <div class="mission-title">あなたの任務：FASTを習得せよ</div>
-          <div class="mission-text">
-            緊急超音波「<strong>FAST</strong>」を使い、体内出血の有無をベッドサイドで
-            2分以内に判断する技術を身につける。<br>完全初学者でも、<strong>一人で</strong>習得できるよう設計されています。
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- スライド2: FASTとは -->
@@ -445,7 +435,7 @@ function updateNav(){
     if(!s1){
       const b=document.createElement('button');
       b.id='btnStep1';b.className='nav-btn btn-step1';
-      b.innerHTML='Step 1 へ進む →';
+      b.innerHTML='惑星オリジンへ進む →';
       b.onclick=()=>warpTo('step1.html');
       next.parentNode.appendChild(b);
     }
