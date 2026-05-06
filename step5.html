@@ -512,6 +512,11 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <span class="ph-arrow">↓</span>
         </div>
 
+        <!-- もう一度チャレンジ（Phase1直下） -->
+        <div style="padding:0;margin-bottom:8px;">
+          <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
+        </div>
+
       </div>
 
       <!-- ═══ PHASE 2: 振り返り & 次のステップ ════════════════ -->
@@ -589,7 +594,6 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         </div>
 
         <div style="padding:0 0 100px;">
-          <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
           <button class="btn-home" onclick="warpTo('home.html')">
             <span>マップへ戻る</span>
           </button>
@@ -780,7 +784,7 @@ function nxt(label,cb,soft=false){
 
 // ── チェックリスト付き「描出できましたか？」prompt ──
 // checklistItems: [{section:"見出し"(optional), items:["チェック項目",...]}]
-function askDep(viewLabel, onYes, hintHead, hintBody, checklistItems){
+function askDep(viewLabel, onYes, checklistItems){
   cho(`▶ ${viewLabel}：描出できましたか？`,[
     {icon:'✅',label:'できた！',sub:'目的の構造が画面に映っている',res:'ok'},
     {icon:'❓',label:'うまく映らない…',sub:'像がぶれる・構造が見つからない',res:'nu'},
@@ -788,20 +792,21 @@ function askDep(viewLabel, onYes, hintHead, hintBody, checklistItems){
     if(o.res==='ok'){sndOk();onYes();}
     else{
       sndNu();
-      hnt(hintHead,hintBody);
 
-      // チェックリストボタン
+      // チェックリスト（即表示）
       if(checklistItems && checklistItems.length>0){
         const cw=document.createElement('div');cw.className='checklist-wrap';
-        const toggleBtn=document.createElement('button');
-        toggleBtn.className='checklist-toggle-btn';
-        toggleBtn.innerHTML=`
-          <div class="clt-left">
-            <span>🔎</span>
-            <span>確認チェックリストを見る</span>
-          </div>
-          <span class="clt-arrow">▼</span>`;
-        const panel=document.createElement('div');panel.className='checklist-panel';
+
+        // ヘッダーラベル
+        const header=document.createElement('div');
+        header.style.cssText=`display:flex;align-items:center;gap:8px;padding:10px 14px 8px;
+          background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);
+          border-radius:${checklistItems.length>0?'var(--radius-sm) var(--radius-sm) 0 0':'var(--radius-sm)'};
+          font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;font-weight:700;color:var(--white);`;
+        header.innerHTML=`<span>🔎</span><span>確認チェックリスト</span>`;
+
+        const panel=document.createElement('div');
+        panel.className='checklist-panel open';
 
         // チェックリスト内容生成
         let checkId=0;
@@ -827,14 +832,7 @@ function askDep(viewLabel, onYes, hintHead, hintBody, checklistItems){
           });
         });
 
-        toggleBtn.addEventListener('click',()=>{
-          sndClick();
-          const isOpen=panel.classList.contains('open');
-          panel.classList.toggle('open');
-          toggleBtn.classList.toggle('open');
-          scrollBot();
-        });
-        cw.appendChild(toggleBtn);
+        cw.appendChild(header);
         cw.appendChild(panel);
         app(cw);
       }
