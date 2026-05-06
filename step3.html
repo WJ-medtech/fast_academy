@@ -7,16 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --blue-deep:   #0a1628;
-  --blue-mid:    #1a3a6e;
-  --blue-vivid:  #1565d8;
-  --blue-bright: #3d8ef0;
-  --blue-light:  #7bb8f8;
+  --blue-deep:   #061a1a;
+  --blue-mid:    #0d3a3a;
+  --blue-vivid:  #0e9e9e;
+  --blue-bright: #2dd4d4;
+  --blue-light:  #7ef0f0;
   --white:       #ffffff;
   --gold:        #f5c842;
   --green:       #22c55e;
   --red:         #ef4444;
   --purple:      #a855f7;
+  --teal:        #0e9e9e;
+  --cyan:        #2dd4d4;
   --radius:      20px;
   --radius-sm:   12px;
   --radius-lg:   28px;
@@ -40,13 +42,13 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 /* ===== 背景 ===== */
 .bg-canvas {
   position:fixed; inset:0; z-index:0; overflow:hidden;
-  background:linear-gradient(160deg,#040d1f 0%,#0a1e4a 40%,#091535 100%);
+  background:linear-gradient(160deg,#020f0f 0%,#041e1e 40%,#031515 100%);
 }
 .bg-canvas::before {
   content:''; position:absolute; inset:0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(21,101,216,.25) 0%,transparent 70%),
-    radial-gradient(ellipse 60% 40% at 90% 80%,rgba(61,142,240,.15) 0%,transparent 60%);
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(14,158,158,.22) 0%,transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 80%,rgba(45,212,212,.12) 0%,transparent 60%);
 }
 .star { position:absolute; border-radius:50%; background:white; opacity:0;
   animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out; }
@@ -56,8 +58,9 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .planet-deco {
   position:fixed; bottom:-80px; right:-80px; z-index:0;
   width:260px; height:260px; border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,rgba(93,160,255,.18),rgba(21,101,216,.08) 60%,transparent 80%);
-  border:1px solid rgba(61,142,240,.12);
+  background:radial-gradient(circle at 35% 35%,rgba(45,212,212,.22),rgba(14,158,158,.1) 60%,transparent 80%);
+  border:1px solid rgba(45,212,212,.18);
+  box-shadow:0 0 60px rgba(45,212,212,.08), inset 0 0 40px rgba(14,158,158,.06);
   animation:planetFloat 8s ease-in-out infinite;
   pointer-events:none;
 }
@@ -95,7 +98,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .sonobo-glow  {
   position:absolute; bottom:-10px; left:50%; transform:translateX(-50%);
   width:110px; height:18px;
-  background:radial-gradient(ellipse,rgba(21,101,216,.55) 0%,transparent 70%);
+  background:radial-gradient(ellipse,rgba(14,158,158,.55) 0%,transparent 70%);
   border-radius:50%; animation:glowPulse 3.2s ease-in-out infinite;
 }
 .glass-card {
@@ -110,8 +113,8 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .page-header {
   display:flex; align-items:center; gap:12px; min-width:0; overflow:hidden;
   padding:16px 16px 12px;
-  background:rgba(8,16,36,.97); backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,.07);
+  background:rgba(4,18,18,.97); backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(45,212,212,.1);
   position:sticky; top:0; z-index:50;
 }
 .back-btn {
@@ -128,13 +131,13 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .page-title { font-family:'Zen Kaku Gothic New',sans-serif; font-size:17px; font-weight:900; }
 .header-prog {
   font-size:11px; color:var(--blue-light); font-weight:700;
-  background:rgba(21,101,216,.2); border:1px solid rgba(61,142,240,.3);
+  background:rgba(14,158,158,.2); border:1px solid rgba(45,212,212,.35);
   padding:4px 10px; border-radius:20px; white-space:nowrap; flex-shrink:0;
 }
 
 /* ===== プログレスバー ===== */
 .step-progress-bar { height:4px; background:rgba(255,255,255,.07); position:relative; }
-.step-progress-fill { height:100%; background:linear-gradient(90deg,var(--blue-bright),var(--blue-light)); transition:width .5s ease; }
+.step-progress-fill { height:100%; background:linear-gradient(90deg,var(--teal),var(--cyan)); transition:width .5s ease; }
 .step-progress-dots {
   display:flex; gap:6px; justify-content:center; padding:8px 0 4px;
   background:rgba(8,16,36,.6);
@@ -143,7 +146,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
   width:6px; height:6px; border-radius:50%;
   background:rgba(255,255,255,.2); transition:all .3s;
 }
-.dot.active { background:var(--blue-bright); box-shadow:0 0 8px var(--blue-bright); transform:scale(1.3); }
+.dot.active { background:var(--cyan); box-shadow:0 0 8px var(--cyan); transform:scale(1.3); }
 .dot.done { background:var(--green); }
 
 /* ===== スクロールエリア ===== */
@@ -156,8 +159,8 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
 /* ===== 惑星着陸バナー（sec1専用） ===== */
 .planet-arrival-banner {
-  background:linear-gradient(135deg,rgba(10,30,80,.9),rgba(5,15,50,.95));
-  border:1px solid rgba(61,142,240,.4);
+  background:linear-gradient(135deg,rgba(4,30,30,.9),rgba(2,15,20,.95));
+  border:1px solid rgba(45,212,212,.35);
   border-radius:var(--radius);
   padding:20px 16px;
   position:relative; overflow:hidden;
@@ -165,7 +168,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .planet-arrival-banner::before {
   content:''; position:absolute; top:0; left:-100%;
   width:60%; height:100%;
-  background:linear-gradient(90deg,transparent,rgba(61,142,240,.08),transparent);
+  background:linear-gradient(90deg,transparent,rgba(45,212,212,.08),transparent);
   animation:shimmer 3s linear infinite;
   background-size:200% 100%;
 }
@@ -199,15 +202,15 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
 /* ===== ストーリーカード（見出し） ===== */
 .story-card {
-  background:linear-gradient(135deg,rgba(21,101,216,.22) 0%,rgba(10,50,140,.32) 100%);
-  border:1px solid rgba(61,142,240,.3);
+  background:linear-gradient(135deg,rgba(14,158,158,.18) 0%,rgba(4,60,60,.28) 100%);
+  border:1px solid rgba(45,212,212,.25);
   border-radius:var(--radius);
   padding:18px;
   position:relative; overflow:hidden;
 }
 .story-card::after {
   content:''; position:absolute; top:-1px; left:0; right:0; height:2px;
-  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent);
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
   opacity:.6;
 }
 .slide-num { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--blue-light); margin-bottom:5px; text-transform:uppercase; }
@@ -217,7 +220,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 /* ===== ミッションログ風コンテナ ===== */
 .mission-log {
   background:rgba(0,0,0,.25);
-  border:1px solid rgba(61,142,240,.2);
+  border:1px solid rgba(45,212,212,.2);
   border-radius:var(--radius-sm);
   padding:14px;
   font-family:monospace;
@@ -241,7 +244,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
   width:28px; height:28px; border-radius:50%; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
   font-size:12px; font-weight:900;
-  background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);
+  background:linear-gradient(135deg,var(--teal),#0a7070);
   color:white; margin-top:2px;
 }
 .step-text { flex:1; min-width:0; overflow:hidden; }
@@ -286,7 +289,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .info-chips { display:flex; flex-wrap:wrap; gap:8px; min-width:0; overflow:hidden; }
 .info-chip {
   font-size:12px; font-weight:700; padding:6px 12px; border-radius:20px;
-  background:rgba(61,142,240,.15); border:1px solid rgba(61,142,240,.3); color:var(--blue-light);
+  background:rgba(45,212,212,.12); border:1px solid rgba(45,212,212,.28); color:var(--blue-light);
 }
 
 /* ===== 扇動アニメ ===== */
@@ -321,11 +324,11 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
 /* ===== クイズ ===== */
 .quiz-card {
-  background:rgba(255,255,255,.04); border:1px solid rgba(61,142,240,.22);
+  background:rgba(255,255,255,.04); border:1px solid rgba(45,212,212,.2);
   border-radius:var(--radius); padding:18px;
 }
 .quiz-header { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
-.quiz-badge { font-size:9px; font-weight:700; letter-spacing:2px; color:var(--blue-light); background:rgba(21,101,216,.3); border:1px solid rgba(61,142,240,.3); border-radius:20px; padding:3px 10px; }
+.quiz-badge { font-size:9px; font-weight:700; letter-spacing:2px; color:var(--blue-light); background:rgba(14,158,158,.25); border:1px solid rgba(45,212,212,.3); border-radius:20px; padding:3px 10px; }
 .quiz-q { font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; font-weight:900; margin-bottom:14px; line-height:1.5; }
 .quiz-options { display:flex; flex-direction:column; gap:8px; }
 .quiz-opt {
@@ -351,10 +354,10 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .nav-row { display:flex; gap:10px; margin-top:6px; min-width:0; overflow:hidden; }
 .btn-next {
   flex:1; padding:17px; min-width:0;
-  background:linear-gradient(135deg,var(--blue-vivid) 0%,#0d4fc0 100%);
+  background:linear-gradient(135deg,var(--teal) 0%,#0a7070 100%);
   border:none; border-radius:var(--radius); cursor:pointer;
   font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; font-weight:900; color:white;
-  box-shadow:0 6px 28px rgba(21,101,216,.5); transition:transform .2s;
+  box-shadow:0 6px 28px rgba(14,158,158,.45); transition:transform .2s;
   position:relative; overflow:hidden;
 }
 .btn-next::before {
@@ -392,12 +395,15 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .modal-overlay.open { display:flex; animation:fadeIn .25s ease; }
 .modal-sheet {
   width:100%; max-width:430px;
-  background:linear-gradient(180deg,#0f2050 0%,#081530 100%);
-  border-top:1px solid rgba(61,142,240,.28);
+  background:linear-gradient(180deg,#0a2525 0%,#041515 100%);
+  border-top:1px solid rgba(45,212,212,.28);
   border-radius:24px 24px 0 0;
   padding:28px 24px 50px;
   animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);
   text-align:center;
+  max-height:90vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 .modal-handle { width:38px; height:4px; background:rgba(255,255,255,.14); border-radius:2px; margin:0 auto 22px; }
 .modal-sonobo { width:100px; height:100px; margin:0 auto 14px; animation:heartbeat 2s infinite; }
@@ -415,7 +421,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 }
 .modal-btn {
   width:100%; padding:16px;
-  background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);
+  background:linear-gradient(135deg,var(--teal),#0a7070);
   border:none; border-radius:var(--radius-sm); cursor:pointer;
   font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; font-weight:900; color:white; margin-bottom:10px;
 }
@@ -439,10 +445,10 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
 /* ===== スペシャル：着陸シーケンス ===== */
 .landing-seq {
-  background:rgba(0,0,0,.4); border:1px solid rgba(61,142,240,.25);
+  background:rgba(0,0,0,.4); border:1px solid rgba(45,212,212,.22);
   border-radius:var(--radius-sm); padding:14px;
   font-family:monospace; font-size:11px;
-  color:rgba(61,142,240,.8);
+  color:rgba(45,212,212,.8);
   line-height:2;
 }
 .landing-seq .line { opacity:0; animation:fadeIn .3s ease forwards; }
@@ -453,14 +459,14 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 .landing-seq .line.c5 { animation-delay:1.3s; color:var(--green); font-weight:700; }
 .cursor-blink { animation:pulse .8s infinite; }
 
-/* ===== アップグレード表示 ===== */
+/* ===== アップグレード表示（宇宙食） ===== */
 .upgrade-card {
-  background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(21,101,216,.1));
-  border:1px solid rgba(168,85,247,.3); border-radius:var(--radius);
+  background:linear-gradient(135deg,rgba(45,212,212,.15),rgba(14,158,158,.1));
+  border:1px solid rgba(45,212,212,.35); border-radius:var(--radius);
   padding:16px; text-align:center;
 }
 .upgrade-icon { font-size:32px; margin-bottom:8px; animation:float 3s ease-in-out infinite; }
-.upgrade-title { font-family:'Orbitron',sans-serif; font-size:14px; color:var(--purple); font-weight:700; margin-bottom:6px; }
+.upgrade-title { font-family:'Orbitron',sans-serif; font-size:14px; color:var(--cyan); font-weight:700; margin-bottom:6px; }
 .upgrade-desc { font-size:12px; color:rgba(255,255,255,.6); line-height:1.6; }
 </style>
 </head>
@@ -477,7 +483,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
   <div class="page-header">
     <a class="back-btn" onclick="warpTo('home.html')">←</a>
     <div class="header-info">
-      <div class="page-step-label">🪐 PLANET READINESS — STEP 3</div>
+      <div class="page-step-label">🪐 PLANET READINESS — MISSION 3</div>
       <div class="page-title">エコーを当てる前に 🔧</div>
     </div>
     <div class="header-prog" id="headerProg">1 / 8</div>
@@ -534,19 +540,19 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
     </div>
 
     <div class="story-card">
-      <div class="slide-num">STEP 3 — ミッション概要</div>
+      <div class="slide-num">MISSION 3 — ミッション概要</div>
       <div class="slide-heading">エコーを当てる前に</div>
       <div class="slide-sub">機器の準備から患者さんのポジショニングまで、FASTを安全・確実に行うための手順を習得します。このミッションをクリアすると、宇宙船がアップグレードされます！</div>
     </div>
 
     <div class="upgrade-card">
-      <div class="upgrade-icon">🚀</div>
-      <div class="upgrade-title">SHIP UPGRADE UNLOCKED</div>
-      <div class="upgrade-desc">ミッションクリアで「宇宙船アップグレード」を獲得！<br>次の惑星プロービアへの航路が強化されます。</div>
+      <div class="upgrade-icon">🍬</div>
+      <div class="upgrade-title">SPACE FOOD UNLOCKED</div>
+      <div class="upgrade-desc">ミッションクリアで「宇宙食：エコーゼリー味のグミ」を獲得！<br>食べるとソノボくんの<em style="color:var(--cyan);font-style:normal">「内面」</em>が透視できる…？</div>
     </div>
 
     <div class="nav-row">
-      <button class="btn-home" onclick="warpTo('home.html')">🏠 ホーム</button>
+      
       <button class="btn-next" onclick="goNext()">ミッション開始 🚀</button>
     </div>
   </div>
@@ -615,7 +621,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
+      
       <button class="btn-next" onclick="goNext()">次：プリセット →</button>
     </div>
   </div>
@@ -663,7 +669,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
+      
       <button class="btn-next" onclick="goNext()">次：プローブ →</button>
     </div>
   </div>
@@ -724,7 +730,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
+      
       <button class="btn-next" onclick="goNext()">次：マーカー →</button>
     </div>
   </div>
@@ -779,7 +785,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
+      
       <button class="btn-next" onclick="goNext()">次：ゼリー →</button>
     </div>
   </div>
@@ -834,7 +840,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
+      
       <button class="btn-next" onclick="goNext()">次：扇動操作 →</button>
     </div>
   </div>
@@ -919,7 +925,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
+      
       <button class="btn-next" onclick="goNext()">次：チェックリスト →</button>
     </div>
   </div>
@@ -989,8 +995,8 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
 
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
-      <button class="btn-home" onclick="warpTo('home.html')">🏠</button>
-      <button class="btn-next" id="finishBtn" onclick="showComplete()">STEP 3 完了！🚀</button>
+      
+      <button class="btn-next" id="finishBtn" onclick="showComplete()">MISSION 3 完了！🚀</button>
     </div>
   </div>
 
@@ -998,7 +1004,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
   </div><!-- /scroll-content -->
 </div><!-- /app-wrapper -->
 
-<!-- ===== クリアモーダル ===== -->
+<!-- ===== クリアモーダル（宇宙食グミ） ===== -->
 <div class="modal-overlay" id="completeModal">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -1006,13 +1012,73 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
     <div class="modal-stars">⭐⭐⭐</div>
     <div class="modal-title">惑星レディネス クリア！</div>
     <div class="modal-planet">PLANET READINESS — CLEARED</div>
-    <div class="modal-reward">🚀 宇宙船アップグレード獲得！</div>
+    <div class="modal-reward">🍬 宇宙食：エコーゼリー味のグミ 獲得！</div>
     <div class="modal-text">
       準備の手順・プローブの選び方・扇動操作をマスターした！<br>
-      次はいよいよ惑星プロービアへ。エコーを実際に当ててみよう！
+      <span style="color:var(--cyan);font-weight:700">エコーゼリー味のグミ</span>を食べると、ソノボくんの「内面」が透視できるらしい…！？
     </div>
-    <button class="modal-btn" onclick="warpTo('home.html?screen=home&from=step3')">🏠 ホームに戻る</button>
+    <button class="modal-btn" id="eatGummyBtn" onclick="eatGummy()" style="background:linear-gradient(135deg,#0e9e9e,#2dd4d4);font-size:15px;">
+      🍬 グミを食べる！
+    </button>
     <button class="modal-btn-sec" onclick="document.getElementById('completeModal').classList.remove('open')">もう一度確認する</button>
+  </div>
+</div>
+
+<!-- ===== ソノボくんプロフィール画面 ===== -->
+<div class="modal-overlay" id="sonoboProfileModal">
+  <div class="modal-sheet" style="padding-bottom:40px;">
+    <div class="modal-handle"></div>
+    <div id="profileContent">
+      <!-- ヘッダー -->
+      <div style="background:linear-gradient(135deg,rgba(45,212,212,.15),rgba(14,158,158,.08));border:1px solid rgba(45,212,212,.3);border-radius:16px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#2dd4d4,transparent);opacity:.8;"></div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:9px;color:var(--cyan);letter-spacing:3px;margin-bottom:10px;">◆ CLASSIFIED FILE — SONOBO INTEL ◆</div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="position:relative;flex-shrink:0;">
+            <img src="assets/sonobo_1.png" alt="ソノボくん" style="width:80px;height:80px;object-fit:contain;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(45,212,212,.6));">
+            <div style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(45,212,212,.4);animation:pulse 2s infinite;"></div>
+          </div>
+          <div style="text-align:left;flex:1;min-width:0;">
+            <div style="font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:2px;margin-bottom:4px;">IDENTITY CONFIRMED</div>
+            <div style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;line-height:1.2;margin-bottom:4px;">ソノボ・エコー・<br>ウォーカー</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.45);">Sonobo Echo Walker</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 知られざる過去 -->
+      <div style="background:rgba(0,0,0,.35);border:1px solid rgba(45,212,212,.15);border-radius:12px;padding:14px;margin-bottom:10px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:18px;">🌌</span>
+          <span style="font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:2px;">知られざる過去</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,.82);line-height:1.75;">
+          暗い宇宙の塵に埋もれていたソノボ。廃棄寸前で「医学教育をより良くしたい」という開発者の熱意に拾われ、<span style="color:var(--cyan);font-weight:700">POCUSサポーターAI</span>として現在活躍中。
+        </div>
+      </div>
+
+      <!-- 意外な趣味 -->
+      <div style="background:rgba(0,0,0,.35);border:1px solid rgba(45,212,212,.15);border-radius:12px;padding:14px;margin-bottom:18px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:18px;">🎧</span>
+          <span style="font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:2px;">意外な趣味</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,.82);line-height:1.75;">
+          星が爆発する時の音をサンプリングして、<span style="color:var(--gold);font-weight:700">超高速のユーロビート</span>にリミックスして踊る。
+        </div>
+      </div>
+
+      <!-- ナビボタン -->
+      <button class="modal-btn" onclick="warpTo('home.html?screen=home&from=step3')" style="margin-bottom:10px;">
+        🏠 マップに戻る
+      </button>
+      <button class="modal-btn" onclick="warpTo('step4.html')" style="background:linear-gradient(135deg,#0e9e9e,#0a7070);margin-bottom:10px;">
+        🪐 次の惑星プロービアへ →
+      </button>
+      <button class="modal-btn-sec" onclick="document.getElementById('sonoboProfileModal').classList.remove('open')">
+        もう一度確認する
+      </button>
+    </div>
   </div>
 </div>
 
@@ -1194,6 +1260,24 @@ function updateCheckCount() {
 function showComplete() {
   playSound('reward');
   document.getElementById('completeModal').classList.add('open');
+}
+
+// ===== グミを食べる演出 =====
+function eatGummy() {
+  const btn = document.getElementById('eatGummyBtn');
+  if (btn.disabled) return;
+  btn.disabled = true;
+  btn.textContent = '✨ もぐもぐ…';
+  btn.style.opacity = '0.6';
+  playSound('reward');
+  setTimeout(() => {
+    document.getElementById('completeModal').classList.remove('open');
+    document.getElementById('sonoboProfileModal').classList.add('open');
+    playSound('warp');
+    btn.disabled = false;
+    btn.textContent = '🍬 グミを食べる！';
+    btn.style.opacity = '1';
+  }, 1000);
 }
 </script>
 </body>
