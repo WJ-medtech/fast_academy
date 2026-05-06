@@ -330,6 +330,66 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   0%,100%{text-shadow:0 0 20px rgba(245,200,66,.4)}
   50%{text-shadow:0 0 40px rgba(245,200,66,.8),0 0 80px rgba(245,200,66,.3)}
 }
+@keyframes otsukareFadeIn{
+  0%{opacity:0;transform:translateY(-18px) scale(.95)}
+  60%{opacity:1;transform:translateY(4px) scale(1.02)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes glowPulse{
+  0%,100%{box-shadow:0 0 30px rgba(245,200,66,.15),0 0 0 0 rgba(245,200,66,.12)}
+  50%{box-shadow:0 0 60px rgba(245,200,66,.3),0 0 80px rgba(168,85,247,.2)}
+}
+@keyframes shimmer{
+  0%{background-position:200% center}
+  100%{background-position:-200% center}
+}
+@keyframes phase2Drop{
+  0%{opacity:0;transform:translateY(30px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+
+/* PHASE DIVIDER */
+.phase-divider{
+  display:flex;align-items:center;gap:12px;padding:10px 16px 6px;
+  margin:8px 0;}
+.ph-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(61,142,240,.3),transparent);}
+.ph-label{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:3px;
+  color:rgba(61,142,240,.5);white-space:nowrap;}
+
+/* PHASE 2 CTA banner */
+.phase2-banner{
+  margin:0 16px 8px;
+  background:linear-gradient(135deg,rgba(21,101,216,.18),rgba(168,85,247,.14));
+  border:1px solid rgba(61,142,240,.3);border-radius:var(--radius);
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:background .2s;}
+.phase2-banner:hover{background:linear-gradient(135deg,rgba(21,101,216,.28),rgba(168,85,247,.22));}
+.phase2-banner .ph-icon{font-size:26px;flex-shrink:0;}
+.phase2-banner .ph-body{flex:1;min-width:0;}
+.phase2-banner .ph-body strong{display:block;font-size:14px;font-weight:700;color:var(--white);margin-bottom:2px;
+  word-break:break-all;}
+.phase2-banner .ph-body span{font-size:11px;color:rgba(255,255,255,.5);
+  word-break:break-all;}
+.phase2-banner .ph-arrow{font-size:20px;color:rgba(61,142,240,.7);flex-shrink:0;}
+
+/* OTSUKARE CARD */
+.otsukare-card{
+  margin:0 16px 16px;
+  background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(168,85,247,.1),rgba(21,101,216,.1));
+  border:1px solid rgba(245,200,66,.4);border-radius:var(--radius-lg);
+  padding:22px 18px 18px;text-align:center;
+  animation:otsukareFadeIn .8s cubic-bezier(.34,1.3,.64,1) both, glowPulse 4s ease-in-out 1s infinite;
+  position:relative;overflow:hidden;}
+.otsukare-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);
+  background-size:200% 100%;animation:shimmer 3s linear 1s infinite;}
+.otsukare-emoji{font-size:40px;display:block;margin-bottom:8px;animation:float 3s ease-in-out infinite;}
+.otsukare-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;
+  color:var(--gold);margin-bottom:6px;letter-spacing:1px;
+  animation:titleGlow 3s ease-in-out 1s infinite;}
+.otsukare-msg{font-size:13px;line-height:1.85;color:rgba(255,255,255,.8);
+  word-break:break-all;}
 </style>
 </head>
 <body>
@@ -409,8 +469,17 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
 
     <!-- RESULT -->
     <div class="result-wrap" id="resultWrap">
-      <!-- Phase 1: 結果発表エリア -->
+
+      <!-- ═══ PHASE 1: 結果発表 ════════════════════════════════ -->
       <div id="resultPhase1">
+
+        <!-- お疲れ様カード -->
+        <div class="otsukare-card" id="otsukareCard" style="display:none">
+          <span class="otsukare-emoji" id="otsukareEmoji">🌌</span>
+          <div class="otsukare-title" id="otsukareTitle">お疲れ様でした！</div>
+          <div class="otsukare-msg" id="otsukareMsg">長旅を走り抜いたキャプテン、本当によく頑張った。<br>この銀河の果てまで、あなたの判断力が患者を救った。</div>
+        </div>
+
         <div class="star-victoria-badge">⭐</div>
         <div class="star-name-badge">★ STAR FASTALIS ★</div>
         <div class="res-sonobo" style="animation:heartbeat 2.2s ease-in-out infinite">
@@ -433,7 +502,28 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="sc-row"><span class="sc-label">緊急度</span><span class="sc-val">🔴 外科コール・緊急手術/IVR</span></div>
         </div>
 
-        <div class="review-card">
+        <!-- Phase 2 への誘導バナー -->
+        <div class="phase2-banner" onclick="scrollToPhase2()">
+          <span class="ph-icon">📋</span>
+          <div class="ph-body">
+            <strong>振り返りと次のミッションを見る</strong>
+            <span>学習ポイント・アドバイス・名札生成</span>
+          </div>
+          <span class="ph-arrow">↓</span>
+        </div>
+
+      </div>
+
+      <!-- ═══ PHASE 2: 振り返り & 次のステップ ════════════════ -->
+      <div id="resultPhase2" style="display:none;padding-top:8px;">
+
+        <div class="phase-divider">
+          <div class="ph-line"></div>
+          <div class="ph-label">DEBRIEF &amp; NEXT MISSION</div>
+          <div class="ph-line"></div>
+        </div>
+
+        <div class="review-card" style="animation:phase2Drop .5s ease both;">
           <div class="rev-title">🎓 振り返りポイント</div>
           <div class="rev-item"><div class="rev-dot"></div><div class="rev-text"><strong>バイタル不安定＋FAST陽性</strong>のセットを見たら、即外科コール。CTはその後でいい。</div></div>
           <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">左側腹部打撲では<strong>脾損傷を先に疑う</strong>。脾周囲は念入りに確認する習慣をつけよう。</div></div>
@@ -441,8 +531,8 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <div class="rev-item"><div class="rev-dot"></div><div class="rev-text">心窩部・モリソン窩が陰性でも<strong>脾周囲を省略しない</strong>。4窓全部当てる習慣が命を救う。</div></div>
         </div>
 
-        <div class="next-steps-card">
-          <div class="ns-title">🚀 次のミッション — キャプテンへのアドバイス</div>
+        <div class="next-steps-card" style="animation:phase2Drop .5s .12s ease both;">
+          <div class="ns-title">🚀 キャプテンへのアドバイス</div>
           <div class="ns-item">
             <span class="ns-icon">🔁</span>
             <div class="ns-body">
@@ -467,7 +557,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
         </div>
 
         <!-- 名札生成ボタン（称号がある場合） -->
-        <div id="badgeEntrySection" style="display:none;margin-bottom:16px;">
+        <div id="badgeEntrySection" style="display:none;margin-bottom:16px;animation:phase2Drop .5s .24s ease both;">
           <div style="background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(168,85,247,.1));
             border:1px solid rgba(245,200,66,.35);border-radius:20px;padding:20px 16px;text-align:center;
             box-shadow:0 0 30px rgba(245,200,66,.1);">
@@ -498,15 +588,19 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
           <!-- JSで生成 -->
         </div>
 
-        <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
-        <button class="btn-home" onclick="warpTo('home.html')">
-          <span>マップへ戻る</span>
-        </button>
-        <button class="btn-qcheck" onclick="warpTo('quickcheck.html')">
-          <span>⚡</span><span>クイックチェックへ</span>
-        </button>
-      </div>
-    </div>
+        <div style="padding:0 0 100px;">
+          <button class="btn-retry" onclick="resetSim()">🔄 もう一度チャレンジ</button>
+          <button class="btn-home" onclick="warpTo('home.html')">
+            <span>マップへ戻る</span>
+          </button>
+          <button class="btn-qcheck" onclick="warpTo('quickcheck.html')">
+            <span>⚡</span><span>クイックチェックへ</span>
+          </button>
+        </div>
+
+      </div><!-- /Phase 2 -->
+
+    </div><!-- /resultWrap -->
 
   </div>
 </div>
@@ -1100,11 +1194,19 @@ const STEPS=[
   stopHb();
   document.getElementById('monitorCard').style.display='none';
   document.getElementById('fastMap').style.display='none';
-  sc.scrollTop=0;
   stream.style.display='none';
+
+  // Phase 2 を非表示・リセット
+  document.getElementById('resultPhase2').style.display='none';
+
   const rw=document.getElementById('resultWrap');
-  rw.classList.add('show');
   const ratio=total>0?correct/total:0;
+
+  // お疲れ様カードのバリエーション
+  const oCard=document.getElementById('otsukareCard');
+  const oEmoji=document.getElementById('otsukareEmoji');
+  const oTitle=document.getElementById('otsukareTitle');
+  const oMsg=document.getElementById('otsukareMsg');
 
   // 称号・メッセージ設定
   let titleEn='',titleJp='',medals='',scoreClass='';
@@ -1114,6 +1216,8 @@ const STEPS=[
     setTimeout(sndReward,500);
     setTimeout(sndReward,1000);
     spawnConfetti();
+    setTimeout(spawnConfetti,800);
+    setTimeout(spawnConfetti,1600);
     document.getElementById('resSonobo').src='assets/sonobo_6.png';
     document.getElementById('resTitle').textContent='完璧な判断でした！🏆';
     document.getElementById('resTitle').style.animation='nameGlow 2s ease-in-out infinite';
@@ -1125,8 +1229,12 @@ const STEPS=[
     document.getElementById('titleCard').style.display='block';
     document.getElementById('titleCard').style.animation='starBurst .7s ease both';
     document.getElementById('badgeEntrySection').style.display='block';
+    oEmoji.textContent='🏆';
+    oTitle.textContent='ミッション完遂、お疲れ様！';
+    oMsg.innerHTML='全問正解の完璧なパフォーマンス。<br>この銀河での長旅を、最高の形で締めくくったキャプテンを称えよう。<br><span style="color:var(--gold);font-weight:700">あなたの判断力が、今日も命を救った。</span>';
   }else if(ratio>=0.4){
     sndOk();
+    spawnConfetti();
     document.getElementById('resSonobo').src='assets/sonobo_3.png';
     document.getElementById('resTitle').textContent='よくできました ✅';
     document.getElementById('resSub').textContent='基本の流れは正しい。全問正解を目指してもう一度チャレンジしよう！';
@@ -1136,13 +1244,23 @@ const STEPS=[
     scoreClass='silver';
     document.getElementById('titleCard').style.display='block';
     document.getElementById('badgeEntrySection').style.display='none';
+    oEmoji.textContent='⭐';
+    oTitle.textContent='よく頑張った、お疲れ様！';
+    oMsg.innerHTML='ここまで走り続けたことに拍手を送ろう。<br>まだ伸びしろがある——それが次への燃料だ、キャプテン。';
   }else{
     document.getElementById('resSonobo').src='assets/sonobo_4.png';
     document.getElementById('resTitle').textContent='振り返ろう 💡';
     document.getElementById('resSub').textContent='バイタルとFAST所見を組み合わせて判断する感覚を養おう。何度でも挑戦してくれ、キャプテン！';
     titleEn='';titleJp='';medals='';scoreClass='';
     document.getElementById('badgeEntrySection').style.display='none';
+    oEmoji.textContent='🌱';
+    oTitle.textContent='挑戦した自分を褒めよう';
+    oMsg.innerHTML='うまくいかない日も、それが力に変わる。<br>ここで終わりじゃない——再挑戦がキャプテンの証だ。';
   }
+
+  // お疲れ様カード表示
+  oCard.style.display='block';
+  oCard.style.animation='otsukareFadeIn .8s cubic-bezier(.34,1.3,.64,1) both, glowPulse 4s ease-in-out 1s infinite';
 
   // 称号カード内容を更新
   if(titleEn){
@@ -1153,10 +1271,12 @@ const STEPS=[
   }
 
   document.getElementById('scScore').textContent=`${correct} / ${total} 正解`;
-  sc.scrollTop=0;
+
+  // 一番上へスクロール → 表示 → 再スクロール
+  sc.scrollTop = 0;
+  rw.classList.add('show');
   requestAnimationFrame(()=>{
-    sc.scrollTop=0;
-    document.getElementById('resultPhase1').scrollIntoView({block:'start'});
+    sc.scrollTop = 0;
   });
 }
 
@@ -1164,7 +1284,16 @@ const STEPS=[
 
 function run(n){stepN=n;STEPS[n]&&STEPS[n]();}
 
-// ══ BADGE GENERATOR ═══════════════════════════════════════════
+// ══ PHASE 2 REVEAL ══════════════════════════════════════════════
+function scrollToPhase2(){
+  sndClick();
+  const p2=document.getElementById('resultPhase2');
+  p2.style.display='block';
+  p2.style.animation='phase2Drop .5s ease both';
+  setTimeout(()=>{
+    p2.scrollIntoView({behavior:'smooth',block:'start'});
+  },80);
+}
 function generateBadge(){
   const nameInput=document.getElementById('captainNameInput');
   const name=(nameInput.value.trim()||'キャプテン');
@@ -1264,19 +1393,21 @@ function generateBadge(){
 
 // ══ CONFETTI ══════════════════════════════════════════════════
 function spawnConfetti(){
-  const colors=['#f5c842','#a855f7','#3d8ef0','#22c55e','#f97316','#fff'];
-  for(let i=0;i<35;i++){
+  const colors=['#f5c842','#a855f7','#3d8ef0','#22c55e','#f97316','#fff','#ff6b9d','#00d4ff'];
+  for(let i=0;i<55;i++){
     const el=document.createElement('div');
     const color=colors[Math.floor(Math.random()*colors.length)];
-    const size=Math.random()*8+4;
+    const size=Math.random()*10+4;
     const left=Math.random()*100;
-    const delay=Math.random()*1.5;
-    const dur=Math.random()*1.5+1.5;
+    const delay=Math.random()*2;
+    const dur=Math.random()*2+1.8;
+    const isCircle=Math.random()>0.4;
     el.style.cssText=`
       position:fixed;top:-20px;left:${left}%;
       width:${size}px;height:${size}px;
-      background:${color};border-radius:${Math.random()>0.5?'50%':'2px'};
+      background:${color};border-radius:${isCircle?'50%':'2px'};
       z-index:9999;pointer-events:none;
+      box-shadow:0 0 6px ${color}80;
       animation:confettiFall ${dur}s ${delay}s ease-out forwards;`;
     document.body.appendChild(el);
     setTimeout(()=>el.remove(),(dur+delay)*1000+100);
@@ -1298,6 +1429,8 @@ function resetSim(){
   document.getElementById('badgeEntrySection').style.display='none';
   document.getElementById('badgeDisplay').style.display='none';
   document.getElementById('captainNameInput').value='';
+  document.getElementById('otsukareCard').style.display='none';
+  document.getElementById('resultPhase2').style.display='none';
   window._currentTitle=null;
   setProgress(0);
   startHb(118);

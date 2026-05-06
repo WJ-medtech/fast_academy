@@ -486,11 +486,11 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
       <div class="page-step-label">🪐 PLANET READINESS — MISSION 3</div>
       <div class="page-title">エコーを当てる前に 🔧</div>
     </div>
-    <div class="header-prog" id="headerProg">1 / 8</div>
+    <div class="header-prog" id="headerProg">1 / 9</div>
   </div>
 
   <div class="step-progress-bar">
-    <div class="step-progress-fill" id="progressFill" style="width:12.5%"></div>
+    <div class="step-progress-fill" id="progressFill" style="width:11.1%"></div>
   </div>
   <div class="step-progress-dots">
     <div class="dot active" id="dot1"></div>
@@ -501,6 +501,7 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
     <div class="dot" id="dot6"></div>
     <div class="dot" id="dot7"></div>
     <div class="dot" id="dot8"></div>
+    <div class="dot" id="dot9"></div>
   </div>
 
   <div class="scroll-content">
@@ -833,12 +834,71 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
     <div class="nav-row">
       <button class="btn-prev" onclick="goPrev()">←</button>
       
+      <button class="btn-next" onclick="goNext()">次：ポジショニング →</button>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 7: ポジショニング ===== -->
+  <div class="slide-section" id="sec7">
+    <div class="sonobo-row">
+      <div class="sonobo-wrap">
+        <img src="assets/sonobo_2.png" alt="ソノボくん" class="sonobo-float">
+        <div class="sonobo-glow"></div>
+      </div>
+      <div class="sonobo-bubble">
+        <div class="sb-name">🤖 ソノボくん</div>
+        <div class="sb-text">患者さんのポジショニングと<em>術者の立ち位置</em>、意外と盲点です！正しい位置取りで検査効率がぐっと上がります🧭</div>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="slide-num">SECTION 5.5 — ポジショニング</div>
+      <div class="slide-heading">立ち位置と視野の確保</div>
+      <div class="slide-sub">「患者さんと画面が同時に見える」位置に立つことが、FAST実施の基本中の基本。</div>
+    </div>
+
+    <div class="photo-card">
+      <img src="assets/positioning.png" alt="ポジショニングの写真" style="width:100%;height:auto;display:block;">
+      <div class="photo-caption">左手で設定をすぐ変えられ、かつ患者さんと画面が同一視野に入る位置取り</div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num-badge">👁</div>
+        <div class="step-text">
+          <p><strong>視野に患者さんと画面が両方入る</strong></p>
+          <p class="step-note">目線の往復を最小にすることで、見落としを防ぐ</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-badge">✋</div>
+        <div class="step-text">
+          <p><strong>左手で設定をすぐに変えられる位置</strong></p>
+          <p class="step-note">プローブは右手で持ち、左手はコンソール操作に使える体勢が理想</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-badge">🛏</div>
+        <div class="step-text">
+          <p><strong>患者さんは仰臥位（仰向け）が基本</strong></p>
+          <p class="step-note">腕を頭の上に挙げてもらうと肋間が広がり、観察しやすくなる</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <span class="hi-icon">🎯</span>
+      <p>装置は<strong>患者さんの足側・右手側</strong>に置くのが定番。術者は患者さんの右側に立ち、プローブを握る。この配置で<strong>自然に全ポイントが揃う</strong>！</p>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-prev" onclick="goPrev()">←</button>
       <button class="btn-next" onclick="goNext()">次：扇動操作 →</button>
     </div>
   </div>
 
-  <!-- ===== SECTION 7: 扇動操作 ===== -->
-  <div class="slide-section" id="sec7">
+  <!-- ===== SECTION 8: 扇動操作 ===== -->
+  <div class="slide-section" id="sec8">
     <div class="sonobo-row">
       <div class="sonobo-wrap">
         <img src="assets/sonobo_5.png" alt="ソノボくん" class="sonobo-float">
@@ -922,8 +982,8 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
     </div>
   </div>
 
-  <!-- ===== SECTION 8: チェックリスト ===== -->
-  <div class="slide-section" id="sec8">
+  <!-- ===== SECTION 9: チェックリスト ===== -->
+  <div class="slide-section" id="sec9">
     <div class="sonobo-row">
       <div class="sonobo-wrap">
         <img src="assets/sonobo_3.png" alt="ソノボくん" class="sonobo-float">
@@ -968,15 +1028,19 @@ p, div, span, li, h1, h2, h3, h4, h5, h6 {
       </div>
       <div class="check-item" onclick="toggleCheck(this)">
         <div class="check-box">□</div>
-        <div class="check-text">⑦ 患者さんを仰臥位にした</div>
+        <div class="check-text">⑦ 患者さんを仰臥位にした（腕を挙げてもらう）</div>
       </div>
       <div class="check-item" onclick="toggleCheck(this)">
         <div class="check-box">□</div>
-        <div class="check-text">⑧ 患者さんと画面が同一視野に入る位置に座った</div>
+        <div class="check-text">⑧ 患者さんと画面が同一視野に入る位置に立った</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">□</div>
+        <div class="check-text">⑨ 左手でコンソール操作できる体勢を確認した</div>
       </div>
     </div>
 
-    <div class="check-counter" id="checkCounter">0 / 8 チェック完了</div>
+    <div class="check-counter" id="checkCounter">0 / 9 チェック完了</div>
 
     <div id="allCheckedMsg" style="display:none;">
       <div class="highlight-box">
@@ -1176,7 +1240,7 @@ function warpTo(url) {
 }
 
 // ===== ページ管理 =====
-const TOTAL = 8;
+const TOTAL = 9;
 let current = 1;
 
 function updateUI() {

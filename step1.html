@@ -1279,7 +1279,7 @@ function go(dir) {
   const next = cur + dir;
   if (next < 0 || next >= TOTAL) return;
   playSound('tap');
-  if (next === TOTAL-2) {
+  if (next === TOTAL-1) {
     showClearCinematic(() => {
       cur = next;
       updateUI();
@@ -1312,12 +1312,12 @@ function showClearCinematic(onDone) {
   center.appendChild(glassEl);
 
   const titleEl = document.createElement('div');
-  titleEl.textContent = 'MISSION CLEAR';
+  titleEl.textContent = 'GALAXY UNLOCKED';
   titleEl.style.cssText = "font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;letter-spacing:4px;color:white;opacity:0;transition:opacity .5s .3s ease;text-shadow:0 0 30px rgba(180,120,255,.9);";
   center.appendChild(titleEl);
 
   const subEl = document.createElement('div');
-  subEl.textContent = 'ギャラクシーグラス獲得！';
+  subEl.textContent = 'ギャラクシーグラス、装着完了！';
   subEl.style.cssText = "font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:rgba(255,255,255,.8);opacity:0;transition:opacity .5s .5s ease;letter-spacing:2px;";
   center.appendChild(subEl);
 
