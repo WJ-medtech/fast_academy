@@ -96,9 +96,11 @@ html, body { width:100%; min-height:100vh; overflow-x:hidden; font-family:'Noto 
 .prog-title { font-size:10px; color:var(--blue-light); font-weight:700; max-width:64%; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
 
 /* ===== SLIDES ===== */
-.slide-viewport { flex:1; overflow:hidden; position:relative; }
-.slides-track { display:flex; height:100%; transition:transform .4s cubic-bezier(.4,0,.2,1); will-change:transform; }
-.slide { min-width:100%; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:18px 16px calc(var(--nav-h) + 24px); }
+/* ===== SCROLL (step4方式) ===== */
+.scroll-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.scroll-inner { padding:14px 16px calc(var(--nav-h) + 40px); }
+.screen { display:none; flex-direction:column; animation:fadeIn .35s ease; }
+.screen.active { display:flex; }
 
 /* ===== BOTTOM NAV ===== */
 .bottom-bar {
@@ -160,14 +162,14 @@ html, body { width:100%; min-height:100vh; overflow-x:hidden; font-family:'Noto 
 /* sonobo */
 .sonobo-row {
   display:flex; align-items:flex-start; gap:12px;
-  padding:13px; border-radius:var(--radius);
-  margin-bottom:14px; min-width:0; overflow:hidden;
+  padding:11px; border-radius:var(--radius);
+  margin-bottom:10px; min-width:0; overflow:hidden;
   background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
 }
 .sonobo-row.warn { border-color:rgba(245,200,66,.25); background:rgba(245,200,66,.06); }
 .sonobo-row.good { border-color:rgba(34,197,94,.25); background:rgba(34,197,94,.06); }
 .sonobo-row.danger { border-color:rgba(239,68,68,.28); background:rgba(239,68,68,.07); }
-.sonobo-img { width:64px; height:64px; flex-shrink:0; position:relative; }
+.sonobo-img { width:54px; height:54px; flex-shrink:0; position:relative; }
 .sonobo-img img { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(21,101,216,.4)); animation:float 3.2s ease-in-out infinite; }
 .sonobo-glow { position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:50px; height:14px; background:radial-gradient(ellipse,rgba(21,101,216,.5) 0%,transparent 70%); border-radius:50%; animation:glowPulse 3.2s ease-in-out infinite; }
 .sonobo-body { flex:1; min-width:0; overflow:hidden; }
@@ -187,8 +189,8 @@ html, body { width:100%; min-height:100vh; overflow-x:hidden; font-family:'Noto 
 .sec-title span { word-break:break-all; overflow-wrap:break-word; min-width:0; }
 
 /* stat card */
-.stat-cards { display:flex; flex-direction:column; gap:9px; margin-bottom:16px; }
-.stat-card { border-radius:var(--radius-sm); padding:12px 14px; display:flex; align-items:flex-start; gap:11px; border:1px solid rgba(255,255,255,.07); min-width:0; overflow:hidden; }
+.stat-cards { display:flex; flex-direction:column; gap:7px; margin-bottom:12px; }
+.stat-card { border-radius:var(--radius-sm); padding:10px 12px; display:flex; align-items:flex-start; gap:11px; border:1px solid rgba(255,255,255,.07); min-width:0; overflow:hidden; }
 .stat-card.red  { background:linear-gradient(135deg,rgba(127,29,29,.22),rgba(69,10,10,.28)); border-color:rgba(239,68,68,.2); }
 .stat-card.blue { background:rgba(21,101,216,.1); border-color:rgba(61,142,240,.16); }
 .stat-card.green{ background:rgba(34,197,94,.08); border-color:rgba(34,197,94,.16); }
@@ -428,6 +430,108 @@ html, body { width:100%; min-height:100vh; overflow-x:hidden; font-family:'Noto 
 }
 .btn-home-link:active { transform:scale(.97); }
 
+/* ===== GALAXY GLASS REWARD ===== */
+.galaxy-glass-reward { margin-bottom:16px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.glass-orb {
+  width:88px; height:88px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#c8b8ff,#7c3aed 50%,#312e81);
+  box-shadow:0 0 40px rgba(139,92,246,.6),0 0 80px rgba(139,92,246,.25);
+  display:flex; align-items:center; justify-content:center; font-size:40px;
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+  position:relative;
+}
+.glass-orb::after {
+  content:''; position:absolute; inset:-6px; border-radius:50%;
+  border:2px solid rgba(196,181,253,.4);
+  animation:orbitRing 3s linear infinite;
+}
+
+/* ===== GALAXY ENDING ===== */
+/* グラスアイコン */
+.gx-glass-wrap { position:relative; width:90px; height:90px; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; }
+.gx-glass-ring {
+  position:absolute; inset:-8px; border-radius:50%;
+  border:2px solid rgba(196,181,253,.35);
+  animation:orbitRing 4s linear infinite;
+}
+.gx-glass-ring::before {
+  content:''; position:absolute; inset:-8px; border-radius:50%;
+  border:1px solid rgba(196,181,253,.15);
+  animation:orbitRing 7s linear infinite reverse;
+}
+.gx-glass-icon {
+  font-size:52px; line-height:1;
+  filter:drop-shadow(0 0 24px rgba(139,92,246,.9)) drop-shadow(0 0 48px rgba(139,92,246,.4));
+  animation:float 3s ease-in-out infinite;
+}
+.gx-title {
+  font-family:'Zen Kaku Gothic New',sans-serif; font-size:22px; font-weight:900;
+  background:linear-gradient(135deg,#e9d5ff,#a78bfa,#c4b5fd);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; margin-bottom:6px;
+}
+.gx-sub { font-size:12px; color:rgba(255,255,255,.52); line-height:1.75; margin-bottom:20px; }
+
+/* 惑星マップグリッド */
+.gx-map {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  width:100%; margin-bottom:18px;
+}
+.gx-star-col { grid-column: 1 / -1; }
+
+/* 惑星カード共通 */
+.gx-planet {
+  position:relative; display:flex; flex-direction:column; align-items:center; gap:6px;
+  padding:14px 8px 12px; border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  overflow:hidden;
+}
+.gx-cleared {
+  background:rgba(34,197,94,.06); border-color:rgba(34,197,94,.22);
+}
+.gx-locked { }
+
+/* 惑星の光彩（背景） */
+.gx-planet-glow {
+  position:absolute; inset:0; border-radius:16px; pointer-events:none;
+}
+
+/* 3D惑星ボール */
+.gx-planet-body {
+  width:52px; height:52px; border-radius:50%; position:relative; overflow:hidden; flex-shrink:0;
+  animation:float 4s ease-in-out infinite;
+}
+.gx-planet-surface {
+  position:absolute; inset:0; border-radius:50%; pointer-events:none;
+}
+
+/* クリア済み惑星アイコン */
+.gx-planet-icon { font-size:36px; filter:drop-shadow(0 0 12px rgba(34,197,94,.5)); animation:float 3s ease-in-out infinite; }
+
+.gx-planet-name { font-family:'Zen Kaku Gothic New',sans-serif; font-size:11px; font-weight:900; color:rgba(255,255,255,.75); }
+.gx-planet-badge {
+  font-size:8px; font-weight:700; letter-spacing:1px;
+  padding:2px 8px; border-radius:4px; border:1px solid;
+}
+.gx-badge-clear { background:rgba(34,197,94,.18); border-color:rgba(34,197,94,.4); color:#4ade80; }
+
+/* ファスタリス恒星 */
+.gx-star-burst { position:relative; width:64px; height:64px; display:flex; align-items:center; justify-content:center; margin:0 auto; }
+.gx-star-core { font-size:40px; filter:drop-shadow(0 0 16px rgba(245,200,66,.9)) drop-shadow(0 0 32px rgba(245,200,66,.5)); animation:float 2.5s ease-in-out infinite; position:relative; z-index:1; }
+.gx-star-ray {
+  position:absolute; top:50%; left:50%; width:2px; border-radius:1px;
+  background:linear-gradient(to top,transparent,rgba(245,200,66,.6),transparent);
+  transform-origin:center bottom; animation:rayPulse 2s ease-in-out infinite;
+}
+.gx-ray1 { height:40px; transform:translateX(-50%) rotate(0deg) translateY(-100%); animation-delay:0s; }
+.gx-ray2 { height:32px; transform:translateX(-50%) rotate(90deg) translateY(-100%); animation-delay:.5s; }
+.gx-ray3 { height:38px; transform:translateX(-50%) rotate(45deg) translateY(-100%); animation-delay:.25s; }
+.gx-ray4 { height:28px; transform:translateX(-50%) rotate(135deg) translateY(-100%); animation-delay:.75s; }
+@keyframes rayPulse { 0%,100%{opacity:.3;height:30px} 50%{opacity:.8;height:44px} }
+
+.sonobo-galaxy-row { display:flex; align-items:flex-start; gap:12px; padding:11px; border-radius:var(--radius); margin-bottom:14px; width:100%; background:rgba(34,197,94,.06); border:1px solid rgba(34,197,94,.2); text-align:left; }
+
 /* ===== MISC ===== */
 .gap { height:16px; }
 .gap-sm { height:8px; }
@@ -445,7 +549,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       <div class="header-planet">🪐 PLANET ORIGIN — MISSION 01</div>
       <div class="header-title" id="hTitle">着陸！惑星オリジン</div>
     </div>
-    <div class="fuel-display">
+    <div class="fuel-display" id="fuelDisplay" style="display:none">
       <span class="fuel-icon">⛽</span>
       <div class="fuel-bar-wrap"><div class="fuel-bar" id="fuelBar"></div></div>
     </div>
@@ -461,11 +565,11 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
   </div>
 
   <!-- SLIDES -->
-  <div class="slide-viewport">
-    <div class="slides-track" id="sTrack">
+  <div class="scroll-content" id="scrollContent">
+    <div class="scroll-inner">
 
       <!-- ===== S0: 惑星着陸 ===== -->
-      <div class="slide" id="s0">
+      <div class="screen" id="s0">
         <div class="planet-landing an">
           <div class="planet-name-tag">PLANET ORIGIN</div>
           <div class="planet-wrap">
@@ -474,7 +578,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
           </div>
           <div class="planet-title">🪐 惑星オリジンへ<br>ようこそ！</div>
           <div class="planet-subtitle">ここはFASTの原点を学ぶ星</div>
-          <div class="reward-badge">⛽ クリアボーナス：燃料補給</div>
+          <div class="reward-badge">🕶️ クリアボーナス：ギャラクシーグラス</div>
         </div>
 
         <div class="sonobo-row an d1">
@@ -518,7 +622,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S1: 一番大事なポイント ===== -->
-      <div class="slide" id="s1">
+      <div class="screen" id="s1">
         <div class="sonobo-row an">
           <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -562,7 +666,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S2: 緊迫の救急現場 ===== -->
-      <div class="slide" id="s2">
+      <div class="screen" id="s2">
         <div class="sonobo-row an">
           <div class="sonobo-img"><img src="assets/sonobo_5.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -592,7 +696,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S3: 搬入時バイタル ===== -->
-      <div class="slide" id="s3">
+      <div class="screen" id="s3">
         <div class="sonobo-row an">
           <div class="sonobo-img"><img src="assets/sonobo_7.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -627,7 +731,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S4: 急変 ===== -->
-      <div class="slide" id="s4">
+      <div class="screen" id="s4">
         <div class="sonobo-row danger an">
           <div class="sonobo-img"><img src="assets/sonobo_8.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -664,7 +768,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S5: 分岐点 ===== -->
-      <div class="slide" id="s5">
+      <div class="screen" id="s5">
         <div class="sonobo-row an">
           <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -686,7 +790,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
         <div class="choice-list an d2">
           <div class="choice-btn choice-bad">
             <span class="choice-icon">❌</span>
-            <span class="choice-text">採血・ライン確保を優先し、FAST後回し</span>
+            <span class="choice-text">「とりあえずCT」でFASTを後回し</span>
           </div>
           <div class="choice-btn choice-good">
             <span class="choice-icon">✅</span>
@@ -696,7 +800,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S6: FASTなし → bad path ===== -->
-      <div class="slide" id="s6">
+      <div class="screen" id="s6">
         <div class="sonobo-row danger an">
           <div class="sonobo-img"><img src="assets/sonobo_9.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -713,7 +817,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
           <div class="branch-items">
             <div class="branch-item"><span class="branch-item-icon">🩸</span>採血・ライン確保に時間を取られる</div>
             <div class="branch-item"><span class="branch-item-icon">⏳</span>「腹部外傷なし」という外表所見を信じ、出血源を見落とす</div>
-            <div class="branch-item"><span class="branch-item-icon">🖥️</span>バイタル不安定なままCTへ搬送 = <strong style="color:#fca5a5;">「死のトンネル」</strong><span style="font-size:11px;color:rgba(255,255,255,.4);">（監視できない空白時間）</span></div>
+            <div class="branch-item"><span class="branch-item-icon">🖥️</span><span>バイタル不安定なままCTへ搬送 = <strong style="color:#fca5a5;">「死のトンネル」</strong><br><span style="font-size:11px;color:rgba(255,255,255,.45);">（モニタリングが途切れる空白時間）</span></span></div>
             <div class="branch-item"><span class="branch-item-icon">📉</span>その間も体腔内出血は進行し続ける</div>
           </div>
           <div class="outcome bad">💀 循環破綻 → 心停止リスク。介入の機会を逃す</div>
@@ -723,13 +827,13 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
           <div class="sonobo-img"><img src="assets/sonobo_8.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
             <div class="sonobo-label danger">😱 ソノボくん</div>
-            <div class="sonobo-text">バイタル不安定な外傷患者では、<strong style="color:#fca5a5;">出血源の同定を最優先</strong>する。FASTはそのための最速ツールです</div>
+            <div class="sonobo-text">バイタル不安定な外傷患者では、<strong style="color:#fca5a5;">腹腔内出血の有無をいち早く確認</strong>することが命を左右する。FASTはそのための最速ツールです</div>
           </div>
         </div>
       </div>
 
       <!-- ===== S7: FASTあり → good path ===== -->
-      <div class="slide" id="s7">
+      <div class="screen" id="s7">
         <div class="sonobo-row good an">
           <div class="sonobo-img"><img src="assets/sonobo_3.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -750,7 +854,6 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
           </div>
           <div class="branch-items">
             <div class="branch-item"><span class="branch-item-icon">🔴</span>腹腔内出血と判断 → 外科・上級医へ即コール</div>
-            <div class="branch-item"><span class="branch-item-icon">💉</span>大量輸血プロトコール（MTP）起動・輸血開始</div>
             <div class="branch-item"><span class="branch-item-icon">🔪</span>血行動態を考慮しながら手術室へ（止血を優先）</div>
           </div>
           <div class="outcome good">🏆 活動性腹腔内出血確認 → <strong>止血処置へ早期移行！</strong></div>
@@ -758,7 +861,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S8: 結末 ===== -->
-      <div class="slide" id="s8">
+      <div class="screen" id="s8">
         <div class="result-card an">
           <div class="result-sb"><img src="assets/sonobo_6.png" alt="ソノボくんジャンプ"></div>
           <div class="result-body">
@@ -785,7 +888,7 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
       </div>
 
       <!-- ===== S9: クイズ1 ===== -->
-      <div class="slide" id="s9">
+      <div class="screen" id="s9">
         <div class="sonobo-row an">
           <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
@@ -806,13 +909,13 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
         </div>
       </div>
 
-      <!-- ===== S10: クイズ2 + まとめ ===== -->
-      <div class="slide" id="s10">
+      <!-- ===== S10: クイズ2 ===== -->
+      <div class="screen" id="s10">
         <div class="sonobo-row an">
           <div class="sonobo-img"><img src="assets/sonobo_4.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
           <div class="sonobo-body">
             <div class="sonobo-label">🤖 ソノボくん</div>
-            <div class="sonobo-text">ラスト1問！これができれば燃料補給のミッションクリアです✨</div>
+            <div class="sonobo-text">ラスト1問！これができればギャラクシーグラスをゲットです✨</div>
           </div>
         </div>
 
@@ -826,43 +929,134 @@ p, h1, h2, h3, span, li { word-break:break-all; overflow-wrap:break-word; min-wi
           </div>
           <div class="quiz-fb" id="q2fb"></div>
         </div>
+      </div>
 
-
-      <!-- ===== S11: 惑星オリジン クリア！ ===== -->
-      <div class="slide" id="s11">
+      <!-- ===== S11: クリア！ ===== -->
+      <div class="screen" id="s11">
         <div class="complete-screen">
-          <div class="fuel-reward">
-            <div class="fuel-orb">⛽</div>
-            <div class="complete-badge-text">FUEL ACQUIRED</div>
+          <div class="galaxy-glass-reward an">
+            <div class="glass-orb">🕶️</div>
+            <div class="complete-badge-text">GALAXY GLASS ACQUIRED</div>
           </div>
 
-          <div class="complete-title">惑星オリジン クリア！</div>
-          <div class="complete-sub">燃料補給完了。次の惑星へのルートが解放された！<br>FASTの存在意義をマスターしたね⭐</div>
+          <div class="complete-title an">惑星オリジン クリア！</div>
+          <div class="complete-sub an">ギャラクシーグラス獲得。次の惑星へのルートが解放された！<br>FASTの存在意義をマスターしたね⭐</div>
 
           <div class="complete-sonobo">
             <img src="assets/sonobo_6.png" alt="ソノボくんジャンプ">
           </div>
 
-          <div class="complete-sum">
+          <div class="complete-sum an">
             <div class="sum-label">✅ ミッションログ</div>
             <div class="sum-point"><div class="sum-num">1</div><div class="sum-text">外傷死の主因は<strong>出血性ショック</strong>。腹腔内出血は外見でわからない</div></div>
             <div class="sum-point"><div class="sum-num">2</div><div class="sum-text">早期FASTが救命率を上げる</div></div>
             <div class="sum-point"><div class="sum-num">3</div><div class="sum-text">異常があれば繰り返し行う</div></div>
           </div>
 
-          <div class="btn-group">
-            <button class="btn-next-planet" onclick="warpTo('step2.html')">
-              <span>🚀 惑星アナトミアへ出発</span><span style="font-size:18px;">→</span>
-            </button>
-            <button class="btn-home-link" onclick="warpTo('home.html')">
-              <span>🏠</span><span>HOMEに戻る</span>
+          <div class="btn-group an">
+            <button class="btn-next-planet" onclick="go(1)">
+              <span>🕶️ ギャラクシーグラスをかける</span><span style="font-size:18px;">→</span>
             </button>
           </div>
         </div>
       </div>
 
-    </div><!-- /slides-track -->
-  </div><!-- /slide-viewport -->
+      <!-- ===== S12: 銀河エンディング ===== -->
+      <div class="screen" id="s12" style="padding:0;position:relative;overflow:hidden;">
+        <canvas id="galaxyCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+
+        <!-- 上部グラデーション装飾 -->
+        <div style="position:absolute;top:0;left:0;right:0;height:180px;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(139,92,246,.18) 0%,transparent 70%);pointer-events:none;z-index:1;"></div>
+
+        <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 20px 32px;">
+
+          <!-- グラスアニメーション -->
+          <div class="gx-glass-wrap an">
+            <div class="gx-glass-ring"></div>
+            <div class="gx-glass-icon">🕶️</div>
+          </div>
+
+          <div class="gx-title an d1">銀河を見渡してみよう</div>
+          <div class="gx-sub an d2">ギャラクシーグラスをかけると…<br>これから旅する星々が輝いて見える</div>
+
+          <!-- 惑星マップ -->
+          <div class="gx-map an d2">
+
+            <!-- オリジン（クリア済み） -->
+            <div class="gx-planet gx-cleared">
+              <div class="gx-planet-glow" style="background:radial-gradient(circle,rgba(34,197,94,.35) 0%,transparent 70%);"></div>
+              <div class="gx-planet-icon">🪐</div>
+              <div class="gx-planet-name">オリジン</div>
+              <div class="gx-planet-badge gx-badge-clear">✅ CLEARED</div>
+            </div>
+
+            <!-- アナトミア（深緑） -->
+            <div class="gx-planet gx-locked" style="--pc:#0d4a2a;--pcl:#1a7a45;">
+              <div class="gx-planet-glow" style="background:radial-gradient(circle,rgba(13,74,42,.5) 0%,transparent 70%);"></div>
+              <div class="gx-planet-body" style="background:radial-gradient(circle at 38% 35%,#1a7a45,#0d4a2a 55%,#052214);box-shadow:0 0 18px rgba(13,74,42,.6),inset -6px -4px 12px rgba(0,0,0,.5);">
+                <div class="gx-planet-surface" style="background:repeating-linear-gradient(30deg,transparent,transparent 4px,rgba(0,0,0,.12) 4px,rgba(0,0,0,.12) 5px);"></div>
+              </div>
+              <div class="gx-planet-name" style="color:#2db868;">アナトミア</div>
+              <div class="gx-planet-badge" style="color:#2db868;border-color:rgba(13,74,42,.6);background:rgba(13,74,42,.25);">ANATOMIA</div>
+            </div>
+
+            <!-- レディネス（ティール） -->
+            <div class="gx-planet gx-locked" style="--pc:#0e4f4f;--pcl:#2dd4bf;">
+              <div class="gx-planet-glow" style="background:radial-gradient(circle,rgba(45,212,191,.28) 0%,transparent 70%);"></div>
+              <div class="gx-planet-body" style="background:radial-gradient(circle at 38% 35%,#5eead4,#0d9488 55%,#0e4f4f);box-shadow:0 0 18px rgba(45,212,191,.4),inset -6px -4px 12px rgba(0,0,0,.5);">
+                <div class="gx-planet-surface" style="background:repeating-linear-gradient(50deg,transparent,transparent 5px,rgba(0,0,0,.1) 5px,rgba(0,0,0,.1) 6px);"></div>
+              </div>
+              <div class="gx-planet-name" style="color:#2dd4bf;">レディネス</div>
+              <div class="gx-planet-badge" style="color:#2dd4bf;border-color:rgba(45,212,191,.4);background:rgba(45,212,191,.1);">READINESS</div>
+            </div>
+
+            <!-- プローヴィア（深青） -->
+            <div class="gx-planet gx-locked" style="--pc:#1e3a8a;--pcl:#3b82f6;">
+              <div class="gx-planet-glow" style="background:radial-gradient(circle,rgba(59,130,246,.35) 0%,transparent 70%);"></div>
+              <div class="gx-planet-body" style="background:radial-gradient(circle at 38% 35%,#60a5fa,#1d4ed8 55%,#1e3a8a);box-shadow:0 0 18px rgba(59,130,246,.5),inset -6px -4px 12px rgba(0,0,0,.5);">
+                <div class="gx-planet-surface" style="background:repeating-linear-gradient(20deg,transparent,transparent 6px,rgba(0,0,0,.1) 6px,rgba(0,0,0,.1) 7px);"></div>
+              </div>
+              <div class="gx-planet-name" style="color:#60a5fa;">プローヴィア</div>
+              <div class="gx-planet-badge" style="color:#60a5fa;border-color:rgba(59,130,246,.4);background:rgba(59,130,246,.1);">PROVIA</div>
+            </div>
+
+            <!-- ファスタリス（恒星） -->
+            <div class="gx-planet gx-locked gx-star-col">
+              <div class="gx-star-burst">
+                <div class="gx-star-core">⭐</div>
+                <div class="gx-star-ray gx-ray1"></div>
+                <div class="gx-star-ray gx-ray2"></div>
+                <div class="gx-star-ray gx-ray3"></div>
+                <div class="gx-star-ray gx-ray4"></div>
+              </div>
+              <div class="gx-planet-name" style="color:var(--gold);">ファスタリス</div>
+              <div class="gx-planet-badge" style="color:var(--gold);border-color:rgba(245,200,66,.4);background:rgba(245,200,66,.1);">FASTARIS ⭐</div>
+            </div>
+
+          </div><!-- /gx-map -->
+
+          <!-- ソノボくん -->
+          <div class="sonobo-galaxy-row an d3">
+            <div class="sonobo-img"><img src="assets/sonobo_6.png" alt="ソノボくん"><div class="sonobo-glow"></div></div>
+            <div class="sonobo-body">
+              <div class="sonobo-label good">🤖 ソノボくん</div>
+              <div class="sonobo-text">まだまだ旅は続くよ！<br>次の星へ、一緒に頑張ろう🚀✨</div>
+            </div>
+          </div>
+
+          <!-- ボタン -->
+          <div class="btn-group an d4" style="width:100%;">
+            <button class="btn-next-planet" onclick="warpTo('step2.html')">
+              <span>🚀 惑星アナトミアへ出発</span><span style="font-size:18px;">→</span>
+            </button>
+            <button class="btn-home-link" onclick="warpTo('home.html')">
+              <span>🗺️</span><span>マップに戻る</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /scroll-inner -->
+  </div><!-- /scroll-content -->
 
   <!-- BOTTOM NAV -->
   <div class="bottom-bar" id="bottomBar">
@@ -1014,7 +1208,7 @@ function initBg() {
 initBg();
 
 // ===== SLIDES ENGINE =====
-const TOTAL  = 12;
+const TOTAL  = 13;
 const TITLES = [
   '惑星オリジンへ着陸',
   '最重要ポイント',
@@ -1026,12 +1220,12 @@ const TITLES = [
   'FASTあり → 救命へ',
   '結末',
   'クイズ 1',
-  'クイズ 2 ＋ まとめ',
-  '⛽ 惑星オリジン クリア！'
+  'クイズ 2',
+  '🕶️ 惑星オリジン クリア！',
+  '🌌 銀河を見渡す'
 ];
 
 let cur = 0;
-const track    = document.getElementById('sTrack');
 const pFill    = document.getElementById('pFill');
 const pCount   = document.getElementById('pCount');
 const pTitle   = document.getElementById('pTitle');
@@ -1042,7 +1236,6 @@ const fuelBar  = document.getElementById('fuelBar');
 const bottomBar= document.getElementById('bottomBar');
 
 function updateUI() {
-  track.style.transform = `translateX(-${cur*100}%)`;
   const pct = Math.round((cur+1)/TOTAL*100);
   pFill.style.width  = pct + '%';
   fuelBar.style.width = pct + '%';
@@ -1051,23 +1244,31 @@ function updateUI() {
   hTitle.textContent = TITLES[cur];
   bPrev.disabled = cur === 0;
 
-  const isComplete = cur === TOTAL-1;
+  const isComplete = cur >= TOTAL-2;
   bottomBar.style.display = isComplete ? 'none' : 'flex';
-
   if (!isComplete) {
-    bNext.textContent = cur === TOTAL-2 ? 'クリア画面へ →' : '次へ →';
+    bNext.textContent = cur === TOTAL-3 ? 'クリア画面へ →' : '次へ →';
     bNext.className = 'btn-next';
   }
+
+  // step4方式：スクリーン切り替え + scroll-content一括リセット
+  for (let i = 0; i < TOTAL; i++) {
+    const el = document.getElementById('s'+i);
+    if (el) el.classList.toggle('active', i === cur);
+  }
+  // ★ scroll-content（1つのスクロールコンテナ）をトップへ
+  const sc = document.getElementById('scrollContent');
+  if (sc) { sc.scrollTop = 0; sc.scrollTo(0, 0); }
 
   // サウンド演出
   if (cur === 2) setTimeout(() => playSound('hotline'), 200);
   if (cur === 3) setTimeout(() => playSound('vitals'), 300);
   if (cur === 4) setTimeout(() => playSound('alarm'), 200);
-  if (cur === TOTAL-1) setTimeout(() => playSound('reward'), 300);
+  if (cur === TOTAL-2) setTimeout(() => playSound('reward'), 300);
 
   // アニメーション再トリガー
   const sl = document.getElementById('s'+cur);
-  sl.querySelectorAll('.an').forEach(el => {
+  if (sl) sl.querySelectorAll('.an').forEach(el => {
     el.style.animation = 'none';
     el.offsetHeight;
     el.style.animation = '';
@@ -1078,8 +1279,179 @@ function go(dir) {
   const next = cur + dir;
   if (next < 0 || next >= TOTAL) return;
   playSound('tap');
+  if (next === TOTAL-2) {
+    showClearCinematic(() => {
+      cur = next;
+      updateUI();
+      checkGalaxyCanvas();
+    });
+    return;
+  }
   cur = next;
   updateUI();
+  checkGalaxyCanvas();
+}
+
+// ===== クリア演出 =====
+function showClearCinematic(onDone) {
+  playSound('reward');
+  const ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;';
+
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+  ov.appendChild(cvs);
+
+  // テキスト層
+  const center = document.createElement('div');
+  center.style.cssText = 'position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;';
+
+  const glassEl = document.createElement('div');
+  glassEl.textContent = '🕶️';
+  glassEl.style.cssText = 'font-size:72px;filter:drop-shadow(0 0 32px rgba(180,120,255,1));animation:none;transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1);';
+  center.appendChild(glassEl);
+
+  const titleEl = document.createElement('div');
+  titleEl.textContent = 'MISSION CLEAR';
+  titleEl.style.cssText = "font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;letter-spacing:4px;color:white;opacity:0;transition:opacity .5s .3s ease;text-shadow:0 0 30px rgba(180,120,255,.9);";
+  center.appendChild(titleEl);
+
+  const subEl = document.createElement('div');
+  subEl.textContent = 'ギャラクシーグラス獲得！';
+  subEl.style.cssText = "font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:rgba(255,255,255,.8);opacity:0;transition:opacity .5s .5s ease;letter-spacing:2px;";
+  center.appendChild(subEl);
+
+  ov.appendChild(center);
+  document.body.appendChild(ov);
+
+  // Canvas花火・パーティクル
+  const W = cvs.offsetWidth || window.innerWidth;
+  const H = cvs.offsetHeight || window.innerHeight;
+  cvs.width = W; cvs.height = H;
+  const ctx = cvs.getContext('2d');
+
+  const particles = [];
+  const COLORS = ['#a78bfa','#f472b6','#34d399','#60a5fa','#fbbf24','#f87171','#e879f9','#ffffff'];
+
+  function burst(x, y, count, speed) {
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI*2/count)*i + Math.random()*.3;
+      const v = speed * (0.6 + Math.random()*.8);
+      particles.push({
+        x, y,
+        vx: Math.cos(angle)*v,
+        vy: Math.sin(angle)*v,
+        r: 2 + Math.random()*4,
+        color: COLORS[Math.floor(Math.random()*COLORS.length)],
+        life: 1, decay: 0.015 + Math.random()*0.02,
+        gravity: 0.12,
+        trail: []
+      });
+    }
+  }
+
+  // 流れ星
+  const streaks = [];
+  function addStreak() {
+    streaks.push({
+      x: Math.random()*W, y: 0,
+      vx: (Math.random()-.5)*3,
+      vy: 4 + Math.random()*6,
+      color: COLORS[Math.floor(Math.random()*COLORS.length)],
+      life: 1, len: 60+Math.random()*80
+    });
+  }
+
+  let frame = 0;
+  let rafId;
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.fillRect(0,0,W,H);
+
+    // オーロラ帯
+    const t = frame * 0.03;
+    for (let b=0;b<3;b++) {
+      const grad = ctx.createLinearGradient(0,0,W,0);
+      const hue = (b*120 + frame*1.2) % 360;
+      grad.addColorStop(0,'rgba(0,0,0,0)');
+      grad.addColorStop(.3,`hsla(${hue},80%,60%,.12)`);
+      grad.addColorStop(.7,`hsla(${hue+60},80%,60%,.18)`);
+      grad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.moveTo(0, H*(.3+b*.15));
+      for(let x=0;x<=W;x+=10) ctx.lineTo(x, H*(.3+b*.15)+Math.sin(x*.012+t+b)*28);
+      ctx.lineWidth=22; ctx.strokeStyle=grad; ctx.stroke();
+    }
+
+    // バースト（定期的）
+    if (frame % 18 === 0) {
+      burst(Math.random()*W, Math.random()*H*.7, 18, 4+Math.random()*4);
+    }
+    if (frame % 7 === 0) addStreak();
+
+    // 流れ星
+    for (let i = streaks.length-1; i >= 0; i--) {
+      const s = streaks[i];
+      ctx.save();
+      ctx.globalAlpha = s.life * 0.7;
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(s.x - s.vx*(s.len/6), s.y - s.vy*(s.len/6));
+      ctx.stroke();
+      ctx.restore();
+      s.x+=s.vx; s.y+=s.vy; s.life-=0.04;
+      if(s.life<=0) streaks.splice(i,1);
+    }
+
+    // パーティクル
+    for (let i = particles.length-1; i >= 0; i--) {
+      const p = particles[i];
+      ctx.save();
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 8; ctx.shadowColor = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+      p.x += p.vx; p.y += p.vy;
+      p.vy += p.gravity;
+      p.vx *= 0.98;
+      p.life -= p.decay;
+      if(p.life <= 0) particles.splice(i,1);
+    }
+
+    frame++;
+    rafId = requestAnimationFrame(draw);
+  }
+
+  // 初期大バースト
+  setTimeout(() => burst(W*.5, H*.4, 40, 7), 50);
+  setTimeout(() => burst(W*.2, H*.3, 28, 5), 300);
+  setTimeout(() => burst(W*.8, H*.35, 28, 5), 500);
+  setTimeout(() => burst(W*.5, H*.5, 36, 8), 800);
+  setTimeout(() => burst(W*.3, H*.6, 24, 5), 1100);
+  setTimeout(() => burst(W*.7, H*.25, 24, 5), 1400);
+
+  draw();
+
+  // アイコン・テキスト登場
+  requestAnimationFrame(() => {
+    glassEl.style.transform = 'scale(1)';
+    titleEl.style.opacity = '1';
+    subEl.style.opacity = '1';
+  });
+
+  // 2秒後にフェードアウト→次画面
+  setTimeout(() => {
+    cancelAnimationFrame(rafId);
+    ov.animate([{opacity:1},{opacity:0}], {duration:350, fill:'forwards'}).finished.then(() => {
+      document.body.removeChild(ov);
+      onDone();
+    });
+  }, 2000);
 }
 
 // ===== QUIZ =====
@@ -1103,9 +1475,71 @@ function ansQ(id, idx, ok) {
   fb.textContent = ok ? FB[id].ok : FB[id].ng;
   fb.className = 'quiz-fb show ' + (ok ? 'ok' : 'ng');
   playSound(ok ? 'correct' : 'wrong');
+  // クイズ2正解時は自動でクリア画面へ
+  if (id === 'q2' && ok) {
+    setTimeout(() => go(1), 1400);
+  }
 }
 
 updateUI();
+
+// ===== GALAXY CANVAS =====
+let galaxyInited = false;
+function initGalaxyCanvas() {
+  const canvas = document.getElementById('galaxyCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [], shootingStars = [], auroras = [];
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    stars = [];
+    for (let i=0;i<120;i++) stars.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.4+0.3, op:Math.random()*.7+.2, phase:Math.random()*Math.PI*2});
+    auroras = [
+      {y:H*.28, color:'rgba(0,255,180,', amp:22, phase:0, speed:.008},
+      {y:H*.4,  color:'rgba(120,80,255,', amp:14, phase:1.5, speed:.011},
+    ];
+  }
+  function addShootingStar() {
+    shootingStars.push({x:Math.random()*W*.6+W*.05, y:Math.random()*H*.35, vx:3.5+Math.random()*3, vy:2+Math.random()*2, life:1, len:80+Math.random()*60});
+  }
+  let t=0, ssTimer=0;
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    t+=0.012;
+    stars.forEach(s=>{
+      const op=s.op*(0.6+0.4*Math.sin(t+s.phase));
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${op})`; ctx.fill();
+    });
+    auroras.forEach(a=>{
+      a.phase+=a.speed;
+      const grad=ctx.createLinearGradient(0,0,W,0);
+      grad.addColorStop(0,a.color+'0)'); grad.addColorStop(.3,a.color+'.13)');
+      grad.addColorStop(.65,a.color+'.22)'); grad.addColorStop(1,a.color+'0)');
+      ctx.beginPath(); ctx.moveTo(0,a.y);
+      for(let x=0;x<=W;x+=8) ctx.lineTo(x,a.y+Math.sin(x*.015+a.phase)*a.amp);
+      ctx.lineWidth=18; ctx.strokeStyle=grad; ctx.stroke();
+    });
+    ssTimer++;
+    if(ssTimer>90+Math.random()*100){addShootingStar();ssTimer=0;}
+    shootingStars=shootingStars.filter(s=>s.life>0);
+    shootingStars.forEach(s=>{
+      const g2=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*(s.len/5),s.y-s.vy*(s.len/5));
+      g2.addColorStop(0,`rgba(255,255,255,${s.life})`); g2.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*(s.len/5),s.y-s.vy*(s.len/5));
+      ctx.lineWidth=1.5; ctx.strokeStyle=g2; ctx.stroke();
+      s.x+=s.vx; s.y+=s.vy; s.life-=0.028;
+    });
+    requestAnimationFrame(draw);
+  }
+  resize(); window.addEventListener('resize',resize); draw();
+}
+
+function checkGalaxyCanvas() {
+  if (cur === 12 && !galaxyInited) { galaxyInited=true; setTimeout(initGalaxyCanvas,250); }
+}
+
 </script>
 </body>
 </html>
