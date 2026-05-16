@@ -18,7 +18,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
   background:var(--blue-deep);color:var(--white);overflow-x:hidden;}
 
 /* ===== OVERFLOW PREVENTION ===== */
-[style*="display:flex"],.flex-container{min-width:0;overflow:hidden;}
+.flex-container{min-width:0;overflow:hidden;}
 p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 /* ===== BACKGROUND ===== */
@@ -47,13 +47,13 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 @keyframes scanline {0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
 @keyframes blink    {0%,100%{opacity:1}50%{opacity:0}}
 @keyframes rotateGlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes landingShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 @keyframes passportReveal{0%{opacity:0;transform:scale(0.5) rotateY(-30deg)}60%{transform:scale(1.08) rotateY(5deg)}100%{opacity:1;transform:scale(1) rotateY(0deg)}}
 @keyframes goldRain {0%{transform:translateY(-20px);opacity:1}100%{transform:translateY(100vh);opacity:0}}
 @keyframes streakOut{0%{transform:rotate(var(--a,0deg)) scaleX(0)}50%{transform:rotate(var(--a,0deg)) scaleX(1);opacity:1}100%{transform:rotate(var(--a,0deg)) scaleX(0) translateX(300px);opacity:0}}
 @keyframes fadeInOut{0%,100%{opacity:0}30%,70%{opacity:1}}
 @keyframes scanIn   {from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
 @keyframes missionBadge{0%{opacity:0;transform:scale(0) rotate(-15deg)}70%{transform:scale(1.1) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
+@keyframes loadBar{from{width:0}to{width:100%}}
 
 /* ===== HEADER ===== */
 .page-header{display:flex;align-items:center;gap:12px;min-width:0;overflow:hidden;
@@ -385,11 +385,24 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 .loading-bar-wrap{width:200px;height:4px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;}
 .loading-bar{height:100%;background:linear-gradient(90deg,var(--blue-vivid),var(--gold));
   border-radius:10px;animation:loadBar 1.2s ease forwards;}
-@keyframes loadBar{from{width:0}to{width:100%}}
 
 /* ===== SCANLINE EFFECT ===== */
 .scanline-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
   background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);}
+
+/* ===== STEP SUB-BADGE ===== */
+.sub-screen-badge{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(21,101,216,.2);border:1px solid rgba(61,142,240,.35);
+  border-radius:20px;padding:5px 12px;font-family:'Orbitron',sans-serif;
+  font-size:9px;color:var(--blue-light);letter-spacing:1.5px;margin-bottom:14px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== NOTE BOX ===== */
+.note-box{background:rgba(61,142,240,.08);border:1px solid rgba(61,142,240,.25);
+  border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:12px;
+  display:flex;align-items:flex-start;gap:9px;min-width:0;overflow:hidden;}
+.note-box p{font-size:13px;color:rgba(200,225,255,.88);line-height:1.7;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
 </style>
 </head>
 <body>
@@ -416,7 +429,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="header-progress-fill" id="headerBar" style="width:0%"></div>
     </div>
   </div>
-  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/4</div>
+  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/19</div>
 </div>
 
 <!-- ===== SCROLL CONTENT ===== -->
@@ -428,7 +441,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
      ============================================================ -->
 <div class="screen active" id="screen-0">
 
-  <!-- 惑星着陸シーン -->
   <div class="planet-landing">
     <div style="position:relative;display:inline-block;">
       <div class="planet-orb" id="planetOrb">
@@ -443,7 +455,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="planet-subtitle">惑星プロービア — 探査ゾーン4</div>
   </div>
 
-  <!-- ソノボくん — 着陸の喜び -->
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_2.png" alt="">
     <div class="sonobo-bubble">
@@ -452,7 +463,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
-  <!-- ミッションブリーフィング -->
   <div class="mission-banner">
     <div class="mission-tag">🚀 MISSION BRIEFING — PLANET PROBIA</div>
     <div class="mission-text">
@@ -461,7 +471,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
-  <!-- 4ビュー全体マップ -->
   <div class="section-divider"><span>🗺 EXPLORATION MAP</span></div>
   <div class="views-grid">
     <div class="view-card" onclick="goToView('ep')">
@@ -496,22 +505,81 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 1: ZONE 01 心窩部
+     SCREEN 1: 心窩部１ — どこに当てるか
      ============================================================ -->
 <div class="screen" id="screen-1">
 
   <div class="view-banner">
-    <div class="view-number">🫀 ZONE 01 / 04</div>
-    <div class="view-title-big">心窩部ビュー</div>
-    <div class="view-desc">心膜腔に液体が貯まっていないかを確認するゾーン。<br>心タンポナーデの早期発見が目標だ！</div>
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部１：当てる場所</div>
+    <div class="view-desc">肋骨弓に「はめ込む」のがポイント！</div>
   </div>
 
-  <!-- ソノボ -->
+  <div class="sub-screen-badge">📍 STEP 1 / 7 — 心窩部</div>
+
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
     <div class="sonobo-bubble">
       <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
-      <div class="bubble-text">キャプテン、まず<strong style="color:var(--gold)">プローブの持ち方</strong>が攻略の鍵です！上から握って、しっかり「寝かせる」ことでビームが心臓に届きます。</div>
+      <div class="bubble-text">キャプテン！まず<strong style="color:var(--gold)">「どこに当てるか」</strong>をマスターしよう。剣状突起のすぐ下、肋骨弓にはめ込むのがコツです！</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">📍</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">当てる場所</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="img-card">
+        <img src="images/img_02.jpeg" alt="心窩部の位置">
+        <div class="img-caption">▲ 剣状突起直下・肋骨弓にはめ込む</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🎯</span>
+          <div class="info-text"><strong>剣状突起直下</strong>：みぞおちの一番上の硬い骨の直下</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🦴</span>
+          <div class="info-text">プローブを<strong>肋骨弓にはめ込む</strong>ようにして当てる</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">↗️</span>
+          <div class="info-text">プローブを<strong>寝かせて</strong>ビームを斜め上方（心臓の方向）へ向ける</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">💡</span>
+        <p>「はめ込む」＋「寝かせる」がセット！この2つが決まれば心臓が見えてくる。</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 心窩部２：プローブの持ち方</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 2: 心窩部２ — プローブの持ち方
+     ============================================================ -->
+<div class="screen" id="screen-2">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部２：プローブの持ち方</div>
+    <div class="view-desc">「寝かせる」には上から持つことが必要！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 2 / 7 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">プローブを寝かせるためには、<strong style="color:var(--gold)">上から持つ</strong>必要があります！下から持つと指が邪魔で十分に寝かせられないんです。</div>
     </div>
   </div>
 
@@ -545,29 +613,27 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
-  <div class="step-card">
-    <div class="step-card-header">
-      <div class="step-icon">📍</div>
-      <div style="flex:1;min-width:0;overflow:hidden;">
-        <div class="step-num-label">POINT 02</div>
-        <div class="step-title">どこに当てる？</div>
-      </div>
-    </div>
-    <div class="step-body">
-      <div class="img-card">
-        <img src="images/img_02.jpeg" alt="心窩部の位置">
-        <div class="img-caption">▲ 剣状突起直下・肋骨弓にはめ込む</div>
-      </div>
-      <div class="info-list">
-        <div class="info-item">
-          <span class="info-icon">🎯</span>
-          <div class="info-text"><strong>剣状突起直下</strong>：肋骨弓にはめ込むようにプローブを当てる</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🔊</span>
-          <div class="info-text">プローブを寝かせると、ビームが斜め上方の<strong>心臓へ届く</strong></div>
-        </div>
-      </div>
+  <button class="next-btn" onclick="nextScreen()">次へ → 心窩部３：画面に何が見える？</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 3: 心窩部３ — 当てると何が見えるか（NEW）
+     ============================================================ -->
+<div class="screen" id="screen-3">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部３：画面を見てみよう</div>
+    <div class="view-desc">バクバクしているのが心臓！まず発見することが目標。</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 3 / 7 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">プローブを当てると、画面の<strong style="color:var(--gold)">下側にバクバク動いているもの</strong>が見えてきます。それが心臓です！まずはそれを確認しましょう。</div>
     </div>
   </div>
 
@@ -575,49 +641,273 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="step-card-header">
       <div class="step-icon">📺</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
-        <div class="step-num-label">POINT 03</div>
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">心臓を探そう</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <!-- 新規画像: ep_heart_view.jpeg -->
+      <div class="img-card">
+        <img src="images/ep_heart_view.jpeg" alt="心臓が見えている心窩部エコー画像">
+        <div class="img-caption">▲ 画面の下側にバクバク動く心臓が見える</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">👁</span>
+          <div class="info-text">画面の<strong>下側</strong>にバクバクしているものが映る → これが<strong>心臓</strong>！</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🔝</span>
+          <div class="info-text">画面<strong>上側</strong>は皮膚・脂肪・肝臓など（手前の構造）</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">💓</span>
+          <div class="info-text">拍動しているので一目でわかる！まず「見つける」ことが第一歩</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">🗝</span>
+        <p>見つけたら次のステップへ。「息を吸って止めてもらう」とさらに見やすくなります！</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 心窩部４：息を吸って止めて</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 4: 心窩部４ — 息を吸って止めてもらう（NEW）
+     ============================================================ -->
+<div class="screen" id="screen-4">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部４：息を吸って止めて</div>
+    <div class="view-desc">患者さんへの指示で心臓を画面中央へ！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 4 / 7 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">患者さんに<strong style="color:var(--gold)">「息を吸って、止めてください」</strong>と指示しましょう。そうすると心臓が画面の中央に上がってきて評価しやすくなります！</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">🗣</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">患者さんへの指示</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="good-box">
+        <span class="hi-icon">🗣</span>
+        <p style="color:rgba(160,255,200,.88);">「<strong style="color:#4ade80">息を吸って、止めてください</strong>」<br>→ 心臓が横隔膜に押されて画面中央に上がってくる！</p>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">😮‍💨</span>
+          <div class="info-text">吸気で横隔膜が<strong>下に押し下げられ</strong>、心臓が押し上げられる → 画面中央へ</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">⏱</span>
+          <div class="info-text">止めてもらっている間に<strong>心膜を観察・評価</strong>する</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🗣</span>
+          <div class="info-text">評価が終わったら<strong>「楽にしてください」</strong>と声かけ！</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">⚠️</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">CAUTION</div>
+        <div class="step-title">注意！プローブがずれやすい</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="warn-box">
+        <span class="hi-icon">🚨</span>
+        <p>息を吸うと患者さんの<strong style="color:#fca5a5">お腹が膨らむ</strong>！<br>プローブが押し出されて<strong style="color:#fca5a5">滑りやすくなる</strong>ので注意！</p>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">💪</span>
+          <div class="info-text">吸気のタイミングで<strong>少し強め</strong>にプローブを押さえておく</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🔒</span>
+          <div class="info-text">肋骨弓に<strong>はめ込んだまま</strong>位置を保持する意識で</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">💡</span>
+        <p>吸気前にプローブをしっかり固定！ズレたら最初からやり直しになるよ。</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 心窩部５：画面の見方</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 5: 心窩部５ — 画面の見方・心膜液貯留
+     ============================================================ -->
+<div class="screen" id="screen-5">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部５：画面の見方</div>
+    <div class="view-desc">白い線が心膜。黒い帯が見えたら異常のサイン！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 5 / 7 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">心臓が見えたら、次は<strong style="color:var(--gold)">「心膜」</strong>を探しましょう。白く光る線が心膜です。その外側に<strong style="color:var(--red)">黒い帯</strong>が見えたら要注意！</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">📺</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">心窩部VIEW・評価</div>
       </div>
     </div>
     <div class="step-body">
       <div class="img-card">
         <img src="images/img_03.jpeg" alt="心窩部エコー画像">
-        <div class="img-caption">▲ 実際のエコー画像：白い線が心膜</div>
+        <div class="img-caption">▲ 白い線が心膜（正常）</div>
       </div>
       <div class="info-list">
         <div class="info-item">
-          <span class="info-icon">👁</span>
-          <div class="info-text">画面の下側に<strong>バクバク（拍動）</strong>しているものが映る → これが心臓！</div>
+          <span class="info-icon">⬜</span>
+          <div class="info-text"><strong>白い線（高エコー域）= 心膜</strong>：正常では細く明瞭に映る</div>
         </div>
         <div class="info-item">
-          <span class="info-icon">😮‍💨</span>
-          <div class="info-text">患者さんに<strong>息を吸って止めて</strong>もらうと心臓が画面中央に上がってくる</div>
+          <span class="info-icon">⬛</span>
+          <div class="info-text">心膜の外側に<strong>黒い帯（無エコー域）</strong>が見えたら → 心膜液貯留の可能性！</div>
         </div>
         <div class="info-item">
-          <span class="info-icon">⚠️</span>
-          <div class="info-text">腹が膨らんでプローブが滑りやすい → <strong>少し強めに当てておく</strong></div>
+          <span class="info-icon">💧</span>
+          <div class="info-text">液体（血液・滲出液）は超音波を<strong>通すので黒く映る</strong></div>
         </div>
       </div>
-      <div class="highlight-box">
-        <span class="hi-icon">🔍</span>
-        <p>見るべきポイント：<strong style="color:var(--gold)">心膜の外側に黒い帯（液体）がないか</strong>を確認！扇動走査で広く観察しよう。</p>
-      </div>
-      <div class="highlight-box" style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);">
-        <span class="hi-icon">🗣</span>
-        <p>評価が終わったら忘れずに<strong style="color:#4ade80">「楽にしてください」</strong>と声かけ！</p>
+      <div class="warn-box">
+        <span class="hi-icon">🚨</span>
+        <p>心膜外側に<strong style="color:#fca5a5">黒い帯が見えたら心タンポナーデを疑う！</strong><br>直ちに上級医へ報告せよ！</p>
       </div>
     </div>
   </div>
 
+  <button class="next-btn" onclick="nextScreen()">次へ → 心窩部６：扇動走査</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 6: 心窩部６ — 扇動走査
+     ============================================================ -->
+<div class="screen" id="screen-6">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部６：扇動走査</div>
+    <div class="view-desc">1断面だけでは不十分！扇動走査で全体を見よう。</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 6 / 7 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">1か所を見ているだけでは心臓の<strong style="color:var(--red)">すべての面は確認できません！</strong><br>プローブを扇のように動かして<strong style="color:var(--gold)">「扇動走査」</strong>で広く観察しましょう。絶対に忘れずに！</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">🌀</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">扇動走査とは？</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🔄</span>
+          <div class="info-text">プローブの接触面を<strong>固定したまま</strong>、角度だけを変える</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🪭</span>
+          <div class="info-text">扇を開くように<strong>頭側↔尾側</strong>にゆっくり傾ける</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">👁</span>
+          <div class="info-text">心臓の複数の断面を確認し、<strong>心膜液の貯留がないか</strong>広く探す</div>
+        </div>
+      </div>
+      <div class="img-card">
+        <img src="assets/fan_operation2" alt="扇動走査のイメージ">
+        <div class="img-caption">▲ 扇動走査のイメージ（プローブを扇形に動かす）</div>
+      </div>
+      <div class="warn-box">
+        <span class="hi-icon">⚠️</span>
+        <p><strong style="color:#fca5a5">扇動走査を忘れずに！</strong><br>1断面だけの観察は見落としにつながる危険があります。</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 心窩部７：クイズ＆チェック</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 7: 心窩部７ — クイズ＆できたかな？
+     ============================================================ -->
+<div class="screen" id="screen-7">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部７：確認クイズ</div>
+    <div class="view-desc">ZONE 01 の知識を確認しよう！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 7 / 7 — 心窩部</div>
+
   <!-- QUIZ 1 -->
   <div class="quiz-box">
-    <div class="quiz-q">🧠 センサーチェック：心窩部でプローブを当てる場所は？</div>
+    <div class="quiz-q">🧠 センサーチェック①：心窩部でプローブを当てる場所は？</div>
     <div class="quiz-opts" id="q1-opts">
       <button class="quiz-opt" onclick="answerQuiz('q1',this,false)">A. へその周り</button>
       <button class="quiz-opt" onclick="answerQuiz('q1',this,true)">B. 剣状突起直下・肋骨弓にはめ込む</button>
       <button class="quiz-opt" onclick="answerQuiz('q1',this,false)">C. 右脇腹</button>
     </div>
     <div class="quiz-feedback" id="q1-fb"></div>
+  </div>
+
+  <!-- QUIZ 2 -->
+  <div class="quiz-box">
+    <div class="quiz-q">🧠 センサーチェック②：心膜液貯留があると画面にどう見える？</div>
+    <div class="quiz-opts" id="q1b-opts">
+      <button class="quiz-opt" onclick="answerQuiz('q1b',this,false)">A. 白い点が増える</button>
+      <button class="quiz-opt" onclick="answerQuiz('q1b',this,true)">B. 心膜の外側に黒い帯が出現</button>
+      <button class="quiz-opt" onclick="answerQuiz('q1b',this,false)">C. 心臓が明るく光る</button>
+    </div>
+    <div class="quiz-feedback" id="q1b-fb"></div>
   </div>
 
   <!-- 心窩部トラブルシューティング -->
@@ -650,14 +940,21 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">その際、プローブの位置がズレていない</div>
-          <div class="t-sub">（よく滑ってしまう — 押し込むイメージ）</div>
+          <div class="t-label">吸気中、プローブの位置がズレていない</div>
+          <div class="t-sub">（よく滑ってしまう — 少し強く押し込むイメージ）</div>
         </div>
       </div>
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">心臓はやや左寄りだが、「ほぼ真ん中」</div>
+          <div class="t-label">心臓はやや左寄りだが「ほぼ真ん中」に当てている</div>
+        </div>
+      </div>
+      <div class="t-item" onclick="toggleTroubleItem(this)">
+        <div class="t-box"></div>
+        <div style="flex:1;min-width:0;">
+          <div class="t-label">扇動走査も行っている</div>
+          <div class="t-sub">（1断面だけでなく広く観察する）</div>
         </div>
       </div>
     </div>
@@ -667,22 +964,23 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 2: ZONE 02 モリソン窩
+     SCREEN 8: モリソン窩１ — 当てる場所
      ============================================================ -->
-<div class="screen" id="screen-2">
+<div class="screen" id="screen-8">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
-    <div class="view-number">💧 ZONE 02 / 04</div>
-    <div class="view-title-big">モリソン窩・右側胸部</div>
-    <div class="view-desc">腹腔内出血が貯まりやすい「最重要ポイント」。<br>モリソン窩に加え、プローブを1肋間上げてカーテンサインも確認しよう！</div>
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩１：当てる場所</div>
+    <div class="view-desc">腹腔内出血が貯まりやすい最重要ポイント！まずは場所を確認。</div>
   </div>
 
-  <!-- ソノボ -->
+  <div class="sub-screen-badge">📍 STEP 1 / 6 — モリソン窩</div>
+
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
     <div class="sonobo-bubble">
       <div class="bubble-name">🤖 SONOBO — 警告発令</div>
-      <div class="bubble-text">キャプテン、モリソン窩は<strong style="color:var(--red)">腹腔内出血が貯まりやすい場所</strong>です。ここで異常を見つけると命が救える…。<br>絶対にマスターしましょう！</div>
+      <div class="bubble-text">キャプテン！モリソン窩は<strong style="color:var(--red)">腹腔内出血が最も貯まりやすい場所</strong>です。正確な場所を覚えましょう！</div>
     </div>
   </div>
 
@@ -691,44 +989,128 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="step-icon">📍</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
         <div class="step-num-label">POINT 01</div>
-        <div class="step-title">当て方・場所の目安</div>
+        <div class="step-title">当てる場所</div>
       </div>
     </div>
     <div class="step-body">
+      <!-- 新規画像: morrison_position.jpeg -->
       <div class="img-card">
-        <img src="images/img_04.jpeg" alt="モリソン窩当て方">
-        <div class="img-caption">▲ 右中腋窩線上・剣状突起の高さくらいの肋間</div>
+        <img src="images/morrison_position.jpeg" alt="モリソン窩プローブ位置">
+        <div class="img-caption">▲ 中腋窩線と剣状突起の高さの交点・患者さんの右側</div>
       </div>
       <div class="info-list">
         <div class="info-item">
-          <span class="info-icon">🎯</span>
-          <div class="info-text"><strong>右中腋窩線上</strong>で剣状突起の高さくらいの肋間に当てる</div>
+          <span class="info-icon">📏</span>
+          <div class="info-text"><strong>中腋窩線上</strong>：わきの下から真っすぐ下に引いた線のちょうど中間</div>
         </div>
         <div class="info-item">
-          <span class="info-icon">🖐</span>
-          <div class="info-text"><strong>小指と薬指</strong>は患者さんの体につけてプローブを安定させる</div>
+          <span class="info-icon">↔️</span>
+          <div class="info-text"><strong>中腋窩線（ちゅうえきかせん）とは？</strong><br>前腋窩線と後腋窩線の中間。わきの前と後ろの中点を垂直に引いた線。</div>
         </div>
         <div class="info-item">
-          <span class="info-icon">🦴</span>
-          <div class="info-text">肋間の走行に注意 → 肋骨は<strong>黒い影（音響陰影）</strong>として映る</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🌊</span>
-          <div class="info-text">プローブを<strong>頭尾方向に扇動走査</strong>する</div>
+          <span class="info-icon">📐</span>
+          <div class="info-text"><strong>剣状突起の高さ</strong>のあたりの肋間を目安にする</div>
         </div>
         <div class="info-item">
           <span class="info-icon">🙋</span>
-          <div class="info-text">患者さんに<strong>右手を挙げてもらう</strong>と肋間が広がる！</div>
+          <div class="info-text">患者さんの<strong>右側（右腋窩）</strong>から当てる</div>
         </div>
       </div>
+      <!-- 肋骨の走行画像再掲 -->
+      <div class="img-card">
+        <img src="images/img_04.jpeg" alt="モリソン窩当て方">
+        <div class="img-caption">▲ 肋骨の走行を意識して肋間を狙う</div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">💡</span>
+        <p>患者さんに<strong style="color:var(--gold)">右手を挙げてもらう</strong>と肋間が広がって当てやすくなる！</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩２：プローブの持ち方</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 9: モリソン窩２ — プローブの持ち方
+     ============================================================ -->
+<div class="screen" id="screen-9">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩２：プローブの持ち方</div>
+    <div class="view-desc">腎臓に向けてビームを届けることを意識！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 2 / 6 — モリソン窩</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">画像を真似て持ってみましょう！このとき意識してほしいのは<strong style="color:var(--gold)">腎臓の位置</strong>。プローブのビームが腎臓に届くよう角度を意識して！</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-card-header">
+      <div class="step-icon">🖐</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">プローブの持ち方・当て方</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="img-card">
+        <img src="images/img_04.jpeg" alt="モリソン窩プローブ持ち方">
+        <div class="img-caption">▲ この画像を参考にして持ってみよう</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🦴</span>
+          <div class="info-text"><strong>小指と薬指</strong>を患者さんの体につけてプローブを安定させる</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🎯</span>
+          <div class="info-text">ビームが<strong>腎臓（背側）</strong>に届くよう角度を意識する</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">⚠️</span>
+          <div class="info-text">プローブが<strong>上（頭側）</strong>を向いていると<strong>肝臓しか見えない！</strong></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">↙️</span>
+          <div class="info-text">ビームを<strong>背中側・尾側</strong>へ向けるイメージ</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">🔑</span>
+        <p><strong style="color:var(--gold)">腎臓は背側にある！</strong><br>プローブが腹側に向きすぎると肝臓だけしか見えないので、もっと後ろへ傾ける。</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩３：画像の見方</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 10: モリソン窩３ — 画像の見方
+     ============================================================ -->
+<div class="screen" id="screen-10">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩３：画像の見方</div>
+    <div class="view-desc">肝臓・右腎・モリソン窩を画面で確認しよう！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 3 / 6 — モリソン窩</div>
+
+  <div class="step-card">
+    <div class="step-card-header">
       <div class="step-icon">📺</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
-        <div class="step-num-label">POINT 02</div>
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">評価・見るポイント</div>
       </div>
     </div>
@@ -740,7 +1122,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">🔍</span>
-          <div class="info-text"><strong>肝腎境界</strong>が明瞭に描出されているか確認</div>
+          <div class="info-text"><strong>肝腎境界（モリソン窩）</strong>が明瞭に描出されているか確認</div>
         </div>
         <div class="info-item">
           <span class="info-icon">🩸</span>
@@ -748,15 +1130,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         </div>
         <div class="info-item">
           <span class="info-icon">👁</span>
-          <div class="info-text"><strong>右腎</strong>が描出されているか確認</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🌊</span>
-          <div class="info-text">忘れずに<strong>扇動走査</strong>で全体を広く確認</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🪟</span>
-          <div class="info-text">プローブを<strong>1肋間頭側へ上げて</strong>カーテンサインを確認（右胸水評価）</div>
+          <div class="info-text"><strong>右腎</strong>が描出されているか確認（腎臓が見えないと不完全な観察）</div>
         </div>
       </div>
       <div class="warn-box">
@@ -766,22 +1140,100 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
+  <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩４：扇動走査</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 11: モリソン窩４ — 扇動走査
+     ============================================================ -->
+<div class="screen" id="screen-11">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩４：扇動走査</div>
+    <div class="view-desc">1断面だけでは不十分！広く観察しよう。</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 4 / 6 — モリソン窩</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">モリソン窩でも<strong style="color:var(--gold)">扇動走査</strong>を忘れずに！頭尾方向に扇を動かして、見逃しをなくそう。</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">🌀</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">扇動走査</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="img-card">
+        <img src="assets/fan_operation2" alt="扇動走査イメージ">
+        <div class="img-caption">▲ 扇動走査のイメージ</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🔄</span>
+          <div class="info-text">プローブを<strong>頭尾方向</strong>に扇動走査して広く観察</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🩸</span>
+          <div class="info-text">モリソン窩全体を走査し、<strong>液体貯留の見逃し</strong>を防ぐ</div>
+        </div>
+      </div>
+      <div class="warn-box">
+        <span class="hi-icon">⚠️</span>
+        <p><strong style="color:#fca5a5">扇動走査を忘れずに！</strong><br>1断面だけでは少量の出血を見逃す可能性がある。</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩５：カーテンサイン</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 12: モリソン窩５ — カーテンサイン
+     ============================================================ -->
+<div class="screen" id="screen-12">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩５：カーテンサイン</div>
+    <div class="view-desc">1肋間上げて右胸水を評価！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 5 / 6 — モリソン窩</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">モリソン窩の評価が終わったら、プローブを<strong style="color:var(--gold)">1肋間頭側へ上げて</strong>カーテンサインを確認！右の胸水チェックです。</div>
+    </div>
+  </div>
+
   <div class="step-card">
     <div class="step-card-header">
       <div class="step-icon">🪟</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
-        <div class="step-num-label">POINT 03</div>
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">カーテンサイン確認（右側胸部）</div>
       </div>
     </div>
     <div class="step-body">
       <div class="highlight-box">
         <span class="hi-icon">📌</span>
-        <p>プローブを<strong>1肋間頭側に上げて</strong>息を吸ってもらう → カーテンサインを確認（右胸水評価）</p>
+        <p>プローブを<strong>1肋間頭側に上げて</strong>患者さんに息を吸ってもらう → カーテンサインを確認（右胸水評価）</p>
       </div>
       <div class="img-card">
         <img src="images/img_07.jpeg" alt="カーテンサイン">
-        <div class="img-caption">カーテンサインの様子</div>
+        <div class="img-caption">▲ カーテンサインの様子</div>
       </div>
       <div class="good-box">
         <span class="hi-icon">✅</span>
@@ -789,12 +1241,28 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
       <div class="warn-box">
         <span class="hi-icon">🚨</span>
-        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に胸水や液体が貯まると肺が十分に拡張できず危険！</p>
+        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に液体が貯まると肺が十分に拡張できず危険！</p>
       </div>
     </div>
   </div>
 
-  <!-- QUIZ 2 -->
+  <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩６：クイズ＆チェック</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 13: モリソン窩６ — クイズ＆できたかな？＋AI tool
+     ============================================================ -->
+<div class="screen" id="screen-13">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩６：確認クイズ</div>
+    <div class="view-desc">ZONE 02 の知識を確認しよう！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 6 / 6 — モリソン窩</div>
+
+  <!-- QUIZ -->
   <div class="quiz-box">
     <div class="quiz-q">🧠 センサーチェック：モリソン窩の出血のサインは？</div>
     <div class="quiz-opts" id="q2-opts">
@@ -803,6 +1271,16 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <button class="quiz-opt" onclick="answerQuiz('q2',this,false)">C. 肝臓が光る</button>
     </div>
     <div class="quiz-feedback" id="q2-fb"></div>
+  </div>
+
+  <div class="quiz-box">
+    <div class="quiz-q">🧠 センサーチェック：カーテンサインがない場合は何を疑う？</div>
+    <div class="quiz-opts" id="q2b-opts">
+      <button class="quiz-opt" onclick="answerQuiz('q2b',this,false)">A. 心膜液貯留</button>
+      <button class="quiz-opt" onclick="answerQuiz('q2b',this,false)">B. 腸閉塞</button>
+      <button class="quiz-opt" onclick="answerQuiz('q2b',this,true)">C. 胸水貯留（血胸）</button>
+    </div>
+    <div class="quiz-feedback" id="q2b-fb"></div>
   </div>
 
   <!-- モリソン窩トラブルシューティング -->
@@ -821,7 +1299,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">肋骨の走行に注意し、肋骨を避けれている</div>
+          <div class="t-label">肋骨の走行に注意し、肋骨を避けられている</div>
           <div class="t-sub">難しい場合は → 実際に肋間を触って確認してみる</div>
         </div>
       </div>
@@ -842,7 +1320,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">超音波ビームが背中の方に向くよう、プローブを当てる</div>
+          <div class="t-label">超音波ビームが背中の方に向くよう、プローブを当てている</div>
         </div>
       </div>
       <div class="t-item" onclick="toggleTroubleItem(this)">
@@ -872,42 +1350,44 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 3: ZONE 03 脾周囲 + カーテンサイン
+     SCREEN 14: 脾周囲１ — 移動方法
      ============================================================ -->
-<div class="screen" id="screen-3">
+<div class="screen" id="screen-14">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
-    <div class="view-number">🩸 ZONE 03 / 04</div>
-    <div class="view-title-big">脾周囲ビュー</div>
-    <div class="view-desc">脾臓まわりの出血と、左胸水を同時にチェックするゾーン。<br>右側同様、カーテンサインも忘れずに確認しよう！</div>
+    <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
+    <div class="view-title-big">脾周囲１：移動方法</div>
+    <div class="view-desc">モリソン窩から左へ！背中側にぐっと寄ることがポイント。</div>
   </div>
 
-  <!-- ソノボ -->
+  <div class="sub-screen-badge">📍 STEP 1 / 6 — 脾周囲</div>
+
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_5.png" alt="">
     <div class="sonobo-bubble">
       <div class="bubble-name">🤖 SONOBO — 航路案内</div>
-      <div class="bubble-text">脾周囲はモリソン窩より<strong style="color:var(--blue-light)">ずっと背中側</strong>です！プローブがベッドにつくくらいまで後ろへ持っていく。<br>そして右側と同じく<strong style="color:var(--gold)">カーテンサイン</strong>も忘れずに確認しよう！</div>
+      <div class="bubble-text">脾周囲はモリソン窩より<strong style="color:var(--blue-light)">ずっと背中側</strong>です！プローブがベッドにつくくらいまで後ろへ移動しましょう。</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-card-header">
-      <div class="step-icon">📍</div>
+      <div class="step-icon">➡️</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
         <div class="step-num-label">POINT 01</div>
-        <div class="step-title">当て方・移動方法</div>
+        <div class="step-title">移動方法</div>
       </div>
     </div>
     <div class="step-body">
+      <!-- 新規画像: spleen_position.jpeg -->
       <div class="img-card">
-        <img src="images/img_06.jpeg" alt="脾周囲当て方">
-        <div class="img-caption">▲ プローブがベッドにつくくらい後方へ</div>
+        <img src="images/spleen_position.jpeg" alt="脾周囲プローブ移動">
+        <div class="img-caption">▲ 右側から左の脇腹へ・さらに背側へ移動</div>
       </div>
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">➡️</span>
-          <div class="info-text">モリソン窩から<strong>そのまま左の脇腹へ移動</strong><br>※正中に鏡を置いたイメージ</div>
+          <div class="info-text">モリソン窩から<strong>そのまま左の脇腹へ移動</strong><br>（正中に鏡を置いたイメージで対称に）</div>
         </div>
         <div class="info-item">
           <span class="info-icon">⬅️</span>
@@ -918,8 +1398,112 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
           <div class="info-text"><strong>プローブがベッドにつくくらい！</strong>（個人差あり）</div>
         </div>
         <div class="info-item">
-          <span class="info-icon">💡</span>
-          <div class="info-text">背側にいくほど肋骨のカーブがきつくなる<br>プローブの角度が<strong>縦</strong>に近づく</div>
+          <span class="info-icon">↕️</span>
+          <div class="info-text">背側にいくほど肋骨カーブがきつくなる → プローブの角度が<strong>縦に近づく</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 脾周囲２：当て方</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 15: 脾周囲２ — 当て方
+     ============================================================ -->
+<div class="screen" id="screen-15">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
+    <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
+    <div class="view-title-big">脾周囲２：当て方</div>
+    <div class="view-desc">肋骨カーブを意識して肋間を狙う！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 2 / 6 — 脾周囲</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_5.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">脾臓は左腎より<strong style="color:var(--gold)">頭側</strong>にある！右側より肋骨カーブがきついので、プローブを立てて肋間に当てよう。</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">📍</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">当て方のコツ</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="img-card">
+        <img src="images/img_06.jpeg" alt="脾周囲当て方">
+        <div class="img-caption">▲ プローブがベッドにつくくらい後方へ</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🦴</span>
+          <div class="info-text">背側にいくほど肋骨が<strong>縦走行</strong>になる → プローブを立てて肋間に合わせる</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🙋</span>
+          <div class="info-text">患者さんに<strong>左手を挙げてもらう</strong>と肋間が広がる！</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🔊</span>
+          <div class="info-text">ビームを<strong>腎臓・脾臓の方向（背側）</strong>に向ける意識で</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">💡</span>
+        <p>右側（モリソン窩）の時よりも<strong style="color:var(--gold)">さらに背中側</strong>！これが脾周囲描出の最大のポイント。</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 脾周囲３：VIEW・評価</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 16: 脾周囲３ — VIEW・評価＋扇動走査
+     ============================================================ -->
+<div class="screen" id="screen-16">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
+    <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
+    <div class="view-title-big">脾周囲３：VIEW・評価</div>
+    <div class="view-desc">脾臓・横隔膜・左腎の3つを確認！扇動走査も忘れずに。</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 3 / 6 — 脾周囲</div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">📺</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">POINT 01</div>
+        <div class="step-title">脾周囲VIEW・評価</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="img-card">
+        <img src="images/img_08.jpeg" alt="脾周囲エコー画像">
+        <div class="img-caption">▲ 脾臓・横隔膜・左腎を確認</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🩸</span>
+          <div class="info-text">脾周囲（脾臓と横隔膜の間、脾腎境界）に<strong>液体（黒い帯）</strong>がないか</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">👁</span>
+          <div class="info-text"><strong>左腎</strong>が描出されているか確認</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🌊</span>
+          <div class="info-text"><strong>扇動走査</strong>で広く確認する</div>
         </div>
       </div>
     </div>
@@ -927,31 +1511,45 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 
   <div class="step-card">
     <div class="step-card-header">
-      <div class="step-icon">📺</div>
+      <div class="step-icon">🌀</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
         <div class="step-num-label">POINT 02</div>
-        <div class="step-title">脾周囲VIEW・評価</div>
+        <div class="step-title">扇動走査</div>
       </div>
     </div>
     <div class="step-body">
       <div class="img-card">
-        <img src="images/img_08.jpeg" alt="脾周囲扇動走査">
-        <div class="img-caption">▲ 扇動走査で脾臓・横隔膜・左腎を確認</div>
+        <img src="assets/fan_operation2" alt="扇動走査イメージ">
+        <div class="img-caption">▲ 扇動走査で脾周囲全体を観察</div>
       </div>
-      <div class="info-list">
-        <div class="info-item">
-          <span class="info-icon">🩸</span>
-          <div class="info-text">脾周囲に<strong>液体（黒い帯）</strong>がないか確認<br>＠脾臓と横隔膜の間、脾腎境界</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🌊</span>
-          <div class="info-text"><strong>扇動走査</strong>で広く確認する</div>
-        </div>
-        <div class="info-item">
-          <span class="info-icon">🪟</span>
-          <div class="info-text"><strong>カーテンサイン</strong>を確認する（左胸水の評価）</div>
-        </div>
+      <div class="warn-box">
+        <span class="hi-icon">⚠️</span>
+        <p><strong style="color:#fca5a5">扇動走査を忘れずに！</strong><br>脾周囲の出血は脾臓と横隔膜の間にも貯まりやすい。広く観察しよう。</p>
       </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="nextScreen()">次へ → 脾周囲４：カーテンサイン</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 17: 脾周囲４ — カーテンサイン
+     ============================================================ -->
+<div class="screen" id="screen-17">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
+    <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
+    <div class="view-title-big">脾周囲４：カーテンサイン</div>
+    <div class="view-desc">左胸水の評価も忘れずに！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 4 / 6 — 脾周囲</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_5.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 操作ガイド</div>
+      <div class="bubble-text">左腎は右腎より<strong style="color:var(--gold)">頭側</strong>にあります！そのため1肋間上げなくても、すでに肺が近くてカーテンサインを確認できるかも。</div>
     </div>
   </div>
 
@@ -959,18 +1557,18 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="step-card-header">
       <div class="step-icon">🪟</div>
       <div style="flex:1;min-width:0;overflow:hidden;">
-        <div class="step-num-label">POINT 03</div>
+        <div class="step-num-label">POINT 01</div>
         <div class="step-title">カーテンサイン確認（左側胸部）</div>
       </div>
     </div>
     <div class="step-body">
       <div class="highlight-box">
         <span class="hi-icon">📌</span>
-        <p>プローブを1肋間頭側に上げて息を吸ってもらう → カーテンサインを確認（胸水評価）<br>※左腎は右腎より頭側にあったよね。一肋間上げなくても、肺が近くてカーテンサインが確認できるかも！</p>
+        <p>プローブを1肋間頭側に上げて息を吸ってもらう → カーテンサインを確認（左胸水評価）<br><br>※左腎は右腎より頭側にある。1肋間上げなくても、肺が近くてカーテンサインが確認できるかも！</p>
       </div>
       <div class="img-card">
         <img src="images/img_07.jpeg" alt="カーテンサイン">
-        <div class="img-caption">カーテンサインの様子</div>
+        <div class="img-caption">▲ カーテンサインの様子</div>
       </div>
       <div class="good-box">
         <span class="hi-icon">✅</span>
@@ -978,18 +1576,34 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
       <div class="warn-box">
         <span class="hi-icon">🚨</span>
-        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong><br>胸腔内に胸水や液体が貯まると肺が十分に拡張できず危険！</p>
+        <p><strong style="color:#fca5a5">カーテンサインなし</strong>：肺が動かない → <strong>胸水貯留を疑う！</strong></p>
       </div>
     </div>
   </div>
 
+  <button class="next-btn" onclick="nextScreen()">次へ → 脾周囲５：クイズ＆チェック</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 18: 脾周囲５ — クイズ＆できたかな？
+     ============================================================ -->
+<div class="screen" id="screen-18">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
+    <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
+    <div class="view-title-big">脾周囲５：確認クイズ</div>
+    <div class="view-desc">ZONE 03 の知識を確認しよう！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 5 / 6 — 脾周囲</div>
+
   <!-- QUIZ 3 -->
   <div class="quiz-box">
-    <div class="quiz-q">🧠 センサーチェック：カーテンサインがない場合、何を疑う？</div>
+    <div class="quiz-q">🧠 センサーチェック：脾周囲はモリソン窩と比べてどこに当てる？</div>
     <div class="quiz-opts" id="q3-opts">
-      <button class="quiz-opt" onclick="answerQuiz('q3',this,false)">A. 心膜液貯留</button>
-      <button class="quiz-opt" onclick="answerQuiz('q3',this,false)">B. 腸閉塞</button>
-      <button class="quiz-opt" onclick="answerQuiz('q3',this,true)">C. 胸水貯留（血胸）</button>
+      <button class="quiz-opt" onclick="answerQuiz('q3',this,false)">A. より腹側（前側）に当てる</button>
+      <button class="quiz-opt" onclick="answerQuiz('q3',this,true)">B. より背側（後ろ側）に当てる</button>
+      <button class="quiz-opt" onclick="answerQuiz('q3',this,false)">C. 全く同じ位置</button>
     </div>
     <div class="quiz-feedback" id="q3-fb"></div>
   </div>
@@ -1016,7 +1630,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">肋骨の走行に注意し、肋骨を避けれている</div>
+          <div class="t-label">肋骨の走行に注意し、肋骨を避けられている</div>
           <div class="t-sub">（背側にいくほど、肋骨カーブは縦に近づく）<br>難しい場合は → 実際に肋間を触って確認してみる</div>
         </div>
       </div>
@@ -1030,7 +1644,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="t-item" onclick="toggleTroubleItem(this)">
         <div class="t-box"></div>
         <div style="flex:1;min-width:0;">
-          <div class="t-label">コンベックスは接触面が広いので、浮きが無いか確認する</div>
+          <div class="t-label">コンベックスは接触面が広いので、浮きがないか確認する</div>
         </div>
       </div>
     </div>
@@ -1040,9 +1654,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 4: ZONE 04 骨盤腔
+     SCREEN 19: ZONE 04 骨盤腔（準備中）
      ============================================================ -->
-<div class="screen" id="screen-4">
+<div class="screen" id="screen-19">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(80,20,140,.25));border-color:rgba(168,85,247,.35);">
     <div class="view-number">📍 ZONE 04 / 04 — FINAL ZONE</div>
@@ -1055,11 +1669,10 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 5: 4ビュー最終確認チェック
+     SCREEN 20: 4ビュー最終確認チェック
      ============================================================ -->
-<div class="screen" id="screen-5">
+<div class="screen" id="screen-20">
 
-  <!-- まとめチェックリスト -->
   <div class="section-divider"><span>🛰 4ビュー 最終確認チェック</span></div>
 
   <div class="sonobo-wrap">
@@ -1077,11 +1690,15 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
+      <div class="check-label">🌀 ① 心窩部：扇動走査を行った</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
       <div class="check-label">💧 ② モリソン窩：肝腎境界に黒い帯がないか確認した</div>
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
-      <div class="check-label">🪟 ②+ カーテンサインを確認した</div>
+      <div class="check-label">🪟 ②+ カーテンサインを確認した（右胸水）</div>
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
@@ -1089,7 +1706,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
-      <div class="check-label">🪟 ③+ カーテンサインを確認した</div>
+      <div class="check-label">🪟 ③+ カーテンサインを確認した（左胸水）</div>
     </div>
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
@@ -1097,7 +1714,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
-  <!-- 完了メッセージ（チェック完了で表示） -->
+  <!-- 完了メッセージ -->
   <div id="complete-msg" style="display:none;">
     <div class="complete-box">
       <div style="font-size:52px;margin-bottom:10px;">🎉</div>
@@ -1112,7 +1729,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
     </div>
 
-    <!-- パスポート報酬 -->
     <div id="passport-reward" style="display:none;">
       <div class="passport-card">
         <div class="passport-stamp">✦ PLANET PROBIA CLEAR ✦</div>
@@ -1127,7 +1743,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         </div>
       </div>
 
-      <!-- ナビゲーションボタン -->
       <div class="sonobo-wrap" style="margin-top:4px;">
         <img class="sonobo-img-sm" src="assets/sonobo_6.png" alt="">
         <div class="sonobo-bubble">
@@ -1143,7 +1758,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
-  <!-- 未完了時のみ表示するボタン -->
   <div id="pending-nav" style="margin-top:8px;">
     <button class="next-btn" onclick="warpTo('step5.html')" style="background:linear-gradient(135deg,rgba(61,142,240,.4),rgba(21,101,216,.5));box-shadow:none;border:1px solid rgba(61,142,240,.3);">
       🌟 恒星ファスタリスへ進む（チェック未完了）
@@ -1263,22 +1877,15 @@ function warpTo(url) {
     const ang=Math.random()*360,len=Math.random()*200+50;
     st.style.cssText=`position:absolute;left:50%;top:50%;width:${len}px;height:2px;
       background:linear-gradient(90deg,white,transparent);transform-origin:left center;
-      transform:rotate(${ang}deg) scaleX(0);animation:streakOut .4s .1s ease forwards;
-      --a:${ang}deg;`;
+      transform:rotate(${ang}deg) scaleX(0);--a:${ang}deg;`;
     overlay.appendChild(st);
   }
   const txt=document.createElement('p');
   txt.textContent='WARP DRIVE ENGAGED';
   txt.style.cssText=`font-family:'Orbitron',sans-serif;font-size:14px;color:white;
-    letter-spacing:4px;opacity:0;animation:fadeInOut .8s .2s ease forwards;z-index:1;
+    letter-spacing:4px;opacity:0;z-index:1;
     word-break:break-all;overflow-wrap:break-word;min-width:0;`;
   overlay.appendChild(txt);
-  const style=document.createElement('style');
-  style.textContent=`
-    @keyframes streakOut{0%{transform:rotate(var(--a) ,0deg) scaleX(0)}50%{transform:rotate(var(--a),0deg) scaleX(1);opacity:1}100%{transform:rotate(var(--a),0deg) scaleX(0) translateX(300px);opacity:0}}
-    @keyframes fadeInOut{0%,100%{opacity:0}30%,70%{opacity:1}}
-  `;
-  document.head.appendChild(style);
   document.body.appendChild(overlay);
   overlay.animate([{opacity:0},{opacity:1}],{duration:200,fill:'forwards'}).finished.then(()=>{
     setTimeout(()=>{
@@ -1291,13 +1898,13 @@ function warpTo(url) {
    スクリーン管理
 ===================================================== */
 let currentScreen = 0;
-const totalScreens = 6;
+const totalScreens = 21; // 0〜20
 const screens = document.querySelectorAll('.screen');
 
 function updateProgress() {
   const pct = (currentScreen / (totalScreens - 1)) * 100;
   document.getElementById('headerBar').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = currentScreen + '/5';
+  document.getElementById('progressLabel').textContent = currentScreen + '/' + (totalScreens - 1);
 }
 
 function nextScreen() {
@@ -1311,15 +1918,14 @@ function nextScreen() {
     sc.scrollTo(0, 0);
     window.scrollTo(0, 0);
     updateProgress();
-    // ゾーン到達演出
-    if (currentScreen >= 1 && currentScreen <= 4) {
+    if (currentScreen >= 1) {
       showZoneLanding(currentScreen);
     }
   }
 }
 
 function goToView(id) {
-  const map = {ep:1, rub:2, lup:3, pelvis:4};
+  const map = {ep:1, rub:8, lup:14, pelvis:19};
   if (map[id] !== undefined) {
     playSound('tap');
     screens[currentScreen].classList.remove('active');
@@ -1333,7 +1939,6 @@ function goToView(id) {
   }
 }
 
-/* ゾーン到達時の小演出（ヘッダーを一瞬光らせる） */
 function showZoneLanding(zoneNum) {
   const header = document.querySelector('.page-header');
   header.style.transition = 'background .1s';
@@ -1344,27 +1949,36 @@ function showZoneLanding(zoneNum) {
 /* =====================================================
    クイズ
 ===================================================== */
+const QUIZ_MSGS = {
+  q1:{
+    correct:'🎉 正解！剣状突起直下・肋骨弓にはめ込む。プローブを寝かせてビームを心臓へ届けよう！',
+    wrong:'❌ 不正解。正解はB。剣状突起のすぐ下、肋骨弓にはめ込むように当てます。'
+  },
+  q1b:{
+    correct:'🎉 正解！心膜の外側に黒い帯（無エコー域）= 液体貯留 = 心膜液貯留のサインです！',
+    wrong:'❌ 不正解。正解はB。液体（血液・滲出液）は超音波を通すので黒く映ります。'
+  },
+  q2:{
+    correct:'🎉 正解！黒い帯（無エコー域）が出血のサイン。液体は音波を反射しないので黒く映ります！',
+    wrong:'❌ 不正解。正解はB。液体（血液）は超音波を通すので黒く映ります。'
+  },
+  q2b:{
+    correct:'🎉 正解！カーテンサインなし＝肺が動かない＝胸水（血胸）貯留を疑います！',
+    wrong:'❌ 不正解。正解はC。カーテンサインがないのは胸水貯留のサインです。'
+  },
+  q3:{
+    correct:'🎉 正解！脾周囲はモリソン窩よりもさらに背側（後ろ側）に当てます。プローブがベッドにつくくらい後ろへ！',
+    wrong:'❌ 不正解。正解はB。脾臓は背側にあるため、モリソン窩よりさらに後方に当てる必要があります。'
+  }
+};
+
 function answerQuiz(id, btn, correct) {
   const opts = document.querySelectorAll(`#${id}-opts .quiz-opt`);
   opts.forEach(o => o.classList.add('disabled'));
   btn.classList.add(correct ? 'correct' : 'wrong');
   const fb = document.getElementById(`${id}-fb`);
   fb.className = 'quiz-feedback ' + (correct ? 'correct' : 'wrong') + ' show';
-  const msgs = {
-    q1:{
-      correct:'🎉 正解！剣状突起直下・肋骨弓にはめ込む。プローブを寝かせてビームを心臓へ届けよう！',
-      wrong:'❌ 不正解。正解はB。剣状突起のすぐ下、肋骨弓にはめ込むように当てます。'
-    },
-    q2:{
-      correct:'🎉 正解！黒い帯（無エコー域）が出血のサイン。液体は音波を反射しないので黒く映ります！',
-      wrong:'❌ 不正解。正解はB。液体（血液）は超音波を通すので黒く映ります。'
-    },
-    q3:{
-      correct:'🎉 正解！カーテンサインなし＝肺が動かない＝胸水（血胸）貯留を疑います！',
-      wrong:'❌ 不正解。正解はC。カーテンサインがないのは胸水貯留のサインです。'
-    }
-  };
-  fb.textContent = correct ? msgs[id].correct : msgs[id].wrong;
+  fb.textContent = correct ? QUIZ_MSGS[id].correct : QUIZ_MSGS[id].wrong;
   playSound(correct ? 'correct' : 'wrong');
 }
 
@@ -1399,7 +2013,6 @@ function toggleCheck(el) {
   }
 }
 
-/* 金色パーティクル演出 */
 function spawnGoldParticles() {
   const emojis = ['⭐','🌟','✨','💫','🎉','🛂'];
   for (let i = 0; i < 18; i++) {
@@ -1423,7 +2036,6 @@ function toggleTrouble(panelId, btnId) {
   playSound('tap');
   const panel = document.getElementById(panelId);
   const btn = document.getElementById(btnId);
-  const isOpen = panel.classList.contains('open');
   panel.classList.toggle('open');
   btn.classList.toggle('open');
 }
