@@ -439,17 +439,6 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
   <!-- セクションラベル -->
   <div class="section-label">🌌 ギャラクシーマップ</div>
 
-  <!-- ===== INTRO スタート ===== -->
-  <a class="start-zone" href="intro.html" onclick="playSound('tap')">
-    <img class="start-sonobo-img" src="assets/sonobo_2.png" alt="ソノボくん">
-    <div class="start-info">
-      <div class="start-tag">▶ START — THE BRIDGE / 出発前ブリッジ</div>
-      <div class="start-title">FASTとは？</div>
-      <div class="start-desc">ソノボくんと出発前ブリーフィング</div>
-    </div>
-    <span class="start-arrow">›</span>
-  </a>
-
   <!-- ===== 銀河マップ（ジグザグ） ===== -->
   <div class="galaxy-map-wrap">
 
@@ -802,7 +791,7 @@ function generateQR(){
 // ===== Tips =====
 const tips=[
   'キャプテン！銀河マップの惑星をタップして旅を始めよう🚀',
-  '初めてなら、まず「出発前ブリッジ」に上がろう！',
+  'Mission 4「プロービア星」がこのアプリのメインだ！まずはそこへ挑戦しよう🩻',
   '各MISSIONをクリアすると特別な報酬がもらえるぞ🏅',
   '恒星ファスタリスをクリアしたキャプテンには称号が授与される！',
   'AIツールはエコー画像の解析に使ってみよう🤖',
@@ -819,7 +808,6 @@ setInterval(()=>{
   const params=new URLSearchParams(window.location.search);
   const from=params.get('from');
   const cfgs={
-    intro:{title:'✅ INTRO クリア！出発準備完了！',text:'FASTの全体像を把握した。STEP 1へ出発しよう！'},
     step1:{title:'✅ STEP 1 クリア！🥽 ギャラクシーグラス獲得！',text:'FASTの重要性をマスター。STEP 2 アナトミアへ！',
       bid:'s1badge',btxt:'✓',bbg:'#22c55e',rid:'s1reward',rtxt:'🥽 獲得済'},
     step2:{title:'✅ STEP 2 クリア！🚀 宇宙船アップグレード！',text:'解剖知識をマスター。STEP 3 レディネスへ！',
