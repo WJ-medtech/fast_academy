@@ -107,7 +107,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   background:#040d1f;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:20px;padding:32px;
-  animation:fadeOutLanding 0.5s 2.8s ease forwards;
+  animation:fadeOutLanding 0.5s 1.8s ease forwards;
 }
 @keyframes fadeOutLanding{to{opacity:0;pointer-events:none;}}
 .planet-ring{
@@ -736,6 +736,10 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <img src="assets/pericardium.jpg" alt="心膜の解剖図">
     <div class="img-label">心膜の構造図</div>
   </div>
+  <div class="img-card">
+    <img src="assets/pericardium_echo.jpg" alt="心膜腔エコー像">
+    <div class="img-label">心膜腔のエコー像（正常・心タンポナーデ比較）</div>
+  </div>
   <div class="point-list">
     <div class="point-item">
       <span class="point-icon">📍</span>
@@ -967,9 +971,97 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ======================================
-     SLIDE 6: クイズ② 肋骨
+     SLIDE 6: 触察確認チェック
 ======================================= -->
 <div class="slide" id="slide-6">
+  <div class="sonobo-row flex-container">
+    <div class="sonobo-sm">
+      <img src="assets/sonobo_2.png" alt="ソノボくん">
+      <div class="sonobo-glow"></div>
+    </div>
+    <div class="sonobo-speech">
+      <div class="name">🤖 ソノボくん</div>
+      <p>解説はバッチリ！でも<strong>知識は体で覚えてこそ本物</strong>だよ🙌 次に進む前に確認させて！</p>
+    </div>
+  </div>
+  <div class="slide-heading">
+    <span class="slide-tag">✋ BODY CHECK</span>
+    <div class="slide-title">自分の体で<br><span class="accent">触って確認した？</span></div>
+  </div>
+  <div class="highlight-box">
+    <span class="hi-icon">💡</span>
+    <p>解剖を「見る」だけじゃなく、<strong>実際に触れること</strong>で空間的な理解が格段に深まる。プローブ操作にも直結するよ！</p>
+  </div>
+
+  <!-- チェックボックス群 -->
+  <div id="bodyCheckList" style="display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden;">
+    <div class="body-check-item" id="chk-xiphoid" onclick="toggleCheck('chk-xiphoid')" style="
+      display:flex;align-items:center;gap:14px;
+      background:rgba(20,184,166,.06);border:1.5px solid rgba(20,184,166,.2);
+      border-radius:14px;padding:16px 14px;cursor:pointer;
+      transition:background .2s,border-color .2s;min-width:0;overflow:hidden;">
+      <div class="chk-circle" style="
+        width:28px;height:28px;border-radius:50%;flex-shrink:0;
+        border:2px solid rgba(20,184,166,.5);background:rgba(20,184,166,.08);
+        display:flex;align-items:center;justify-content:center;
+        font-size:16px;transition:all .25s;">
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:900;color:white;
+          word-break:break-all;overflow-wrap:break-word;min-width:0;">🔽 剣状突起を触った</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;
+          word-break:break-all;overflow-wrap:break-word;min-width:0;">胸骨の一番下、みぞおちの上あたり</div>
+      </div>
+    </div>
+    <div class="body-check-item" id="chk-rib" onclick="toggleCheck('chk-rib')" style="
+      display:flex;align-items:center;gap:14px;
+      background:rgba(20,184,166,.06);border:1.5px solid rgba(20,184,166,.2);
+      border-radius:14px;padding:16px 14px;cursor:pointer;
+      transition:background .2s,border-color .2s;min-width:0;overflow:hidden;">
+      <div class="chk-circle" style="
+        width:28px;height:28px;border-radius:50%;flex-shrink:0;
+        border:2px solid rgba(20,184,166,.5);background:rgba(20,184,166,.08);
+        display:flex;align-items:center;justify-content:center;
+        font-size:16px;transition:all .25s;">
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:900;color:white;
+          word-break:break-all;overflow-wrap:break-word;min-width:0;">📐 肋骨の走行を触って確かめた</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;
+          word-break:break-all;overflow-wrap:break-word;min-width:0;">斜めに走っているのを指でなぞった</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 未チェック時メッセージ（初期表示） -->
+  <div id="checkPromptMsg" style="
+    background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.25);
+    border-radius:12px;padding:13px 14px;
+    display:flex;align-items:flex-start;gap:10px;min-width:0;overflow:hidden;">
+    <span style="font-size:18px;flex-shrink:0;">⏳</span>
+    <p style="font-size:13px;color:rgba(255,220,80,.9);line-height:1.72;
+      word-break:break-all;overflow-wrap:break-word;min-width:0;">
+      まだ触っていない場合は、今すぐ！<strong>30秒もあればOK</strong>。画面を置いて自分の胸に手を当ててみよう。
+    </p>
+  </div>
+
+  <!-- 両方チェック後に出現するメッセージ -->
+  <div id="checkCompleteMsg" style="display:none;
+    background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);
+    border-radius:12px;padding:13px 14px;
+    display:none;align-items:flex-start;gap:10px;min-width:0;overflow:hidden;">
+    <span style="font-size:18px;flex-shrink:0;">🎉</span>
+    <p style="font-size:13px;color:#86efac;line-height:1.72;
+      word-break:break-all;overflow-wrap:break-word;min-width:0;">
+      <strong>パーフェクト！</strong>体感を伴った解剖知識はプローブ操作で必ず活きる。次のクイズへ進もう！
+    </p>
+  </div>
+</div>
+
+<!-- ======================================
+     SLIDE 7: クイズ② 肋骨 (旧 slide-6)
+======================================= -->
+<div class="slide" id="slide-7">
   <div class="sonobo-row flex-container">
     <div class="sonobo-sm">
       <img src="assets/sonobo_1.png" alt="ソノボくん">
@@ -1005,7 +1097,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 <!-- ======================================
      SLIDE 7: 解剖④ 肝臓・脾臓・腎臓
 ======================================= -->
-<div class="slide" id="slide-7">
+<div class="slide" id="slide-8">
   <div class="chapter-header">
     <div class="chapter-num">CHAPTER 03 — 主要臓器の位置</div>
   </div>
@@ -1047,7 +1139,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 <!-- ======================================
      SLIDE 8: クイズ③ 臓器
 ======================================= -->
-<div class="slide" id="slide-8">
+<div class="slide" id="slide-9">
   <div class="sonobo-row flex-container">
     <div class="sonobo-sm">
       <img src="assets/sonobo_1.png" alt="ソノボくん">
@@ -1083,7 +1175,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 <!-- ======================================
      SLIDE 9: ファイナルクイズ
 ======================================= -->
-<div class="slide" id="slide-9">
+<div class="slide" id="slide-10">
   <div class="sonobo-row flex-container">
     <div class="sonobo-sm">
       <img src="assets/sonobo_1.png" alt="ソノボくん">
@@ -1246,6 +1338,41 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div><!-- /app-wrapper -->
 
 <script>
+// ===== BODY CHECK TOGGLE =====
+const bodyChecked = {};
+function toggleCheck(id) {
+  bodyChecked[id] = !bodyChecked[id];
+  const item = document.getElementById(id);
+  const circle = item.querySelector('.chk-circle');
+  if (bodyChecked[id]) {
+    item.style.background = 'rgba(20,184,166,.14)';
+    item.style.borderColor = 'rgba(20,184,166,.6)';
+    circle.textContent = '✓';
+    circle.style.background = 'rgba(20,184,166,.35)';
+    circle.style.borderColor = 'var(--teal)';
+    circle.style.color = '#fff';
+    circle.style.fontWeight = '900';
+    playSound('tap');
+  } else {
+    item.style.background = 'rgba(20,184,166,.06)';
+    item.style.borderColor = 'rgba(20,184,166,.2)';
+    circle.textContent = '';
+    circle.style.background = 'rgba(20,184,166,.08)';
+    circle.style.borderColor = 'rgba(20,184,166,.5)';
+  }
+  const allChecked = bodyChecked['chk-xiphoid'] && bodyChecked['chk-rib'];
+  const promptMsg = document.getElementById('checkPromptMsg');
+  const completeMsg = document.getElementById('checkCompleteMsg');
+  if (allChecked) {
+    promptMsg.style.display = 'none';
+    completeMsg.style.display = 'flex';
+    playSound('correct');
+  } else {
+    promptMsg.style.display = 'flex';
+    completeMsg.style.display = 'none';
+  }
+}
+
 // ===== QUIZ DATA =====
 const QUIZ_DATA = {
   quiz1: { correct: 1, exp: "✅ 正解！心膜腔 = 心臓を包む外膜（壁側心膜）と内膜（臓側心膜）の間のスペース。正常では20〜50mLの液体があります。" },
@@ -1258,7 +1385,7 @@ const QUIZ_DATA = {
   quiz8: { correct: 1, exp: "✅ 正解！FAST陽性 = 出血を示す液体（無エコー黒い帯）を確認した、ということ。緊急手術の判断につながる重要な所見！" },
 };
 
-const TOTAL = 10;
+const TOTAL = 11;
 let cur = 0;
 let quizScores = {};
 
@@ -1535,7 +1662,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     const landing = document.getElementById('planetLanding');
     landing.style.display = 'none';
-  }, 3200);
+  }, 2200);
 });
 </script>
 </body>
