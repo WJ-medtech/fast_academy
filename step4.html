@@ -54,19 +54,25 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 @keyframes scanIn   {from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
 @keyframes missionBadge{0%{opacity:0;transform:scale(0) rotate(-15deg)}70%{transform:scale(1.1) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
 @keyframes loadBar{from{width:0}to{width:100%}}
+@keyframes touchPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(245,200,66,.5)}70%{transform:scale(1.02);box-shadow:0 0 0 12px rgba(245,200,66,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(245,200,66,0)}}
 
 /* ===== HEADER ===== */
-.page-header{display:flex;align-items:center;gap:12px;min-width:0;overflow:hidden;
-  padding:16px 16px 12px;background:rgba(8,16,36,.97);backdrop-filter:blur(20px);
+.page-header{display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;
+  padding:14px 14px 10px;background:rgba(8,16,36,.97);backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:50;}
 .back-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
   cursor:pointer;font-size:17px;flex-shrink:0;text-decoration:none;color:white;
   transition:background .2s;}
-.back-btn:active{background:rgba(255,255,255,.15);}
+.back-btn:active{background:rgba(255,255,255,.2);}
+.prev-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:17px;flex-shrink:0;color:white;
+  transition:background .2s;user-select:none;}
+.prev-btn:active{background:rgba(255,255,255,.2);}
 .page-step-label{font-size:10px;color:var(--blue-light);font-weight:700;letter-spacing:1.5px;
   word-break:break-all;overflow-wrap:break-word;min-width:0;font-family:'Orbitron',sans-serif;}
-.page-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;
+.page-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;
   word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .header-progress{height:3px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-top:8px;}
 .header-progress-fill{height:100%;border-radius:10px;
@@ -191,6 +197,51 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   border-radius:var(--radius-sm);padding:12px 14px;
   display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;min-width:0;overflow:hidden;}
 .good-box p{font-size:13px;color:rgba(160,255,200,.88);line-height:1.7;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== TOUCH CHECK CARD (新規) ===== */
+.touch-check-card{background:linear-gradient(135deg,rgba(245,200,66,.12),rgba(245,200,66,.04));
+  border:2px solid rgba(245,200,66,.45);border-radius:var(--radius-lg);
+  padding:24px 18px;margin-bottom:18px;text-align:center;position:relative;overflow:hidden;
+  animation:touchPulse 2.5s ease-in-out infinite;}
+.touch-check-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.touch-big-emoji{font-size:52px;margin-bottom:12px;display:block;}
+.touch-check-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;
+  color:var(--gold);margin-bottom:10px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.touch-check-desc{font-size:13px;line-height:1.8;color:rgba(255,255,255,.85);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== CHECK CONFIRM LIST (新規) ===== */
+.confirm-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.confirm-item{display:flex;align-items:center;gap:12px;min-width:0;overflow:hidden;
+  padding:13px 14px;border-radius:var(--radius-sm);cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);transition:all .25s ease;}
+.confirm-item.checked{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.4);}
+.confirm-box{width:26px;height:26px;border-radius:7px;border:2px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;
+  transition:all .25s ease;}
+.confirm-item.checked .confirm-box{background:var(--green);border-color:var(--green);color:white;}
+.confirm-label{font-size:13px;line-height:1.55;color:rgba(255,255,255,.85);flex:1;min-width:0;
+  word-break:break-all;overflow-wrap:break-word;}
+.confirm-item.checked .confirm-label{color:rgba(160,255,200,.9);}
+
+/* ===== PROBE HOLD CHECK CARD (新規) ===== */
+.probe-check-card{background:linear-gradient(135deg,rgba(61,142,240,.12),rgba(21,101,216,.06));
+  border:2px solid rgba(61,142,240,.45);border-radius:var(--radius-lg);
+  padding:20px 18px;margin-bottom:18px;position:relative;overflow:hidden;}
+.probe-check-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent);}
+.probe-check-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;
+  color:var(--blue-light);margin-bottom:6px;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.probe-check-sub{font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:14px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+
+/* ===== POINT BADGE (新規) ===== */
+.point-badge{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.4);
+  border-radius:20px;padding:5px 12px;font-family:'Orbitron',sans-serif;
+  font-size:9px;color:#e0c0ff;letter-spacing:1.5px;margin-bottom:10px;
   word-break:break-all;overflow-wrap:break-word;min-width:0;}
 
 /* ===== QUIZ ===== */
@@ -421,7 +472,8 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 
 <!-- ===== HEADER ===== -->
 <div class="page-header">
-  <a class="back-btn" href="home.html">←</a>
+  <!-- screen-0ではhome.htmlへ戻る、それ以外はprevScreen() -->
+  <button class="prev-btn" id="headerBackBtn" onclick="handleBack()" title="ひとつ前へ戻る">←</button>
   <div style="flex:1;min-width:0;overflow:hidden;">
     <div class="page-step-label">PLANET PROBIA — MISSION 4</div>
     <div class="page-title">実際に当ててみよう 📡</div>
@@ -429,7 +481,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="header-progress-fill" id="headerBar" style="width:0%"></div>
     </div>
   </div>
-  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/19</div>
+  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/24</div>
 </div>
 
 <!-- ===== SCROLL CONTENT ===== -->
@@ -515,7 +567,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">肋骨弓に「はめ込む」のがポイント！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 1 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 1 / 9 — 心窩部</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
@@ -541,7 +593,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="info-list">
         <div class="info-item">
           <span class="info-icon">🎯</span>
-          <div class="info-text"><strong>剣状突起直下</strong>：みぞおちの一番上の硬い骨の直下→<strong>実際に触って確かめてみよう！</strong></div>
+          <div class="info-text"><strong>剣状突起直下</strong>：みぞおちの一番上の硬い骨の直下</div>
         </div>
         <div class="info-item">
           <span class="info-icon">🦴</span>
@@ -559,13 +611,79 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
+  <button class="next-btn" onclick="nextScreen()">次へ → 実際に触って場所を確認！</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 2: 心窩部 場所確認 CHECK（新規追加）
+     ============================================================ -->
+<div class="screen" id="screen-2">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部：場所を触って確認！</div>
+    <div class="view-desc">実際に体で確かめることが上達の近道！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 2 / 9 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — ハンズオン指令</div>
+      <div class="bubble-text">画面を見るだけじゃダメ！<strong style="color:var(--gold)">実際に自分の体か練習台で触れて</strong>、当てる場所を確かめよう。触れてから当てると格段に描出しやすくなるよ！</div>
+    </div>
+  </div>
+
+  <div class="touch-check-card">
+    <span class="touch-big-emoji">👆</span>
+    <div class="touch-check-title">実際に触って確かめてみよう！</div>
+    <div class="touch-check-desc">
+      みぞおちのいちばん上にある<br>
+      <strong style="color:var(--gold)">剣状突起（けんじょうとっき）</strong>を<br>
+      指で触れてみよう。<br><br>
+      その直下が心窩部のプローブを当てる場所！<br>
+      肋骨弓の内側に指を入れるように触ると感覚がわかる。
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">✅</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">SELF CHECK</div>
+        <div class="step-title">確認できたらチェック！</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="confirm-list" id="ep-place-confirm">
+        <div class="confirm-item" onclick="toggleConfirm(this,'ep-place-confirm')">
+          <div class="confirm-box"></div>
+          <div class="confirm-label">🎯 剣状突起（みぞおちの上の硬い骨）を指で触れて位置を確認した</div>
+        </div>
+        <div class="confirm-item" onclick="toggleConfirm(this,'ep-place-confirm')">
+          <div class="confirm-box"></div>
+          <div class="confirm-label">🦴 肋骨弓（肋骨が左右に広がる弓状の部分）を触れて確認した</div>
+        </div>
+        <div class="confirm-item" onclick="toggleConfirm(this,'ep-place-confirm')">
+          <div class="confirm-box"></div>
+          <div class="confirm-label">📍 「剣状突起のすぐ下・肋骨弓の内側」にプローブを当てる場所を把握した</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">🏅</span>
+        <p>全部チェックできたら次へ進もう！ <br>触れた感覚があれば、プローブを当てたときにブレにくい。</p>
+      </div>
+    </div>
+  </div>
+
   <button class="next-btn" onclick="nextScreen()">次へ → 心窩部２：プローブの持ち方</button>
 </div>
 
 <!-- ============================================================
-     SCREEN 2: 心窩部２ — プローブの持ち方
+     SCREEN 3: 心窩部２ — プローブの持ち方
      ============================================================ -->
-<div class="screen" id="screen-2">
+<div class="screen" id="screen-3">
 
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 心窩部</div>
@@ -573,7 +691,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">「寝かせる」には上から持つことが必要！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 2 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 3 / 9 — 心窩部</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
@@ -617,9 +735,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 3: 心窩部３ — 当てると何が見えるか（NEW）
+     SCREEN 4: 心窩部３ — 当てると何が見えるか
      ============================================================ -->
-<div class="screen" id="screen-3">
+<div class="screen" id="screen-4">
 
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 心窩部</div>
@@ -627,7 +745,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">バクバクしているのが心臓！まず発見することが目標。</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 3 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 4 / 9 — 心窩部</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
@@ -646,7 +764,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
     </div>
     <div class="step-body">
-      <!-- 新規画像: ep_heart_view.jpg -->
       <div class="img-card">
         <img src="images/ep_heart_view.jpg" alt="心臓が見えている心窩部エコー画像">
         <div class="img-caption">▲ 画面の下側にバクバク動く心臓が見える</div>
@@ -676,9 +793,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 4: 心窩部４ — 息を吸って止めてもらう（NEW）
+     SCREEN 5: 心窩部４ — 息を吸って止めてもらう
      ============================================================ -->
-<div class="screen" id="screen-4">
+<div class="screen" id="screen-5">
 
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 心窩部</div>
@@ -686,7 +803,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">患者さんへの指示で心臓を画面中央へ！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 4 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 5 / 9 — 心窩部</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
@@ -760,9 +877,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 5: 心窩部５ — 画面の見方・心膜液貯留
+     SCREEN 6: 心窩部５ — 画面の見方・心膜液貯留
      ============================================================ -->
-<div class="screen" id="screen-5">
+<div class="screen" id="screen-6">
 
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 心窩部</div>
@@ -770,7 +887,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">白い線が心膜。黒い帯が見えたら異常のサイン！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 5 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 6 / 9 — 心窩部</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
@@ -818,9 +935,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 6: 心窩部６ — 扇動走査
+     SCREEN 7: 心窩部６ — 扇動走査
      ============================================================ -->
-<div class="screen" id="screen-6">
+<div class="screen" id="screen-7">
 
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 心窩部</div>
@@ -828,7 +945,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">1断面だけでは不十分！扇動走査で全体を見よう。</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 6 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 7 / 9 — 心窩部</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
@@ -876,9 +993,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 7: 心窩部７ — クイズ＆できたかな？
+     SCREEN 8: 心窩部７ — クイズ＆できたかな？
      ============================================================ -->
-<div class="screen" id="screen-7">
+<div class="screen" id="screen-8">
 
   <div class="view-banner">
     <div class="view-number">🫀 ZONE 01 / 心窩部</div>
@@ -886,7 +1003,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">ZONE 01 の知識を確認しよう！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 7 / 7 — 心窩部</div>
+  <div class="sub-screen-badge">📍 STEP 8 / 9 — 心窩部</div>
 
   <!-- QUIZ 1 -->
   <div class="quiz-box">
@@ -960,13 +1077,78 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
-  <button class="next-btn" onclick="nextScreen()">✅ ZONE 01 クリア → ZONE 02 へ</button>
+  <button class="next-btn" onclick="nextScreen()">次へ → 描出チェック（できたかな？）</button>
 </div>
 
 <!-- ============================================================
-     SCREEN 8: モリソン窩１ — 当てる場所
+     SCREEN 9: 心窩部８ — 描出できたか確認
      ============================================================ -->
-<div class="screen" id="screen-8">
+<div class="screen" id="screen-9">
+
+  <div class="view-banner">
+    <div class="view-number">🫀 ZONE 01 / 心窩部</div>
+    <div class="view-title-big">心窩部８：描出できた？</div>
+    <div class="view-desc">実際に描出を試してみよう！できなくてもOK！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 9 / 9 — 心窩部</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_7.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — 実践確認</div>
+      <div class="bubble-text">ここまで学んだことを実際に試してみよう！<strong style="color:var(--gold)">うまく描出できなくても焦らない</strong>。できなかったときのヒントがあるよ！</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">🫀</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">PRACTICE CHECK</div>
+        <div class="step-title">実際に試してみよう</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">1️⃣</span>
+          <div class="info-text">剣状突起直下・肋骨弓にプローブをはめ込む</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">2️⃣</span>
+          <div class="info-text">プローブを上から持って、しっかり寝かせる</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">3️⃣</span>
+          <div class="info-text">「息を吸って止めて」と指示して評価</div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">4️⃣</span>
+          <div class="info-text">扇動走査で広く確認する</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+    <button class="next-btn" onclick="nextScreen()" style="background:linear-gradient(135deg,var(--green),#16a34a);">
+      ✅ 描出できた！→ ZONE 02へ進む
+    </button>
+    <button class="next-btn" onclick="nextScreen()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);box-shadow:none;">
+      😓 まだ描出できなかった → ヒントを見て再挑戦してから進む
+    </button>
+  </div>
+  <div class="note-box" style="margin-top:12px;">
+    <span style="font-size:18px;flex-shrink:0;">💡</span>
+    <p>描出できなかった場合は上の「うまく描出できないとき」チェックリスト（前のページ）に戻って確認してみよう。どちらを押しても次へ進めます！</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCREEN 10: モリソン窩１ — 当てる場所
+     ============================================================ -->
+<div class="screen" id="screen-10">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
@@ -974,7 +1156,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">腹腔内出血が貯まりやすい最重要ポイント！まずは場所を確認。</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 1 / 6 — モリソン窩</div>
+  <div class="sub-screen-badge">📍 STEP 1 / 8 — モリソン窩</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
@@ -993,7 +1175,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
     </div>
     <div class="step-body">
-      <!-- 新規画像: morrison_position.jpeg -->
       <div class="img-card">
         <img src="images/morrison_position.jpg" alt="モリソン窩プローブ位置">
         <div class="img-caption">▲ 中腋窩線と剣状突起の高さの交点・患者さんの右側</div>
@@ -1019,13 +1200,78 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
+  <button class="next-btn" onclick="nextScreen()">次へ → 実際に肋骨の走行を確認！</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 11: モリソン窩 場所確認 CHECK（新規追加）
+     ============================================================ -->
+<div class="screen" id="screen-11">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩：場所を触って確認！</div>
+    <div class="view-desc">肋骨の走行を事前に把握することが描出の鍵！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 2 / 8 — モリソン窩</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — ハンズオン指令</div>
+      <div class="bubble-text">実際に右側の肋骨を<strong style="color:var(--gold)">触れて確かめよう！</strong>肋骨の間（肋間）がどこにあるかを指で感じ取ること。触れずに当てると肋骨の影で見えなくなるよ！</div>
+    </div>
+  </div>
+
+  <div class="touch-check-card" style="background:linear-gradient(135deg,rgba(61,142,240,.14),rgba(21,101,216,.06));border-color:rgba(61,142,240,.5);animation:none;">
+    <span class="touch-big-emoji">👆</span>
+    <div class="touch-check-title" style="color:var(--blue-light);">実際に触って確かめてみよう！</div>
+    <div class="touch-check-desc">
+      右の脇腹（<strong style="color:var(--blue-light)">中腋窩線上</strong>）を指で触れて、<br>
+      肋骨と肋間（肋骨と肋骨の隙間）を確認しよう。<br><br>
+      <strong style="color:var(--blue-light)">剣状突起の高さ</strong>あたりの肋間が<br>
+      モリソン窩のプローブを当てる場所。
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-header">
+      <div class="step-icon">✅</div>
+      <div style="flex:1;min-width:0;overflow:hidden;">
+        <div class="step-num-label">SELF CHECK</div>
+        <div class="step-title">確認できたらチェック！</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="confirm-list" id="rub-place-confirm">
+        <div class="confirm-item" onclick="toggleConfirm(this,'rub-place-confirm')">
+          <div class="confirm-box"></div>
+          <div class="confirm-label">🖐 右脇腹（中腋窩線上）の肋骨と肋間を指で触れて確認した</div>
+        </div>
+        <div class="confirm-item" onclick="toggleConfirm(this,'rub-place-confirm')">
+          <div class="confirm-box"></div>
+          <div class="confirm-label">📐 剣状突起の高さ（みぞおちと同じ高さ）を右脇腹で確認した</div>
+        </div>
+        <div class="confirm-item" onclick="toggleConfirm(this,'rub-place-confirm')">
+          <div class="confirm-box"></div>
+          <div class="confirm-label">🎯 プローブを当てる肋間をおおよそ把握した</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <span class="hi-icon">🔑</span>
+        <p>肋骨の走行は人によって異なる！毎回触れてから当てる習慣をつけよう。</p>
+      </div>
+    </div>
+  </div>
+
   <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩２：プローブの持ち方</button>
 </div>
 
 <!-- ============================================================
-     SCREEN 9: モリソン窩２ — プローブの持ち方
+     SCREEN 12: モリソン窩２ — プローブの持ち方
      ============================================================ -->
-<div class="screen" id="screen-9">
+<div class="screen" id="screen-12">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
@@ -1033,7 +1279,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">腎臓に向けてビームを届けることを意識！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 2 / 6 — モリソン窩</div>
+  <div class="sub-screen-badge">📍 STEP 3 / 8 — モリソン窩</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
@@ -1081,13 +1327,81 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     </div>
   </div>
 
+  <button class="next-btn" onclick="nextScreen()">次へ → 持ち方を写真と照らし合わせる！</button>
+</div>
+
+<!-- ============================================================
+     SCREEN 13: モリソン窩 持ち方チェック（新規追加）
+     ============================================================ -->
+<div class="screen" id="screen-13">
+
+  <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
+    <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
+    <div class="view-title-big">モリソン窩：持ち方を確認！</div>
+    <div class="view-desc">写真と照らし合わせて3つのポイントをチェック！</div>
+  </div>
+
+  <div class="sub-screen-badge">📍 STEP 4 / 8 — モリソン窩</div>
+
+  <div class="sonobo-wrap">
+    <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
+    <div class="sonobo-bubble">
+      <div class="bubble-name">🤖 SONOBO — ハンズオン確認</div>
+      <div class="bubble-text">持ち方は<strong style="color:var(--gold)">3つのポイント</strong>が揃って初めて正解！実際に持ちながら一つずつ確認しよう。ここが一番の上達ポイントだよ！</div>
+    </div>
+  </div>
+
+  <div class="probe-check-card">
+    <div class="probe-check-title">🖐 持ち方チェックリスト</div>
+    <div class="probe-check-sub">プローブを実際に持ちながら、以下の3点を写真と照らし合わせて確認しよう。</div>
+
+    <div class="confirm-list" id="rub-hold-confirm">
+
+      <!-- チェック1: 小指・薬指 -->
+      <div class="confirm-item" onclick="toggleConfirm(this,'rub-hold-confirm')">
+        <div class="confirm-box"></div>
+        <div class="confirm-label" style="display:flex;flex-direction:column;gap:4px;">
+          <span>🤙 <strong>小指と薬指が患者さんの体についている</strong></span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;">プローブの安定につながる。浮いていると映像がブレやすい。薬指・小指の腹が体表に接触しているか確認。</span>
+        </div>
+      </div>
+
+      <!-- チェック2: ビームの方向 -->
+      <div class="confirm-item" onclick="toggleConfirm(this,'rub-hold-confirm')">
+        <div class="confirm-box"></div>
+        <div class="confirm-label" style="display:flex;flex-direction:column;gap:4px;">
+          <span>🎯 <strong>ビームが背中側（腎臓の方向）へ向いている</strong></span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;">プローブの角度が腹側（お腹側）に向きすぎていないか確認。背中側・尾側へ傾けて腎臓を狙う。</span>
+        </div>
+      </div>
+
+      <!-- チェック3: 写真と比較 -->
+      <div class="confirm-item" onclick="toggleConfirm(this,'rub-hold-confirm')">
+        <div class="confirm-box"></div>
+        <div class="confirm-label" style="display:flex;flex-direction:column;gap:4px;">
+          <span>📸 <strong>前のページの写真と同じように持てている</strong></span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;">写真と全体のフォームを比べてみよう。わからなければ前のページに戻って再確認。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <span class="hi-icon">⚠️</span>
+    <p><strong style="color:#fca5a5">小指・薬指が浮いている場合：</strong><br>プローブが安定せず、映像がブレる原因になる。体表にしっかり当てること！</p>
+  </div>
+  <div class="highlight-box">
+    <span class="hi-icon">💡</span>
+    <p>この持ち方は脾周囲でも同じ！今マスターしておけば後が楽になるよ。</p>
+  </div>
+
   <button class="next-btn" onclick="nextScreen()">次へ → モリソン窩３：画像の見方</button>
 </div>
 
 <!-- ============================================================
-     SCREEN 10: モリソン窩３ — 画像の見方
+     SCREEN 14: モリソン窩３ — 画像の見方
      ============================================================ -->
-<div class="screen" id="screen-10">
+<div class="screen" id="screen-14">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
@@ -1095,7 +1409,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">肝臓・右腎・モリソン窩を画面で確認しよう！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 3 / 6 — モリソン窩</div>
+  <div class="sub-screen-badge">📍 STEP 5 / 8 — モリソン窩</div>
 
   <div class="step-card">
     <div class="step-card-header">
@@ -1135,9 +1449,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 11: モリソン窩４ — 扇動走査
+     SCREEN 15: モリソン窩４ — 扇動走査
      ============================================================ -->
-<div class="screen" id="screen-11">
+<div class="screen" id="screen-15">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
@@ -1145,7 +1459,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">1断面だけでは不十分！広く観察しよう。</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 4 / 6 — モリソン窩</div>
+  <div class="sub-screen-badge">📍 STEP 6 / 8 — モリソン窩</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
@@ -1189,9 +1503,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 12: モリソン窩５ — カーテンサイン
+     SCREEN 16: モリソン窩５ — カーテンサイン
      ============================================================ -->
-<div class="screen" id="screen-12">
+<div class="screen" id="screen-16">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
@@ -1199,7 +1513,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">1肋間上げて右胸水を評価！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 5 / 6 — モリソン窩</div>
+  <div class="sub-screen-badge">📍 STEP 7 / 8 — モリソン窩</div>
 
   <div class="sonobo-wrap">
     <img class="sonobo-img-sm" src="assets/sonobo_8.png" alt="">
@@ -1241,9 +1555,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 13: モリソン窩６ — クイズ＆できたかな？＋AI tool
+     SCREEN 17: モリソン窩６ — クイズ＆できたかな？
      ============================================================ -->
-<div class="screen" id="screen-13">
+<div class="screen" id="screen-17">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(21,101,216,.3),rgba(10,40,120,.35));border-color:rgba(61,142,240,.4);">
     <div class="view-number">💧 ZONE 02 / モリソン窩・右側胸部</div>
@@ -1251,7 +1565,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
     <div class="view-desc">ZONE 02 の知識を確認しよう！</div>
   </div>
 
-  <div class="sub-screen-badge">📍 STEP 6 / 6 — モリソン窩</div>
+  <div class="sub-screen-badge">📍 STEP 8 / 8 — モリソン窩</div>
 
   <!-- QUIZ -->
   <div class="quiz-box">
@@ -1341,9 +1655,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 14: 脾周囲１ — 移動方法
+     SCREEN 18: 脾周囲１ — 移動方法
      ============================================================ -->
-<div class="screen" id="screen-14">
+<div class="screen" id="screen-18">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
@@ -1370,7 +1684,6 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       </div>
     </div>
     <div class="step-body">
-      <!-- 新規画像: spleen_position.jpeg -->
       <div class="img-card">
         <img src="images/spleen_position.jpeg" alt="脾周囲プローブ移動">
         <div class="img-caption">▲ 右側から左の脇腹へ・さらに背側へ移動</div>
@@ -1400,9 +1713,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 15: 脾周囲２ — 当て方
+     SCREEN 19: 脾周囲２ — 当て方
      ============================================================ -->
-<div class="screen" id="screen-15">
+<div class="screen" id="screen-19">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
@@ -1458,9 +1771,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 16: 脾周囲３ — VIEW・評価＋扇動走査
+     SCREEN 20: 脾周囲３ — VIEW・評価＋扇動走査
      ============================================================ -->
-<div class="screen" id="screen-16">
+<div class="screen" id="screen-20">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
@@ -1524,9 +1837,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 17: 脾周囲４ — カーテンサイン
+     SCREEN 21: 脾周囲４ — カーテンサイン
      ============================================================ -->
-<div class="screen" id="screen-17">
+<div class="screen" id="screen-21">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
@@ -1576,9 +1889,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 18: 脾周囲５ — クイズ＆できたかな？
+     SCREEN 22: 脾周囲５ — クイズ＆できたかな？
      ============================================================ -->
-<div class="screen" id="screen-18">
+<div class="screen" id="screen-22">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(120,10,30,.25));border-color:rgba(239,68,68,.35);">
     <div class="view-number">🩸 ZONE 03 / 脾周囲</div>
@@ -1645,9 +1958,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 19: ZONE 04 骨盤腔（準備中）
+     SCREEN 23: ZONE 04 骨盤腔（準備中）
      ============================================================ -->
-<div class="screen" id="screen-19">
+<div class="screen" id="screen-23">
 
   <div class="view-banner" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(80,20,140,.25));border-color:rgba(168,85,247,.35);">
     <div class="view-number">📍 ZONE 04 / 04 — FINAL ZONE</div>
@@ -1660,9 +1973,9 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 </div>
 
 <!-- ============================================================
-     SCREEN 20: 4ビュー最終確認チェック
+     SCREEN 24: 4ビュー最終確認チェック
      ============================================================ -->
-<div class="screen" id="screen-20">
+<div class="screen" id="screen-24">
 
   <div class="section-divider"><span>🛰 4ビュー 最終確認チェック</span></div>
 
@@ -1889,13 +2202,22 @@ function warpTo(url) {
    スクリーン管理
 ===================================================== */
 let currentScreen = 0;
-const totalScreens = 21; // 0〜20
+const totalScreens = 25; // 0〜24
 const screens = document.querySelectorAll('.screen');
 
 function updateProgress() {
   const pct = (currentScreen / (totalScreens - 1)) * 100;
   document.getElementById('headerBar').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = currentScreen + '/' + (totalScreens - 1);
+  // 戻るボタンの見た目をscreen-0のときに変える
+  const btn = document.getElementById('headerBackBtn');
+  if (currentScreen === 0) {
+    btn.style.opacity = '0.5';
+    btn.title = 'ホームに戻る';
+  } else {
+    btn.style.opacity = '1';
+    btn.title = 'ひとつ前へ戻る';
+  }
 }
 
 function nextScreen() {
@@ -1904,37 +2226,58 @@ function nextScreen() {
     screens[currentScreen].classList.remove('active');
     currentScreen++;
     screens[currentScreen].classList.add('active');
-    const sc = document.querySelector('.scroll-content');
-    sc.scrollTop = 0;
-    sc.scrollTo(0, 0);
-    window.scrollTo(0, 0);
+    scrollToTop();
     updateProgress();
-    if (currentScreen >= 1) {
-      showZoneLanding(currentScreen);
-    }
+    flashHeader();
   }
 }
 
+function prevScreen() {
+  if (currentScreen > 0) {
+    playSound('tap');
+    screens[currentScreen].classList.remove('active');
+    currentScreen--;
+    screens[currentScreen].classList.add('active');
+    scrollToTop();
+    updateProgress();
+    flashHeader();
+  }
+}
+
+function handleBack() {
+  if (currentScreen === 0) {
+    // screen-0ではhome.htmlへ
+    warpTo('home.html');
+  } else {
+    prevScreen();
+  }
+}
+
+function scrollToTop() {
+  const sc = document.querySelector('.scroll-content');
+  sc.scrollTop = 0;
+  sc.scrollTo(0, 0);
+  window.scrollTo(0, 0);
+}
+
+function flashHeader() {
+  const header = document.querySelector('.page-header');
+  header.style.transition = 'background .1s';
+  header.style.background = 'rgba(21,101,216,.6)';
+  setTimeout(() => { header.style.background = 'rgba(8,16,36,.97)'; }, 350);
+}
+
+/* goToView: マップカードから特定ゾーンへジャンプ */
 function goToView(id) {
-  const map = {ep:1, rub:8, lup:14, pelvis:19};
+  const map = {ep:1, rub:10, lup:18, pelvis:23};
   if (map[id] !== undefined) {
     playSound('tap');
     screens[currentScreen].classList.remove('active');
     currentScreen = map[id];
     screens[currentScreen].classList.add('active');
-    const sc = document.querySelector('.scroll-content');
-    sc.scrollTop = 0;
-    sc.scrollTo(0, 0);
-    window.scrollTo(0, 0);
+    scrollToTop();
     updateProgress();
   }
-}
-
-function showZoneLanding(zoneNum) {
-  const header = document.querySelector('.page-header');
-  header.style.transition = 'background .1s';
-  header.style.background = 'rgba(21,101,216,.6)';
-  setTimeout(() => { header.style.background = 'rgba(8,16,36,.97)'; }, 350);
 }
 
 /* =====================================================
@@ -1974,7 +2317,16 @@ function answerQuiz(id, btn, correct) {
 }
 
 /* =====================================================
-   チェックリスト
+   確認チェックリスト（新規）
+===================================================== */
+function toggleConfirm(el, listId) {
+  playSound('tap');
+  el.classList.toggle('checked');
+  el.querySelector('.confirm-box').textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+/* =====================================================
+   チェックリスト（最終）
 ===================================================== */
 function toggleCheck(el) {
   playSound('tap');
