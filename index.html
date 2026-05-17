@@ -212,8 +212,8 @@ p,h1,h2,h3,span,li,.text-elem{
     </div>
     <div class="status-divider"></div>
     <div class="status-item">
-      <span class="status-val">FREE</span>
-      <span class="status-lbl">Cost</span>
+      <span class="status-val" id="visitorCount" style="color:#a78bfa;">…</span>
+      <span class="status-lbl">Visitors</span>
     </div>
   </div>
 
@@ -349,6 +349,23 @@ function warpTo(url) {
       }, 700);
     });
 }
+
+// ===== 訪問者カウント（Googleスプレッドシート連携） =====
+(function(){
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbwRlYKhtLYeE9NGSu8VUNsF_wWfb5eArtPV9dR9VTaSEyMdukihb47lZcquhhablTtPYw/exec';
+  const ua = navigator.userAgent;
+  const isIpad = /iPad|Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+  const device = isIpad ? 'iPad' : /iPhone/.test(ua) ? 'iPhone' : 'その他';
+  const el = document.getElementById('visitorCount');
+  fetch(GAS_URL + '?device=' + encodeURIComponent(device))
+    .then(r => r.json())
+    .then(data => {
+      if (el) el.textContent = data.total.toLocaleString() + '人';
+    })
+    .catch(() => {
+      if (el) el.textContent = '--';
+    });
+})();
 
 // ===== タイピングアニメ =====
 const msgs = [
